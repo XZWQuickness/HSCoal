@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar_custom" />
+
+    <TextView
+        android:id="@+id/bt_editPwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/White"
+        android:drawableEnd="@mipmap/icon_main_gray_next"
+        android:padding="@dimen/margin_15"
+        android:text="修改密码"
+        android:textColor="@color/MaterialGrey600"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:id="@+id/bt_user_agreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/White"
+        android:drawableEnd="@mipmap/icon_main_gray_next"
+        android:padding="@dimen/margin_15"
+        android:text="用户协议"
+        android:textColor="@color/MaterialGrey600"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:id="@+id/bt_about_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/White"
+        android:drawableEnd="@mipmap/icon_main_gray_next"
+        android:padding="@dimen/margin_15"
+        android:text="关于我们"
+        android:textColor="@color/MaterialGrey600"
+        android:textSize="@dimen/sp_14" />
+
+    <LinearLayout
+        android:id="@+id/bt_clear_cache"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/White"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_15">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:text="清理缓存"
+            android:textColor="@color/MaterialGrey600"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/tv_clear_cache"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@mipmap/icon_main_gray_next"
+            android:drawablePadding="6dp"
+            android:textColor="@color/MaterialGrey600"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bt_usinghelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/White"
+        android:drawableEnd="@mipmap/icon_main_gray_next"
+        android:padding="@dimen/margin_15"
+        android:text="使用帮助"
+        android:textColor="@color/MaterialGrey600"
+        android:textSize="@dimen/sp_14" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+
+
+        <TextView
+            android:id="@+id/bt_finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Red"
+            android:gravity="center"
+            android:padding="@dimen/margin_15"
+            android:text="退出当前账号"
+            android:textColor="@color/White"
+            android:textSize="@dimen/sp_14" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableHeaderTranslationContent="true"
+        app:srlEnablePreviewInEditMode="false"
+        app:srlHeaderHeight="150dp"
+        app:srlHeaderMaxDragRate="1">
+
+        <View
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:paddingTop="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系人信息"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:drawablePadding="6dp"
+                    android:padding="@dimen/margin_15"
+                    android:drawableStart="@mipmap/icon_contact_info"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/MaterialGrey600"
+                    />
+                <LinearLayout
+                    android:id="@+id/bt_contact_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="@color/White"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="联系人姓名"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/include"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:id="@+id/tv_contact_name"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/margin_15"
+                        android:textColor="@color/MaterialGrey600"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/bt_contact_phone"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="@color/White"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="联系人手机"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/include"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:id="@+id/tv_contact_phone"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/margin_15"
+                        android:textColor="@color/MaterialGrey600"
+                        />
+                </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/bt_driving_licence"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/White"
+                    android:padding="5dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="驾驶证照片"
+                        android:paddingStart="@dimen/dp_10"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="horizontal"
+                        >
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/iv_driving_licence_img"
+                            android:layout_width="@dimen/margin_50"
+                            android:layout_height="@dimen/margin_50"
+                            app:roundAsCircle="false"
+                            app:roundingBorderColor="@color/app_bg"
+                            app:roundingBorderWidth="1dp"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:background="@mipmap/icon_main_gray_next"
+                            android:layout_gravity="center"
+                            />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/bt_driving"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/White"
+                    android:padding="5dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="行驶证照片"
+                        android:paddingStart="@dimen/dp_10"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="horizontal"
+                        >
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/iv_driving_img"
+                            android:layout_width="@dimen/margin_50"
+                            android:layout_height="@dimen/margin_50"
+                            app:roundAsCircle="false"
+                            app:roundingBorderColor="@color/app_bg"
+                            app:roundingBorderWidth="1dp"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            />
+
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:background="@mipmap/icon_main_gray_next"
+                            android:layout_gravity="center"
+                            />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+                <com.flyco.roundview.RoundTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="提交审核"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="@dimen/margin_30"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:textColor="@color/White"
+                    app:rv_cornerRadius="@dimen/margin_20"
+                    android:padding="@dimen/margin_15"
+                    android:gravity="center"
+                    android:id="@+id/bt_commit"
+                    app:rv_backgroundColor="@color/colorPrimary"
+                    android:textSize="@dimen/sp_14"
+                    />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/action_bar_custom" />
+</android.support.constraint.ConstraintLayout>

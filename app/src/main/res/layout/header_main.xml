@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.youth.banner.Banner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:indicator_drawable_selected="@drawable/banner_point_green"
+            app:indicator_drawable_unselected="@drawable/banner_point_gray"
+            app:indicator_height="@dimen/margin_5"
+            app:indicator_width="@dimen/margin_5" />
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/btLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="15dp"
+            android:drawableEnd="@mipmap/icon_main_arrow_location"
+            android:drawablePadding="4dp"
+            android:drawableStart="@mipmap/icon_main_location"
+            android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            android:paddingTop="2dp"
+            android:text="定位中..."
+            android:textColor="@color/White"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rv_backgroundColor="#C65E6163"
+            app:rv_cornerRadius="@dimen/margin_5"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/White"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin_10"
+        android:paddingLeft="@dimen/margin_10"
+        android:paddingRight="@dimen/margin_10"
+        android:paddingTop="@dimen/margin_10">
+
+        <TextView
+            android:id="@+id/bt_tab_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="6dp"
+            android:drawableTop="@mipmap/icon_main_tab_1"
+            android:gravity="center"
+            android:text="@string/main_tab_1"
+            android:textColor="@color/MaterialGrey600"
+            android:textSize="@dimen/text_12" />
+
+        <TextView
+            android:id="@+id/bt_tab_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="6dp"
+            android:drawableTop="@mipmap/icon_main_tab_2"
+            android:gravity="center"
+            android:text="@string/main_tab_2"
+            android:textColor="@color/MaterialGrey600"
+            android:textSize="@dimen/text_12" />
+
+        <TextView
+            android:id="@+id/bt_tab_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="6dp"
+            android:drawableTop="@mipmap/icon_main_tab_3"
+            android:gravity="center"
+            android:text="@string/main_tab_3"
+            android:textColor="@color/MaterialGrey600"
+            android:textSize="@dimen/text_12" />
+
+        <TextView
+            android:id="@+id/bt_tab_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="6dp"
+            android:drawableTop="@mipmap/icon_main_tab_4"
+            android:gravity="center"
+            android:text="@string/main_tab_4"
+            android:textColor="@color/MaterialGrey600"
+            android:textSize="@dimen/text_12" />
+
+        <TextView
+            android:id="@+id/bt_tab_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="6dp"
+            android:drawableTop="@mipmap/icon_main_tab_5"
+            android:gravity="center"
+            android:text="@string/main_tab_5"
+            android:textColor="@color/MaterialGrey600"
+            android:textSize="@dimen/text_12" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/White"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/icon_main_hot_news"
+            android:contentDescription="TODO"
+            tools:ignore="ContentDescription,HardcodedText" />
+
+        <com.sunfusheng.marqueeview.MarqueeView
+            android:id="@+id/marqueeView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/margin_3"
+            app:mvAnimDuration="1000"
+            app:mvInterval="3000"
+            app:mvTextColor="@color/MaterialGrey800"
+            app:mvTextSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/White"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_15">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:background="@mipmap/icon_main_statistics"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:textColor="@color/MaterialGrey600"
+                android:text="@string/vol" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/MaterialGrey600"
+                android:text="@string/main_coal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/MaterialGrey600"
+                android:text="@string/main_steel" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:textColor="@color/MaterialGrey600"
+                android:text="@string/vol" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/MaterialGrey600"
+                android:text="@string/main_coal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/MaterialGrey600"
+                android:text="@string/main_steel" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:drawablePadding="4dp"
+        android:drawableStart="@mipmap/icon_main_hot_resource"
+        android:textColor="@color/MaterialGrey600"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/main_hot_resource"
+        />
+    <com.flyco.tablayout.CommonTabLayout
+        app:tl_iconVisible="false"
+        app:tl_textSelectColor="@color/colorPrimary"
+        app:tl_textUnselectColor="@color/MaterialGrey400"
+        app:tl_textsize="14sp"
+        app:tl_indicator_color="@color/colorPrimary"
+        app:tl_underline_color="@color/app_bg"
+        android:background="@color/White"
+        android:padding="15dp"
+        android:id="@+id/mainTabBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+</LinearLayout>

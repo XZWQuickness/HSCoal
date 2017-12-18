@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/White"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvK4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:textColor="@color/MaterialGrey600"
+        android:textSize="@dimen/sp_14" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/edLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:gravity="center"
+            android:hint="请输入"
+            android:minWidth="90dp"
+            android:padding="@dimen/margin_15"
+            android:textColor="@color/MaterialGrey600"
+            android:textColorHint="@color/MaterialGrey400"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="@dimen/sp_14" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1.5dp"
+            android:layout_gravity="center"
+            android:background="@color/MaterialGrey600"></View>
+
+        <EditText
+            android:id="@+id/edRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@color/White"
+            android:gravity="center"
+            android:minWidth="90dp"
+            android:padding="@dimen/margin_15"
+            android:hint="请输入"
+            android:textColor="@color/MaterialGrey600"
+            android:textColorHint="@color/MaterialGrey400"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+</RelativeLayout>

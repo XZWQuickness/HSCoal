@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableHeaderTranslationContent="true"
+        app:srlEnablePreviewInEditMode="false"
+        app:srlHeaderHeight="150dp"
+        app:srlHeaderMaxDragRate="1">
+
+        <View
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:paddingTop="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.szw.framelibrary.view.ClearWriteEditText
+                    android:id="@+id/ed_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/White"
+                    android:hint="@string/Input_phone"
+                    android:inputType="number"
+                    android:padding="@dimen/margin_15"
+                    android:textColor="@color/MaterialGrey600"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:textSize="@dimen/sp_14" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/White"
+                    >
+
+                    <com.szw.framelibrary.view.ClearWriteEditText
+                        android:id="@+id/ed_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/White"
+                        android:hint="@string/Input_code"
+                        android:inputType="number"
+                        android:padding="@dimen/margin_15"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/get_code"
+                        android:textSize="14sp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:textColor="@color/White"
+                        android:id="@+id/bt_code"
+                        android:gravity="center"
+                        android:background="@color/colorPrimary"
+                        />
+
+                </LinearLayout>
+
+                <com.szw.framelibrary.view.ClearWriteEditText
+                    android:id="@+id/ed_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/White"
+                    android:hint="@string/Input_new_password"
+                    android:inputType="number"
+                    android:padding="@dimen/margin_15"
+                    android:textColor="@color/MaterialGrey600"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:textSize="@dimen/sp_14" />
+                <com.szw.framelibrary.view.ClearWriteEditText
+                    android:id="@+id/ed_pwd2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/White"
+                    android:hint="@string/Input_password"
+                    android:inputType="number"
+                    android:padding="@dimen/margin_15"
+                    android:textColor="@color/MaterialGrey600"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:textSize="@dimen/sp_14" />
+
+                <Button
+                    android:id="@+id/bt_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_30"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/shape_cocal_detail_bt"
+                    android:text="提交"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/action_bar_custom" />
+</android.support.constraint.ConstraintLayout>

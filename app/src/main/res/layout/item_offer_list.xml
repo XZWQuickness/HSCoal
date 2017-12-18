@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/White"
+        android:padding="@dimen/margin_15">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/img"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/icon_offer_price" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/img"
+            android:text="11111"
+            android:id="@+id/tv_title"
+            android:maxLines="1"
+            android:layout_marginStart="@dimen/dp_10"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/MaterialGrey600"
+            />
+
+        <LinearLayout
+            android:layout_alignBottom="@id/img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="bottom"
+            android:layout_toEndOf="@id/img"
+            android:layout_below="@id/tv_title"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img"
+                android:text="报价金额"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/MaterialGrey600"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img"
+                android:text="11111"
+                android:layout_marginStart="@dimen/dp_10"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/Red"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/White"
+        android:padding="@dimen/margin_15"
+        android:orientation="horizontal"
+        android:gravity="right"
+        >
+        <com.flyco.roundview.RoundTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="接受"
+            android:id="@+id/tv_left"
+            app:rv_backgroundColor="@color/colorPrimary"
+            app:rv_cornerRadius="@dimen/margin_5"
+            android:paddingStart="10dp"
+            android:paddingEnd="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:textColor="@color/White"
+            />
+        <com.flyco.roundview.RoundTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拒绝"
+            android:id="@+id/tv_mind"
+            app:rv_backgroundColor="@color/MaterialRedA700"
+            app:rv_cornerRadius="@dimen/margin_5"
+            android:paddingStart="10dp"
+            android:paddingEnd="@dimen/dp_10"
+            android:paddingTop="2dp"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:paddingBottom="2dp"
+            android:textColor="@color/White"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拒绝"
+            android:id="@+id/tv_right"
+            android:paddingStart="10dp"
+            android:paddingEnd="@dimen/dp_10"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:textColor="@color/MaterialRedA700"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

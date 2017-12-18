@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableHeaderTranslationContent="true"
+        app:srlEnablePreviewInEditMode="false"
+        app:srlHeaderHeight="150dp"
+        app:srlHeaderMaxDragRate="1">
+
+        <View
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:paddingTop="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/bt_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:background="@drawable/shape_userinfo_white"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/margin_10"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:paddingStart="@dimen/margin_15"
+                        android:paddingTop="@dimen/margin_10"
+                        android:text="@string/mine_header"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_header"
+                        android:layout_width="@dimen/margin_50"
+                        android:layout_height="@dimen/margin_50"
+                        app:placeholderImage="@mipmap/ic_launcher"
+                        app:roundAsCircle="false"
+                        app:roundingBorderColor="@color/app_bg"
+                        app:roundingBorderWidth="1dp"
+                        tool:background="@mipmap/ic_launcher" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:textColor="@color/MaterialGrey400"
+                        android:paddingStart="@dimen/margin_15"
+                        app:layout_constraintTop_toBottomOf="@+id/include" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/bt_nicekname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:padding="@dimen/dp_10"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:background="@drawable/shape_userinfo_white"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/margin_10"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:paddingStart="@dimen/margin_15"
+                        android:paddingTop="@dimen/margin_10"
+                        android:text="@string/mine_nickname"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/include"
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:id="@+id/tv_nicekname"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/margin_15"
+                        android:textColor="@color/MaterialGrey400"
+                        app:layout_constraintTop_toBottomOf="@+id/include" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/bt_company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:background="@drawable/shape_userinfo_white"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/margin_10"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:paddingStart="@dimen/margin_15"
+                        android:paddingTop="@dimen/margin_10"
+                        android:text="@string/mine_company_name"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/include"
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:id="@+id/tv_company_name"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/margin_15"
+                        app:layout_constraintTop_toBottomOf="@+id/include" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:background="@drawable/shape_userinfo_white"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/margin_10"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:paddingStart="@dimen/margin_15"
+                        android:paddingTop="@dimen/margin_10"
+                        android:text="@string/mine_phone"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/include"
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:id="@+id/tv_phone"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/MaterialGrey400"
+                        android:paddingStart="@dimen/margin_15"
+                        app:layout_constraintTop_toBottomOf="@+id/include" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/bt_telephone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:background="@drawable/shape_userinfo_white"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/margin_10"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:paddingStart="@dimen/margin_15"
+                        android:paddingTop="@dimen/margin_10"
+                        android:text="@string/mine_telephone"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/include"
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:id="@+id/tv_telephone"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/MaterialGrey400"
+                        android:paddingStart="@dimen/margin_15"
+                        app:layout_constraintTop_toBottomOf="@+id/include" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/bt_qq"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:background="@drawable/shape_userinfo_white"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/margin_10"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:paddingStart="@dimen/margin_15"
+                        android:paddingTop="@dimen/margin_10"
+                        android:text="@string/mine_qq"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/include"
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:id="@+id/tv_qq"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/MaterialGrey400"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/margin_15"
+                        app:layout_constraintTop_toBottomOf="@+id/include" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/action_bar_custom" />
+</android.support.constraint.ConstraintLayout>

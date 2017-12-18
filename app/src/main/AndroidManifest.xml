@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.exz.hscal.hscoal">
+    <!-- 通过GPS得到精确位置 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 通过网络得到粗略位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 访问网络，某些位置信息需要从网络服务器获取 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 访问WiFi状态，需要WiFi信息用于网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 修改WiFi状态，发起WiFi扫描, 需要WiFi信息用于网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 访问网络状态, 检测网络的可用性，需要网络运营商相关信息用于网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 访问网络的变化, 需要某些信息用于网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!-- 访问手机当前状态, 需要某些信息用于网络定位 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <application
+        android:name="com.exz.carprofitmuch.app.ToolApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".module.StartPageActivity"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--主-->
+        <activity
+            android:name=".module.MainActivity"
+            android:screenOrientation="portrait" />
+        <!--登录注册-->
+        <activity android:name=".module.login.LoginActivity"  android:screenOrientation="portrait"/>
+        <!--忘记密码-->
+        <activity android:name=".module.login.ForgetPwdActivity"  android:screenOrientation="portrait"/>
+        <!--网页-->
+        <activity android:name=".widget.MyWebActivity"  android:screenOrientation="portrait"/>
+        <!--我的资料-->
+        <activity android:name=".module.mine.UserInfoActivity"  android:screenOrientation="portrait"/>
+        <!--文本-->
+        <activity android:name=".module.mine.UserInfoTextActivity"  android:screenOrientation="portrait"/>
+        <!--地址管理-->
+        <activity android:name=".module.mine.address.AddressManagerActivity"  android:screenOrientation="portrait"/>
+        <!--选择收货地址-->
+        <activity android:name=".module.mine.address.AddressChooseActivity"  android:screenOrientation="portrait"/>
+        <!--地址添加-->
+        <activity android:name=".module.mine.address.AddressAddOrUpdateActivity"  android:screenOrientation="portrait"/>
+        <!--找煤炭-->
+        <activity android:name=".module.main.coal.SeekCoalActivity"  android:screenOrientation="portrait"/>
+        <!--找煤炭详情-->
+        <activity android:name=".module.main.coal.SeekCocalDetailActivity"  android:screenOrientation="portrait"/>
+        <!--搜索-->
+        <activity android:name=".module.main.SerachActivity"  android:screenOrientation="portrait"/>
+        <!--找煤炭-->
+        <activity android:name=".module.main.steel.SeekSteelActivity"  android:screenOrientation="portrait"/>
+        <!--找煤炭详情-->
+        <activity android:name=".module.main.steel.SeekSteelDetailActivity"  android:screenOrientation="portrait"/>
+        <!--发布卖品-->
+        <activity android:name=".module.main.release.ReleaseGoodsActivity"  android:screenOrientation="portrait"/>
+        <!--发布煤炭-->
+        <activity android:name=".module.main.release.ReleaseCocalActivity"  android:screenOrientation="portrait"/>
+        <!--有色金属-->
+        <activity android:name=".module.main.release.ReleaseSteelActivity"  android:screenOrientation="portrait"/>
+        <!--煤炭详情需求-->
+        <activity android:name=".module.demand.DemandCocalDetailAtivity"  android:screenOrientation="portrait"/>
+        <!--有色金属详情需求-->
+        <activity android:name=".module.demand.DemandSteelDetailAtivity"  android:screenOrientation="portrait"/>
+        <!--填写报价-->
+        <activity android:name=".module.demand.OfferActivity" android:screenOrientation="portrait"/>
+        <!--找货源-->
+        <activity android:name=".module.main.goods.SeekGoodsActivity" android:screenOrientation="portrait"/>
+        <!--找货源详情-->
+        <activity android:name=".module.main.goods.SeekGoodsDetailActivity" android:screenOrientation="portrait"/>
+        <!--确认订单-->
+        <activity android:name=".module.main.ConfirmOrderActivity" android:screenOrientation="portrait"/>
+        <!--我的订单-->
+        <activity android:name=".module.mine.myorder.MyOrderActivity" android:screenOrientation="portrait"/>
+        <!--煤炭详情-->
+        <activity android:name=".module.mine.myorder.OrderCocalDetailActivity" android:screenOrientation="portrait"/>
+        <!--金属详情-->
+        <activity android:name=".module.mine.myorder.OrderSteelDetailActivity" android:screenOrientation="portrait"/>
+        <!--询盘信息管理-->
+        <activity android:name=".module.mine.inquiry.InquiryManageActivity" android:screenOrientation="portrait"/>
+        <!--询盘订单煤炭详情-->
+        <activity android:name=".module.mine.inquiry.InquiryCocalDetailActivity" android:screenOrientation="portrait"/>
+        <!--询盘订单金属详情-->
+        <activity android:name=".module.mine.inquiry.InquirySteelDetailActivity" android:screenOrientation="portrait"/>
+        <!--报价列表-->
+        <activity android:name=".module.mine.inquiry.OfferListActivity" android:screenOrientation="portrait"/>
+        <!--我的卖家 询盘订单-->
+        <activity android:name=".module.mine.inquiryo.InquiryOrderActivity" android:screenOrientation="portrait"/>
+        <!--我的卖家 询盘订单煤炭详情-->
+        <activity android:name=".module.mine.inquiryo.InquiryOrderCocalDetailActivity" android:screenOrientation="portrait"/>
+        <!--我的卖家 询盘订单金属详情-->
+        <activity android:name=".module.mine.inquiryo.InquiryOrderSteelDetailActivity" android:screenOrientation="portrait"/>
+        <!--发布询价煤炭-->
+        <activity android:name=".module.main.enquiry.EnquiryCocalActivity" android:screenOrientation="portrait"/>
+        <!--发布询价金属-->
+        <activity android:name=".module.main.enquiry.EnquirySteelActivity" android:screenOrientation="portrait"/>
+        <!--发布询价金属-->
+        <activity android:name=".module.mine.goodsmanage.GoodsManageActivity" android:screenOrientation="portrait"/>
+        <!--我的卖家 商品管理 煤炭详情-->
+        <activity android:name=".module.mine.goodsmanage.GoodsManageCocalDetailActivity" android:screenOrientation="portrait"/>
+        <!--我的卖家 商品管理 金属详情-->
+        <activity android:name=".module.mine.goodsmanage.GoodsManageSteelDetailActivity" android:screenOrientation="portrait"/>
+        <!--我的卖家 已售订单-->
+        <activity android:name=".module.mine.sellorder.SellOrderActivity" android:screenOrientation="portrait"/>
+        <!--我的卖家 已售订单 煤炭详情-->
+        <activity android:name=".module.mine.sellorder.SellOrderCocalDetailActivity" android:screenOrientation="portrait"/>
+        <!--我的卖家 已售订单 金属详情-->
+        <activity android:name=".module.mine.sellorder.SellOrderSteelDetailActivity" android:screenOrientation="portrait"/>
+        <!--申请开发商-->
+        <activity android:name=".module.mine.ApplyForDevelopersActivity" android:screenOrientation="portrait"/>
+        <!--申请司机-->
+        <activity android:name=".module.mine.ApplyForDriverActivity" android:screenOrientation="portrait"/>
+        <!--设置-->
+        <activity android:name=".module.mine.SettingActivity"  android:screenOrientation="portrait"/>
+        <!--修改密码-->
+        <activity android:name=".module.login.EditPwdActivity"  android:screenOrientation="portrait"/>
+
+
+        <meta-data android:name="TencentMapSDK" android:value="SFLBZ-PSUWK-2FYJ3-AN6VI-ZJ6N6-TMBLT" />
+    </application>
+
+</manifest>

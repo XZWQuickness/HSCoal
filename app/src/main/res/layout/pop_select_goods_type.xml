@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_a7000000"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll_Animation"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/White"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="选择出货方式"
+            android:textColor="@color/MaterialGrey800"
+            android:textSize="16sp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingEnd="@dimen/margin_15"
+            android:layout_marginStart="@dimen/margin_15"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rb1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:paddingTop="@dimen/margin_15"
+                android:paddingBottom="@dimen/margin_15"
+                android:drawableEnd="@drawable/selector_goods_type_blue_pop"
+                android:text="物流配送"
+                android:textColor="@color/MaterialGrey600" />
+            <View android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/app_bg"
+                ></View>
+            <RadioButton
+                android:id="@+id/rb2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:paddingTop="@dimen/margin_15"
+                android:paddingBottom="@dimen/margin_15"
+                android:drawableEnd="@drawable/selector_goods_type_blue_pop"
+                android:text="到场自提"
+                android:textColor="@color/MaterialGrey600" />
+            <View android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/app_bg"
+                ></View>
+        </RadioGroup>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:layout_height="match_parent">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/margin_15"
+            android:textColor="@color/White"
+            android:background="@color/colorPrimary"
+            android:id="@+id/tv_submit"
+            android:text="下一步"
+            />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
