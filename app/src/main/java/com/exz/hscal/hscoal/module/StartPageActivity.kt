@@ -6,7 +6,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
-import com.exz.hscal.hscoal.bean.User
 import com.exz.hscal.hscoal.module.login.LoginActivity
 import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
@@ -61,9 +60,6 @@ class StartPageActivity : BaseActivity() {
                     val editor = preferences.edit()
                     editor.putBoolean("FirstRun", false)
                     editor.apply()
-                    //                    LogoActivity.this.startActivity(new Intent(
-                    //                            LogoActivity.this, FirstRunActivity.class));
-                    //                    finish();
                 } else {
 
 //                    type = 1
@@ -81,8 +77,8 @@ class StartPageActivity : BaseActivity() {
     fun login() {
         DataCtrlClass.loginNoDialog(PreferencesService.getAccountKey(this) ?: "", PreferencesService.getAccountValue(this) ?: "") {
             if (it != null) {
-                LoginActivity.loginSuccess(this, PreferencesService.getAccountKey(this) ?: "", PreferencesService.getAccountValue(this) ?: "", User(it))
-            }else{
+                LoginActivity.loginSuccess(this, PreferencesService.getAccountKey(this) ?: "", PreferencesService.getAccountValue(this) ?: "", it)
+            } else {
                 MyApplication.user = null
             }
             jump(type)

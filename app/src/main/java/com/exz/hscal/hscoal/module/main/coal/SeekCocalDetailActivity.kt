@@ -5,6 +5,7 @@ import android.support.v4.widget.NestedScrollView
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
+import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.module.main.ConfirmOrderActivity
 import com.exz.hscal.hscoal.module.main.ConfirmOrderActivity.Companion.Intent_Type
@@ -25,7 +26,7 @@ import org.jetbrains.anko.toast
  * 煤炭货源详情
  */
 
-class SeekCocalDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickListener {
+class SeekCocalDetailActivity : BaseActivity(), View.OnClickListener {
 
 
     private lateinit var pop: SelectGoodsTypePop
@@ -57,22 +58,19 @@ class SeekCocalDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
     override fun init() {
         super.init()
         initView()
+        initData()
+    }
+
+    private fun initData() {
+
+        DataCtrlClass.getSteelInfo(mContext, intent.getStringExtra(Intent_Id), {
+            if (it != null) {
+
+            }
+        })
     }
 
     private fun initView() {
-        refreshLayout.setOnMultiPurposeListener(object : SimpleMultiPurposeListener() {
-            override fun onHeaderPulling(header: RefreshHeader?, percent: Float, offset: Int, bottomHeight: Int, extendHeight: Int) {
-                mOffset = offset / 2
-                parallax.translationY = (mOffset - mScrollY).toFloat()
-                toolbar.alpha = 1 - Math.min(percent, 1f)
-            }
-
-            override fun onHeaderReleasing(header: RefreshHeader?, percent: Float, offset: Int, bottomHeight: Int, extendHeight: Int) {
-                mOffset = offset / 2
-                parallax.translationY = (mOffset - mScrollY).toFloat()
-                toolbar.alpha = 1 - Math.min(percent, 1f)
-            }
-        })
         mScrollView.setOnScrollChangeListener(object : NestedScrollView.OnScrollChangeListener {
             private var lastScrollY = 0
             private val h = DensityUtil.dp2px(170f)
@@ -93,10 +91,10 @@ class SeekCocalDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
         blurView.alpha = 0f
         pop = SelectGoodsTypePop(mContext, {
             if (!TextUtils.isEmpty(it)) {
-                startActivity(Intent(mContext, ConfirmOrderActivity::class.java).putExtra(Intent_Type,it))
+                startActivity(Intent(mContext, ConfirmOrderActivity::class.java).putExtra(ConfirmOrderActivity.Intent_Type_Address, it))
             }
         })
-        refreshLayout.setOnRefreshListener(this)
+//        refreshLayout.setOnRefreshListener(this)
         bt_submit.setOnClickListener(this)
     }
 
@@ -108,7 +106,8 @@ class SeekCocalDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
         }
     }
 
-    override fun onRefresh(refreshlayout: RefreshLayout?) {
-        refreshlayout?.finishRefresh()
+
+    companion object {
+        var Intent_Id = "id"
     }
 }

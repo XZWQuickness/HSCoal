@@ -9,18 +9,24 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.exz.carprofitmuch.config.Urls
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.adapter.CargoListAdapter
 import com.exz.hscal.hscoal.bean.BannersBean
 import com.exz.hscal.hscoal.bean.CargoListBean
+import com.exz.hscal.hscoal.bean.NewsBean
 import com.exz.hscal.hscoal.bean.TabEntity
 import com.exz.hscal.hscoal.imageloader.BannerImageLoader
 import com.exz.hscal.hscoal.module.main.coal.SeekCoalActivity
 import com.exz.hscal.hscoal.module.main.goods.SeekGoodsActivity
 import com.exz.hscal.hscoal.module.main.release.ReleaseGoodsActivity
 import com.exz.hscal.hscoal.module.main.steel.SeekSteelActivity
+import com.exz.hscal.hscoal.module.mine.ApplyForDevelopersActivity
+import com.exz.hscal.hscoal.utils.SZWUtils
+import com.exz.hscal.hscoal.widget.MyWebActivity
 import com.flyco.tablayout.listener.CustomTabEntity
+import com.flyco.tablayout.listener.OnTabSelectListener
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.scwang.smartrefresh.layout.util.DensityUtil
@@ -50,6 +56,9 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
     private lateinit var mAdapter: CargoListAdapter
     private lateinit var headerView: View
     private var mScrollY = 0
+
+    private var url = Urls.HotCoal
+    private var requestCheck = "HotCoal"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_main, container, false)
         return rootView
@@ -60,7 +69,35 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
         initLocation()
         initRecycler()
         initHeader()
+        initBanner()
+        initNews()
         refreshLayout.autoRefresh()
+    }
+
+    private fun initBanner() {
+        DataCtrlClass.bannerData(context) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                banners = it
+                //设置图片集合
+                headerView.banner.setImages(it)
+                //banner设置方法全部调用完毕时最后调用
+                headerView.banner.start()
+            }
+        }
+    }
+
+    private fun initNews() {
+        DataCtrlClass.TopNewsData(context) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                news = it
+                for (bean in news) {
+                    startWithList.add(bean.title)
+                }
+                headerView.marqueeView.startWithList(startWithList)
+            }
+        }
     }
 
     private fun initLocation() {
@@ -98,6 +135,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
             msg = "定位失败: " + reason
         }
     }
+
     private fun initBar() {
         toolbar.navigationIcon = null
         buttonBarLayout.alpha = 0f
@@ -110,23 +148,13 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
         StatusBarUtil.setPaddingSmart(activity, blurView)
     }
 
-    private var data = ArrayList<CargoListBean>()
     private fun initRecycler() {
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
         mAdapter = CargoListAdapter()
         headerView = View.inflate(context, R.layout.header_main, null)
         mAdapter.addHeaderView(headerView)
         mAdapter.setHeaderAndEmpty(true)
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
-        mAdapter.setNewData(data)
         mAdapter.loadMoreEnd()
         mRecyclerView.addItemDecoration(RecycleViewDivider(context, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(context, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
@@ -157,6 +185,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
     private val mIconSelectIds = intArrayOf(R.mipmap.ic_launcher, R.mipmap.ic_launcher)
     private val mTabEntities = java.util.ArrayList<CustomTabEntity>()
     private var banners = ArrayList<BannersBean>()
+    private var news = ArrayList<NewsBean>()
     private var startWithList = ArrayList<String>()
     private fun initHeader() {
         headerView.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
@@ -171,16 +200,32 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
         headerView.banner.setOnBannerListener(this)
         mTitles.indices.mapTo(mTabEntities) { TabEntity(mTitles[it], mIconSelectIds[it], mIconUnSelectIds[it]) }
         headerView.mainTabBar.setTabData(mTabEntities)
-        startWithList.add("煤炭货源")
-        startWithList.add("钢材货源")
-        startWithList.add("煤炭货源")
-        startWithList.add("钢材货源")
-        startWithList.add("煤炭货源")
-        headerView.marqueeView.startWithList(startWithList)
 
+        headerView.marqueeView.setOnItemClickListener { position, textView ->
+
+            startActivity(Intent(context, MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title, startWithList.get(position)).putExtra(MyWebActivity.Intent_Url, news.get(position).url))
+        }
+
+        headerView.mainTabBar.setOnTabSelectListener(object : OnTabSelectListener {
+            override fun onTabSelect(position: Int) {
+                if (position == 0) {
+                    url = Urls.HotCoal//煤炭
+                    requestCheck = "HotCoal"
+                    refreshLayout.autoRefresh()
+                } else {
+                    url = Urls.HotSteel//金属
+                    requestCheck = "HotSteel"
+                    refreshLayout.autoRefresh()
+                }
+            }
+
+            override fun onTabReselect(position: Int) {
+            }
+        })
     }
 
     override fun OnBannerClick(position: Int) {
+        startActivity(Intent(context, MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title, "Banner详情").putExtra(MyWebActivity.Intent_Url, banners.get(position).url))
     }
 
     override fun onClick(view: View) {
@@ -196,23 +241,67 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
                 startActivity(Intent(context, SeekGoodsActivity::class.java))
             }
             headerView.bt_tab_4 -> {//发布询价
-                startActivity(Intent(context, ReleaseGoodsActivity::class.java).putExtra(ReleaseGoodsActivity.Intent_Class_Name,"发布询价"))
+                //"供应商认证：-1未申请 0待审核，1已认证 2未通过",
+                when (MineFragment.businessAuthentication) {
+                    "-1" -> {
+                        startActivity(Intent(context, ApplyForDevelopersActivity::class.java))
+                    }
+                    "0" -> {
+                        toast("供应商认证审核中")
+                    }
+                    "1" -> {
+                        startActivity(Intent(context, ReleaseGoodsActivity::class.java).putExtra(ReleaseGoodsActivity.Intent_Class_Name, "发布询价"))
+                    }
+                    "2" -> {
+                        startActivity(Intent(context, ApplyForDevelopersActivity::class.java).putExtra(ApplyForDevelopersActivity.Intent_State, MineFragment.businessAuthentication))
+                    }
+                }
+
+
             }
             headerView.bt_tab_5 -> {//发布卖品
-                startActivity(Intent(context, ReleaseGoodsActivity::class.java).putExtra(ReleaseGoodsActivity.Intent_Class_Name,"发布卖品"))
+                //"供应商认证：-1未申请 0待审核，1已认证 2未通过",
+                when (MineFragment.businessAuthentication) {
+                    "-1" -> {
+                        startActivity(Intent(context, ApplyForDevelopersActivity::class.java))
+                    }
+                    "0" -> {
+                        toast("供应商认证审核中")
+                    }
+                    "1" -> {
+                        startActivity(Intent(context, ReleaseGoodsActivity::class.java).putExtra(ReleaseGoodsActivity.Intent_Class_Name, "发布卖品"))
+                    }
+                    "2" -> {
+                        startActivity(Intent(context, ApplyForDevelopersActivity::class.java).putExtra(ApplyForDevelopersActivity.Intent_State, MineFragment.businessAuthentication))
+                    }
+                }
+
             }
         }
     }
 
     override fun onRefresh(refreshlayout: RefreshLayout?) {
-        DataCtrlClass.bannerData(context, "1") {
+
+//        首页_成交量/成交金额
+        DataCtrlClass.TurnoverData(context) {
             refreshLayout?.finishRefresh()
             if (it != null) {
-                banners = it
-                //设置图片集合
-                headerView.banner.setImages(it)
-                //banner设置方法全部调用完毕时最后调用
-                headerView.banner.start()
+                headerView.coal_count.text = String.format(context.getString(R.string.main_coal), it.coalCount) + "吨"
+                headerView.coal_price.text = it.coalPrice + "元"
+                headerView.steel_count.text = String.format(context.getString(R.string.main_steel), it.steelCount) + "吨"
+                headerView.steel_price.text = it.steelPrice + "元"
+
+//                SZWUtils.matcherSearchTitle(  headerView.coal_count ,headerView.coal_count.text.toString().trim(),0,context.getString(R.string.main_coal).length,ContextCompat.getColor(context,R.color.MaterialGrey600))
+//                SZWUtils.matcherSearchTitle( headerView.coal_price,headerView.coal_price.text.toString().trim(),0,context.getString(R.string.main_coal).length,ContextCompat.getColor(context,R.color.MaterialGrey600))
+//                SZWUtils.matcherSearchTitle(headerView.steel_count,headerView.steel_count.text.toString().trim(),0,context.getString(R.string.main_steel).length,ContextCompat.getColor(context,R.color.MaterialGrey600))
+//                SZWUtils.matcherSearchTitle(headerView.steel_price,headerView.steel_price.text.toString().trim(),0,context.getString(R.string.main_steel).length,ContextCompat.getColor(context,R.color.MaterialGrey600))
+            }
+        }
+        DataCtrlClass.HomeHotData(context, url, requestCheck) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                mAdapter.setNewData(it)
+                mAdapter.loadMoreEnd()
             }
         }
     }

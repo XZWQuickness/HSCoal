@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.InputType
 import android.util.TypedValue
 import android.view.View
+import android.widget.TextView
 import com.alibaba.fastjson.JSON
 import com.bigkoo.pickerview.OptionsPickerView
 import com.bigkoo.pickerview.TimePickerView
@@ -14,7 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.adapter.ReleaseAdapter
-import com.exz.hscal.hscoal.app.ReleaseBean
+import com.exz.hscal.hscoal.bean.ReleaseBean
 import com.exz.hscal.hscoal.bean.CityBean
 import com.exz.hscal.hscoal.utils.RecycleViewDivider
 import com.exz.hscal.hscoal.utils.SZWUtils
@@ -25,6 +26,7 @@ import com.szw.framelibrary.imageloder.GlideImageLoader
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_release_cocale.*
+import org.jetbrains.anko.toast
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -69,6 +71,9 @@ class ReleaseSteelActivity : BaseActivity() {
         toolbar.setNavigationOnClickListener {
             finish()
         }
+
+        toolbar.inflateMenu(R.menu.menu_seek_cocal_detail_text)
+
         return false
     }
 

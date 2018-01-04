@@ -39,7 +39,13 @@ class DemandCocalDetailAtivity : BaseActivity(), View.OnClickListener {
     override fun init() {
         super.init()
         initView()
+        initData()
         bt_submit.setOnClickListener(this)
+    }
+
+    private fun initData() {
+
+
     }
 
     private fun initView() {
@@ -84,5 +90,10 @@ class DemandCocalDetailAtivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(mContext, OfferActivity::class.java))
             }
         }
+    }
+
+
+    companion object {
+        var Intent_Id="id"
     }
 }

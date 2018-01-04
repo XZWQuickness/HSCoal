@@ -1,4 +1,4 @@
-package com.exz.hscal.hscoal.app
+package com.exz.hscal.hscoal.bean
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
 

@@ -90,4 +90,8 @@ class DemandSteelDetailAtivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
+
+    companion object {
+        var Intent_Id="id"
+    }
 }

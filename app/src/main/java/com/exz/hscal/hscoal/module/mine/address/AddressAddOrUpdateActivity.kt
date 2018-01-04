@@ -42,18 +42,19 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
     private var optionsAddress3 = 0
     private var name = ""
     private var phone = ""
+    private var zipCode = ""
     private var address = ""
     private var detail = ""
     private var cityId = ""
     private var provinceId = ""
     private var districtId = ""
     private var addressId = ""
+    private var state = "1"
     private var requestCheck = ""
-    private var url = ""
+    private var url = Urls.SubmitShippingAddress
 
-    private var addressType = address_type_3
     override fun initToolbar(): Boolean {
-        mTitle.text = getString(if (addressType == address_type_3) R.string.address_manager_add else R.string.address_update_name)
+        mTitle.text = getString(if (TextUtils.isEmpty(intent.getStringExtra(Intent_AddressId))) R.string.address_manager_add else R.string.address_update_name)
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
@@ -66,10 +67,10 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
         actionView.setOnClickListener {
             name = ed_userName.text.toString().trim()
             phone = ed_userPhone.text.toString().trim()
+            zipCode = ed_postal_code.text.toString().trim()
             address = bt_address.text.toString().trim()
             detail = ed_addressDetail.text.toString().trim()
-            url= Urls.AddAddress
-            if(addressType==address_type_3) {
+            if (TextUtils.isEmpty(intent.getStringExtra(Intent_AddressId))) {
 
                 if (TextUtils.isEmpty(name)) {
                     toast(mContext.getString(R.string.address_hint_userName))
@@ -80,6 +81,10 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
                     toast(mContext.getString(R.string.address_hint_userPhone))
                     return@setOnClickListener
                 }
+                if (TextUtils.isEmpty(zipCode)) {
+                    toast(mContext.getString(R.string.input_postal_code))
+                    return@setOnClickListener
+                }
                 if (TextUtils.isEmpty(address)) {
                     toast(mContext.getString(R.string.address_hint_area))
                     return@setOnClickListener
@@ -88,15 +93,21 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
                     toast(mContext.getString(R.string.address_hint_area_detail))
                     return@setOnClickListener
                 }
-                requestCheck =EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, MyApplication.salt).toLowerCase()
-            }else{
-                url= Urls.ModifyAddAddress
-                requestCheck =EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+addressId, MyApplication.salt).toLowerCase()
+                requestCheck = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, MyApplication.salt).toLowerCase()
+            } else {
+                requestCheck = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, MyApplication.salt).toLowerCase()
             }
-            DataCtrlClass.AddAddressData(mContext, name, phone, provinceId, cityId, districtId, detail,addressId,url, requestCheck,{
-                //执行保存操作
-                setResult(Activity.RESULT_OK)
-                onBackPressed()
+
+            state = if (bt_setDefault.isChecked) "1" else "0"
+
+            DataCtrlClass.AddAddressData(mContext, name, phone, zipCode, provinceId, cityId, districtId, detail, addressId, url, state, requestCheck, {
+                if(it!=null){
+                    //执行保存操作
+                    setResult(Activity.RESULT_OK)
+                    onBackPressed()
+                }
+
+
             })
 
 
@@ -110,7 +121,6 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
         initData()
         initPicker()
         initEvent()
-        initBt()
     }
 
     private fun initPicker() {
@@ -175,41 +185,42 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
     }
 
     private fun initData() {
-        addressType = intent.getStringExtra(Intent_AddressType)
-        val data = intent.getSerializableExtra(Intent_AddressData)
-        if (data != null) {
-            data as AddressBean
-            addressId=data.id
-            ed_userName.setText(data.name)
-            ed_userPhone.setText(data.phone)
-            bt_address.text = String.format(data.province + data.city + data.district)
-            ed_addressDetail.setText(data.detail)
+        if(intent.hasExtra(Intent_AddressId)&&!TextUtils.isEmpty(Intent_AddressId)){
+            bt_delete.visibility=View.VISIBLE
+        addressId = intent.getStringExtra(Intent_AddressId)
+        if (!TextUtils.isEmpty(Intent_AddressId)) {
+            DataCtrlClass.AddressInfoData(mContext, addressId, {
+                if (it != null) {
+                    ed_userName.setText(it.userName)
+                    ed_userPhone.setText(it.mobile)
+                    ed_postal_code.setText(it.zipCode)
+                    ed_addressDetail.setText(it.address)
+                    bt_address.text = String.format(it.provinceCity)
+                    name=it.userName
+                    phone=it.mobile
+                    zipCode=it.zipCode
+                    provinceId=it.provinceId
+                    cityId=it.cityId
+                    districtId=it.areaId
+                    address=it.address
+                    state=it.state
+                    bt_setDefault.isChecked=it.isDefault()
+                }
+
+            })
         }
-
-    }
-
-    /**
-     * 初始化 可操作按钮
-     */
-    private fun initBt() {
-        when (addressType) {
-            address_type_1 -> {
-                bt_setDefault.visibility = View.GONE
-                bt_delete.visibility = View.VISIBLE
-            }
-            address_type_2 -> {
-                bt_setDefault.visibility = View.GONE
-                bt_delete.visibility = View.VISIBLE
-            }
-            address_type_3 -> {
-                bt_setDefault.visibility = View.GONE
-                bt_delete.visibility = View.GONE
-            }
+        }else{
+            bt_delete.visibility=View.GONE
         }
     }
+
 
 
     private fun initEvent() {
+        if(intent.hasExtra(INTENT_IS_DELETE)){
+            bt_setDefault.visibility=if(intent.getBooleanExtra(INTENT_IS_DELETE,true)) View.VISIBLE else  View.GONE
+        }
+
         toolbar.setNavigationOnClickListener { finish() }
         bt_address.setOnClickListener(this)
         bt_delete.setOnClickListener(this)
@@ -224,9 +235,12 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
         when (p0) {
             bt_delete -> {
                 DialogUtils.delete(mContext) {
-                    DataCtrlClass.editAddressState(mContext, "") {
-                        setResult(Activity.RESULT_OK)
-                        onBackPressed()
+                    DataCtrlClass.deleteAddressData(mContext, addressId) {
+                        if(it!=null){
+                            setResult(Activity.RESULT_OK)
+                            onBackPressed()
+                        }
+
                     }
                 }
             }
@@ -243,10 +257,7 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
     }
 
     companion object {
-        var Intent_AddressType = "Intent_AddressType"
-        var Intent_AddressData = "Intent_AddressData"
-        val address_type_1 = "can_delete_default" //可删除 可设置默认地址
-        val address_type_2 = "can_delete"// 可删除
-        val address_type_3 = "can_default"// 可设置默认地址
+        var Intent_AddressId = "shippingAddressId"
+        var INTENT_IS_DELETE = "is_delete"
     }
 }

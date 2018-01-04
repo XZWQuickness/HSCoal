@@ -11,6 +11,8 @@ import com.exz.carprofitmuch.config.Urls
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.bean.AddressBean
+import com.exz.hscal.hscoal.module.mine.address.AddressAddOrUpdateActivity.Companion.INTENT_IS_DELETE
+import com.exz.hscal.hscoal.utils.DialogUtils
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.exz.hscoal.adapter.AddressManagerAdapter
 import com.szw.framelibrary.base.BaseActivity
@@ -59,7 +61,7 @@ class AddressManagerActivity : BaseActivity() {
         toolbar.setNavigationOnClickListener { finish() }
         bt_submit.setOnClickListener {
             val intent = Intent(this, AddressAddOrUpdateActivity::class.java)
-            intent.putExtra(AddressAddOrUpdateActivity.Intent_AddressType, AddressAddOrUpdateActivity.address_type_3)
+            intent.putExtra(INTENT_IS_DELETE,mAdapter.data.size>0)
             startActivityForResult(intent, 100)
         }
     }
@@ -67,7 +69,6 @@ class AddressManagerActivity : BaseActivity() {
     private fun initRecycler() {
         mAdapter = AddressManagerAdapter()
         mAdapter.bindToRecyclerView(mRecyclerView)
-//        mAdapter.setOnLoadMoreListener(this,mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 10, ContextCompat.getColor(mContext, R.color.app_bg)))
         mRecyclerView.addOnItemTouchListener(object : OnItemChildClickListener() {
@@ -76,17 +77,19 @@ class AddressManagerActivity : BaseActivity() {
                 when (view.id) {
                     R.id.bt_edit -> {
                         val intent = Intent(mContext, AddressAddOrUpdateActivity::class.java)
-                        intent.putExtra(AddressAddOrUpdateActivity.Intent_AddressData, mAdapter.data[position])
-                        intent.putExtra(AddressAddOrUpdateActivity.Intent_AddressType, if (mAdapter.data[position].isDefault()) AddressAddOrUpdateActivity.address_type_2 else AddressAddOrUpdateActivity.address_type_1)
+                        intent.putExtra(AddressAddOrUpdateActivity.Intent_AddressId, mAdapter.data[position].id)
+                        intent.putExtra(INTENT_IS_DELETE,true)
                         startActivityForResult(intent, 100)
                     }
-                    R.id.bt_delete -> {
-                        DataCtrlClass.EditAddressData(mContext, entity.id, Urls.AddressDelete) {
+                    R.id.bt_delete -> {//删除
+                        DialogUtils.delete(mContext) {
+                            DataCtrlClass.deleteAddressData(mContext,  entity.id) {
                                 initData()
+                            }
                         }
                     }
-                    R.id.radioButton -> {
-                        DataCtrlClass.EditAddressData(mContext, entity.id, Urls.AddressDefault) {
+                    R.id.radioButton -> {//设置默认地址
+                        DataCtrlClass.setAddressData(mContext, entity.id) {
                                 initData()
 
                         }

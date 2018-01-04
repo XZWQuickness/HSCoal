@@ -25,9 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".module.StartPageActivity"
-            >
+        <activity android:name=".module.StartPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,96 +37,191 @@
             android:name=".module.MainActivity"
             android:screenOrientation="portrait" />
         <!--登录注册-->
-        <activity android:name=".module.login.LoginActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.login.LoginActivity"
+            android:screenOrientation="portrait" />
         <!--忘记密码-->
-        <activity android:name=".module.login.ForgetPwdActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.login.ForgetPwdActivity"
+            android:screenOrientation="portrait" />
         <!--网页-->
-        <activity android:name=".widget.MyWebActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".widget.MyWebActivity"
+            android:screenOrientation="portrait" />
         <!--我的资料-->
-        <activity android:name=".module.mine.UserInfoActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.UserInfoActivity"
+            android:screenOrientation="portrait" />
         <!--文本-->
-        <activity android:name=".module.mine.UserInfoTextActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.UserInfoTextActivity"
+            android:screenOrientation="portrait" />
         <!--地址管理-->
-        <activity android:name=".module.mine.address.AddressManagerActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.address.AddressManagerActivity"
+            android:screenOrientation="portrait" />
         <!--选择收货地址-->
-        <activity android:name=".module.mine.address.AddressChooseActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.address.AddressChooseActivity"
+            android:screenOrientation="portrait" />
         <!--地址添加-->
-        <activity android:name=".module.mine.address.AddressAddOrUpdateActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.address.AddressAddOrUpdateActivity"
+            android:screenOrientation="portrait" />
         <!--找煤炭-->
-        <activity android:name=".module.main.coal.SeekCoalActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.coal.SeekCoalActivity"
+            android:screenOrientation="portrait" />
         <!--找煤炭详情-->
-        <activity android:name=".module.main.coal.SeekCocalDetailActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.coal.SeekCocalDetailActivity"
+            android:screenOrientation="portrait" />
         <!--搜索-->
-        <activity android:name=".module.main.SerachActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.SerachActivity"
+            android:screenOrientation="portrait" />
         <!--找煤炭-->
-        <activity android:name=".module.main.steel.SeekSteelActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.steel.SeekSteelActivity"
+            android:screenOrientation="portrait" />
         <!--找煤炭详情-->
-        <activity android:name=".module.main.steel.SeekSteelDetailActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.steel.SeekSteelDetailActivity"
+            android:screenOrientation="portrait" />
         <!--发布卖品-->
-        <activity android:name=".module.main.release.ReleaseGoodsActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.release.ReleaseGoodsActivity"
+            android:screenOrientation="portrait" />
         <!--发布煤炭-->
-        <activity android:name=".module.main.release.ReleaseCocalActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.release.ReleaseCocalActivity"
+            android:screenOrientation="portrait" />
         <!--有色金属-->
-        <activity android:name=".module.main.release.ReleaseSteelActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.release.ReleaseSteelActivity"
+            android:screenOrientation="portrait" />
         <!--煤炭详情需求-->
-        <activity android:name=".module.demand.DemandCocalDetailAtivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.demand.DemandCocalDetailAtivity"
+            android:screenOrientation="portrait" />
         <!--有色金属详情需求-->
-        <activity android:name=".module.demand.DemandSteelDetailAtivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.demand.DemandSteelDetailAtivity"
+            android:screenOrientation="portrait" />
         <!--填写报价-->
-        <activity android:name=".module.demand.OfferActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.demand.OfferActivity"
+            android:screenOrientation="portrait" />
         <!--找货源-->
-        <activity android:name=".module.main.goods.SeekGoodsActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.goods.SeekGoodsActivity"
+            android:screenOrientation="portrait" />
         <!--找货源详情-->
-        <activity android:name=".module.main.goods.SeekGoodsDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.goods.SeekGoodsDetailActivity"
+            android:screenOrientation="portrait" />
         <!--确认订单-->
-        <activity android:name=".module.main.ConfirmOrderActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.ConfirmOrderActivity"
+            android:screenOrientation="portrait" />
         <!--我的订单-->
-        <activity android:name=".module.mine.myorder.MyOrderActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.myorder.MyOrderActivity"
+            android:screenOrientation="portrait" />
         <!--煤炭详情-->
-        <activity android:name=".module.mine.myorder.OrderCocalDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.myorder.OrderCocalDetailActivity"
+            android:screenOrientation="portrait" />
         <!--金属详情-->
-        <activity android:name=".module.mine.myorder.OrderSteelDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.myorder.OrderSteelDetailActivity"
+            android:screenOrientation="portrait" />
         <!--询盘信息管理-->
-        <activity android:name=".module.mine.inquiry.InquiryManageActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.inquiry.InquiryManageActivity"
+            android:screenOrientation="portrait" />
         <!--询盘订单煤炭详情-->
-        <activity android:name=".module.mine.inquiry.InquiryCocalDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.inquiry.InquiryCocalDetailActivity"
+            android:screenOrientation="portrait" />
         <!--询盘订单金属详情-->
-        <activity android:name=".module.mine.inquiry.InquirySteelDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.inquiry.InquirySteelDetailActivity"
+            android:screenOrientation="portrait" />
         <!--报价列表-->
-        <activity android:name=".module.mine.inquiry.OfferListActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.inquiry.OfferListActivity"
+            android:screenOrientation="portrait" />
         <!--我的卖家 询盘订单-->
-        <activity android:name=".module.mine.inquiryo.InquiryOrderActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.inquiryo.InquiryOrderActivity"
+            android:screenOrientation="portrait" />
         <!--我的卖家 询盘订单煤炭详情-->
-        <activity android:name=".module.mine.inquiryo.InquiryOrderCocalDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.inquiryo.InquiryOrderCocalDetailActivity"
+            android:screenOrientation="portrait" />
         <!--我的卖家 询盘订单金属详情-->
-        <activity android:name=".module.mine.inquiryo.InquiryOrderSteelDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.inquiryo.InquiryOrderSteelDetailActivity"
+            android:screenOrientation="portrait" />
         <!--发布询价煤炭-->
-        <activity android:name=".module.main.enquiry.EnquiryCocalActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.enquiry.EnquiryCocalActivity"
+            android:screenOrientation="portrait" />
         <!--发布询价金属-->
-        <activity android:name=".module.main.enquiry.EnquirySteelActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.main.enquiry.EnquirySteelActivity"
+            android:screenOrientation="portrait" />
         <!--发布询价金属-->
-        <activity android:name=".module.mine.goodsmanage.GoodsManageActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.goodsmanage.GoodsManageActivity"
+            android:screenOrientation="portrait" />
         <!--我的卖家 商品管理 煤炭详情-->
-        <activity android:name=".module.mine.goodsmanage.GoodsManageCocalDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.goodsmanage.GoodsManageCocalDetailActivity"
+            android:screenOrientation="portrait" />
         <!--我的卖家 商品管理 金属详情-->
-        <activity android:name=".module.mine.goodsmanage.GoodsManageSteelDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.goodsmanage.GoodsManageSteelDetailActivity"
+            android:screenOrientation="portrait" />
         <!--我的卖家 已售订单-->
-        <activity android:name=".module.mine.sellorder.SellOrderActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.sellorder.SellOrderActivity"
+            android:screenOrientation="portrait" />
         <!--我的卖家 已售订单 煤炭详情-->
-        <activity android:name=".module.mine.sellorder.SellOrderCocalDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.sellorder.SellOrderCocalDetailActivity"
+            android:screenOrientation="portrait" />
         <!--我的卖家 已售订单 金属详情-->
-        <activity android:name=".module.mine.sellorder.SellOrderSteelDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.sellorder.SellOrderSteelDetailActivity"
+            android:screenOrientation="portrait" />
         <!--申请开发商-->
-        <activity android:name=".module.mine.ApplyForDevelopersActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.ApplyForDevelopersActivity"
+            android:screenOrientation="portrait" />
         <!--申请司机-->
-        <activity android:name=".module.mine.ApplyForDriverActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.ApplyForDriverActivity"
+            android:screenOrientation="portrait" />
         <!--设置-->
-        <activity android:name=".module.mine.SettingActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mine.SettingActivity"
+            android:screenOrientation="portrait" />
         <!--修改密码-->
-        <activity android:name=".module.login.EditPwdActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.login.EditPwdActivity"
+            android:screenOrientation="portrait" />
+        <!--显示图片-->
+        <activity
+            android:name="com.szw.framelibrary.view.preview.PreviewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"  />
 
 
-        <meta-data android:name="TencentMapSDK" android:value="SFLBZ-PSUWK-2FYJ3-AN6VI-ZJ6N6-TMBLT" />
+        <meta-data
+            android:name="TencentMapSDK"
+            android:value="SFLBZ-PSUWK-2FYJ3-AN6VI-ZJ6N6-TMBLT" />
     </application>
 
 </manifest>

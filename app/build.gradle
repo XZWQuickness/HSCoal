@@ -37,4 +37,7 @@ dependencies {
     compile "io.objectbox:objectbox-kotlin:$objectboxVersion"
     kapt "io.objectbox:objectbox-processor:$objectboxVersion"
     implementation files('libs/TencentLocationSDK_v5.0.1.jar')
+
+    //图片压缩
+    compile 'top.zibin:Luban:+'
 }

@@ -54,11 +54,13 @@
     <string name="address_choose_delete">删除地址</string>
     <string name="address_manager_add">新增地址</string>
     <string name="address_userName">收货人</string>
-    <string name="address_userPhone">手机号码</string>
+    <string name="postal_code">邮政编码</string>
     <string name="address_area">所在地区</string>
     <string name="address_area_detail">详细地址</string>
     <string name="address_hint_userName">请输入收货人姓名</string>
+    <string name="address_userPhone">手机号</string>
     <string name="address_hint_userPhone">请输入收货人手机号</string>
+    <string name="input_postal_code">请输入邮政编码</string>
     <string name="address_hint_area">请选择所在地</string>
     <string name="address_hint_area_detail">请输入详细地址</string>
     <string name="address_update_name">编辑地址</string>
@@ -72,7 +74,7 @@
     <string name="delivery_type">交货方式</string>
     <string name="trade_name">品名</string>
     <string name="texture">材质</string>
-    <string name="coal_type">煤种</string>
+    <string name="coal_type">煤炭</string>
     <string name="steel_type">类别</string>
     <string name="metals">有色金属</string>
     <string name="origin">产地:%s</string>

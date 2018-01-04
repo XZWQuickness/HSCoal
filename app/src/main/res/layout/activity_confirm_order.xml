@@ -37,12 +37,19 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/llAddress"
+                    >
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@mipmap/icon_score_store_confirm_line" />
 
                 <RelativeLayout
+                    android:id="@+id/rl_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/White"
@@ -69,7 +76,8 @@
                             android:layout_marginTop="@dimen/dp_4"
                             android:textColor="@color/MaterialGrey600"
                             android:textSize="@dimen/sp_14"
-                            android:visibility="gone" />
+                            android:visibility="gone"
+                            />
                     </LinearLayout>
 
                     <ImageView
@@ -87,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@mipmap/icon_score_store_confirm_line" />
-
+                </LinearLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -124,7 +132,7 @@
 
 
                         <TextView
-                            android:id="@+id/tvUnit"
+                            android:id="@+id/price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -157,7 +165,7 @@
                                 android:layout_toStartOf="@+id/count"
                                 android:src="@mipmap/icon_minus" />
                             <com.flyco.roundview.RoundTextView
-                                android:id="@+id/count"
+                                android:id="@+id/tvCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
@@ -219,6 +227,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
+                    android:id="@+id/ed_remark"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/MaterialGrey600"
                     android:hint="请输入备注(选填)"

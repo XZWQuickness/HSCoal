@@ -6,6 +6,7 @@ import android.support.v4.widget.NestedScrollView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.module.login.LoginActivity
 import com.exz.hscal.hscoal.module.login.LoginActivity.Companion.RESULT_LOGIN_CANCELED
@@ -26,9 +27,11 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener
 import com.scwang.smartrefresh.layout.util.DensityUtil
 import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.MyBaseFragment
+import com.szw.framelibrary.config.PreferencesService
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.fragment_mine.*
+import org.jetbrains.anko.toast
 
 /**
  * Created by pc on 2017/12/4.
@@ -39,6 +42,8 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
 
     private var mOffset = 0
     private var mScrollY = 0
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_mine, container, false)
         return rootView
@@ -46,6 +51,7 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
 
     override fun initView() {
         initBar()
+
         refreshLayout.setOnRefreshListener(this)
     }
 
@@ -87,6 +93,15 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
         })
         buttonBarLayout.alpha = 0f
         blurView.alpha = 0f
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!MyApplication.checkUserLogin()) {
+           nickname.text="未登录"
+            return
+        }
+        refreshLayout.autoRefresh()
     }
 
     override fun initEvent() {
@@ -153,14 +168,22 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
                     startActivityForResult(Intent(context, LoginActivity::class.java), RESULT_LOGIN_CANCELED)
                     return
                 }
-                startActivity(Intent(context, ApplyForDevelopersActivity::class.java))
+                if(businessAuthentication.equals("0")||businessAuthentication.equals("1")){ //审核中 审核通过
+                    context.toast(if(businessAuthentication.equals("0")) "供应商审核中" else "供应商已认证")
+                    return
+                }
+                startActivity(Intent(context, ApplyForDevelopersActivity::class.java).putExtra(ApplyForDevelopersActivity.Intent_State,businessAuthentication))
             }
             R.id.tv_applyfor_driver -> {//申请司机
                 if (!MyApplication.checkUserLogin()) {
                     startActivityForResult(Intent(context, LoginActivity::class.java), RESULT_LOGIN_CANCELED)
                     return
                 }
-                startActivity(Intent(context, ApplyForDriverActivity::class.java))
+                if(driverAuthentication.equals("0")||businessAuthentication.equals("1")){ //审核中 审核通过
+                    context.toast(if(driverAuthentication.equals("0")) "司机认证审核中" else "司机认证已认证")
+                    return
+                }
+                startActivity(Intent(context, ApplyForDriverActivity::class.java).putExtra(ApplyForDriverActivity.Intent_State,driverAuthentication))
             }
             R.id.bt_manage_address -> {//管理收货地址
                 if (!MyApplication.checkUserLogin()) {
@@ -181,8 +204,26 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
         }
     }
 
+    private fun getUserInfo() {
+        if (!MyApplication.checkUserLogin()) {
+            startActivityForResult(Intent(context, LoginActivity::class.java), RESULT_LOGIN_CANCELED)
+                nickname.text="未登录"
+            return
+        }
+        DataCtrlClass.getUserInfo(context) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                img_head.setImageURI(it.headImg)
+                nickname.text=it.nickname
+                businessAuthentication=it.businessAuthentication
+                driverAuthentication=it.driverAuthentication
+            }
 
+        }
+    }
     companion object {
+        var businessAuthentication=""  //供应商认证：-1未申请 0待审核，1已认证 2未通过"
+        var driverAuthentication="" //司机认证：-1未申请 0待审核，1已认证 2未通过"
         fun newInstance(): MineFragment {
             val bundle = Bundle()
             val fragment = MineFragment()
@@ -193,5 +234,6 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
 
     override fun onRefresh(refreshlayout: RefreshLayout?) {
         refreshlayout?.finishRefresh()
+        getUserInfo()
     }
 }

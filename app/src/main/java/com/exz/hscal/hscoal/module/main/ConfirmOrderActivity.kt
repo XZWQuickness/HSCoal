@@ -1,14 +1,22 @@
 package com.exz.hscal.hscoal.module.main
 
+import android.app.Activity
 import android.content.Intent
+import android.text.TextUtils
 import android.view.View
+import android.view.WindowManager
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.DeviceUtils
+import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.module.mine.address.AddressChooseActivity
+import com.exz.hscal.hscoal.module.mine.myorder.MyOrderActivity
 import com.exz.hscal.hscoal.utils.DialogUtils
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_confirm_order.*
+import org.jetbrains.anko.toast
 
 /**
  * Created by pc on 2017/12/12.
@@ -17,6 +25,14 @@ import kotlinx.android.synthetic.main.activity_confirm_order.*
 
 class ConfirmOrderActivity : BaseActivity(), View.OnClickListener {
 
+    private var type = ""//类型：1煤炭 2有色金属
+    private var objectId = ""//煤炭、有色金属货源id
+    private var deliveryWayId = ""//交货方式id
+    private var shippingAddressId = ""//配送地址id
+    private var count = ""//购买数量
+    private var remark = ""//备注说明
+
+    private var residualCount = 0
 
     override fun initToolbar(): Boolean {
         mTitle.text = "确认订单"
@@ -33,6 +49,7 @@ class ConfirmOrderActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun setInflateId(): Int {
+        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         return R.layout.activity_confirm_order
     }
 
@@ -43,39 +60,114 @@ class ConfirmOrderActivity : BaseActivity(), View.OnClickListener {
 
     private fun initView() {
         add.setOnClickListener(this)
-        count.setOnClickListener(this)
+        tvCount.setOnClickListener(this)
         minus.setOnClickListener(this)
         tv_name.setOnClickListener(this)
+        llAddress.setOnClickListener(this)
+        bt_submit.setOnClickListener(this)
+        type = intent.getStringExtra(Intent_Type)
+        objectId = intent.getStringExtra(Intent_Id)
+        deliveryWayId = intent.getStringExtra(Intent_Type_Address)
+        if (intent.getStringExtra(Intent_Type_Address).equals("1")) {//物流配送
+            llAddress.visibility = View.VISIBLE
+
+            initAddress()
+
+        } else {//到场自提
+            llAddress.visibility = View.GONE
+        }
+        getConfirmOrder()
+    }
+
+    private fun getConfirmOrder() {
+        //获取确认订单信息
+        DataCtrlClass.ConfirmOrderData(mContext, type, objectId, {
+            if (it != null) {
+                img.setImageURI(it.data?.image)
+                tvTitle.text = it.data?.name
+                price.text = it.data?.price
+                residualCount = it.data?.residualCount?.toInt() ?: 0
+
+            }
+        })
+    }
+
+    private fun initAddress() {
+        DataCtrlClass.confirmOrderShippingAddress(mContext, shippingAddressId, {
+            if (it != null) {
+                tv_address.visibility = View.VISIBLE
+                tv_name.text = it.data?.userName + it.data?.mobile
+                tv_address.text = it.data?.address ?: ""
+                shippingAddressId=it.data?.id ?:""
+            } else {
+                tv_address.visibility = View.GONE
+            }
+        })
     }
 
     override fun onClick(p0: View) {
-        var mCount = count.text.toString().trim().toLong()
+        var mCount = tvCount.text.toString().trim().toLong()
         when (p0) {
-            tv_name -> {
-                startActivity(Intent(mContext, AddressChooseActivity::class.java))
+            llAddress -> {
+                startActivityForResult(Intent(mContext, AddressChooseActivity::class.java),100)
             }
             add -> {
-                mCount++
-                count.text = mCount.toString()
+                if (residualCount > mCount) {
+                    mCount++
+                } else {
+                    mCount = residualCount.toLong()
+                }
+                tvCount.text = mCount.toString()
 
             }
-            count -> {
-                DialogUtils.changeNum(mContext, mCount, {
+            tvCount -> {
+                DialogUtils.changeNum(mContext, mCount, residualCount, {
                     if (it != null) {
-                        count.text = it.toString()
+                        tvCount.text = it.toString()
                     }
                 })
             }
             minus -> {
                 if (mCount > 1) {
                     mCount--
-                    count.text = mCount.toString()
+                    tvCount.text = mCount.toString()
                 }
+            }
+            bt_submit -> { //生成订单
+                count = tvCount.text.toString().trim()
+                remark = ed_remark.text.toString().trim()
+                if (deliveryWayId.equals("1")) {//交货方式 1 物流配送
+                    if (TextUtils.isEmpty(shippingAddressId)) {
+                        startActivityForResult(Intent(mContext, AddressChooseActivity::class.java),100)
+                        return
+                    }
+                }
+
+                DataCtrlClass.GenerateOrder(mContext,type,objectId,deliveryWayId,shippingAddressId,count,remark,{
+                    if(it!=null){
+                        finish()
+                        startActivity(Intent(mContext,MyOrderActivity::class.java))
+                    }
+                })
+
             }
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && data != null && data.hasExtra(Intent_Address_Id)) {
+            shippingAddressId = data.getStringExtra(Intent_Address_Id)
+            llAddress.visibility = View.VISIBLE
+            initAddress()
+        }
+
+    }
+
     companion object {
-        var Intent_Type = "intent_type" // 1 物流配送 2 到场自提
+        var Intent_Type_Address = "deliveryWayId" //交货方式 1 物流配送 2 到场自提
+        var Intent_Address_Id = "shippingAddressId" // 地址id
+        var Intent_Type = "type" //类型：1煤炭 2有色金属
+        var Intent_Id = "objectId" // 煤炭、有色金属货源id
     }
 }

@@ -1,4 +1,5 @@
 package com.exz.hscal.hscoal.module.login
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
@@ -8,10 +9,11 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.exz.carprofitmuch.config.Urls
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
-import com.exz.hscal.hscoal.bean.User
 import com.exz.hscal.hscoal.widget.CustomViewpager
+import com.exz.hscal.hscoal.widget.MyWebActivity
 import com.szw.framelibrary.base.MyBaseFragment
 import com.szw.framelibrary.config.PreferencesService
 import com.szw.framelibrary.observer.SmsContentObserver
@@ -92,7 +94,7 @@ class RegisterFragment : MyBaseFragment(), View.OnFocusChangeListener, TextWatch
             DataCtrlClass.register(context, ed_phone.text.toString(), ed_code.text.toString(), ed_pwd.text.toString(), ed_pwd.text.toString(), "") {
                 if (it != null){
                     ed_phone.postDelayed({
-                        LoginActivity.loginSuccess(activity, ed_phone.text.toString(), ed_pwd.text.toString(), User(it))
+                        LoginActivity.loginSuccess(activity, ed_phone.text.toString(), ed_pwd.text.toString(), it)
                     },500)
                 }
             }
@@ -169,6 +171,8 @@ class RegisterFragment : MyBaseFragment(), View.OnFocusChangeListener, TextWatch
             }
             bt_protocol -> {
                 //协议
+                startActivity(Intent(context, MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title, "用户协议").putExtra(MyWebActivity.Intent_Url,Urls.Information))
+
             }
             else -> {
             }

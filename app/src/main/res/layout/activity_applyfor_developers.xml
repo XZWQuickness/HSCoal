@@ -196,6 +196,7 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="店铺logo"
+                        android:id="@+id/tvLogo"
                         android:paddingStart="@dimen/dp_10"
                         android:layout_centerVertical="true"
                         android:textColor="@color/MaterialGrey600"
@@ -229,7 +230,37 @@
                     </LinearLayout>
 
                 </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/bt_company_name"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="@color/White"
+                    android:gravity="center_vertical">
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="公司名称"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/include"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:id="@+id/tv_company_name"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/margin_15"
+                        android:textColor="@color/MaterialGrey600"
+                        />
+                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/bt_shop_phone"
                     android:layout_marginTop="1dp"
@@ -244,7 +275,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="店铺电话"
+                        android:text="公司电话"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintTop_toBottomOf="@+id/include"
@@ -276,7 +307,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="店铺邮箱"
+                        android:text="公司邮箱"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintTop_toBottomOf="@+id/include"
@@ -293,12 +324,14 @@
                         android:textColor="@color/MaterialGrey600"
                         />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/bt_company_location"
                     android:layout_marginTop="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
+                    android:visibility="gone"
                     android:background="@color/White"
                     android:gravity="center_vertical">
 
@@ -366,6 +399,7 @@
                     android:gravity="center_vertical">
 
                     <TextView
+                        android:id="@+id/tvbusiness"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

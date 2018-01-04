@@ -83,6 +83,8 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener 
     }
 
 
+
+
     var sortData = ArrayList<PopStairListBean>()
     var coalData = ArrayList<PopStairListBean>()
     private fun initPop() {
@@ -126,7 +128,7 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener 
                 radioGroup.clearCheck()
             }
         }
-        arePop = AreaPop(activity, { name, id, check ->
+        arePop = AreaPop(activity, { name, povinceId, cityId, check ->
 
             setGaryOrblue(rb3, check, name)
         })

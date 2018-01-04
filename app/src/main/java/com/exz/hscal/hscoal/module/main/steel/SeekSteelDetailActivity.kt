@@ -5,16 +5,21 @@ import android.support.v4.widget.NestedScrollView
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
+import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
+import com.exz.hscal.hscoal.module.login.LoginActivity
 import com.exz.hscal.hscoal.module.main.ConfirmOrderActivity
+import com.exz.hscal.hscoal.module.main.coal.SeekCocalDetailActivity
 import com.exz.hscal.hscoal.pop.SelectGoodsTypePop
 import com.scwang.smartrefresh.layout.api.RefreshHeader
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener
 import com.scwang.smartrefresh.layout.util.DensityUtil
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
+import com.szw.framelibrary.view.preview.PreviewActivity
 import kotlinx.android.synthetic.main.action_bar_search.*
 import kotlinx.android.synthetic.main.activity_seek_steel_detail.*
 import org.jetbrains.anko.toast
@@ -26,6 +31,7 @@ import org.jetbrains.anko.toast
 
 class SeekSteelDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickListener {
 
+    private var inspectonBody_Img = "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=398952501,2656845064&fm=27&gp=0.png"
 
     private lateinit var pop: SelectGoodsTypePop
     private var mOffset = 0
@@ -43,9 +49,17 @@ class SeekSteelDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
         val actionView = toolbar.menu.getItem(0).actionView
         (actionView as TextView).text = "检验报告"
         actionView.setOnClickListener {
-            toast("")
+            if (TextUtils.isEmpty(inspectonBody_Img)) {
+                toast("暂无检验报告")
+                return@setOnClickListener
+            }
+            val intent = Intent(mContext, PreviewActivity::class.java)
+            val images = ArrayList<String>()
+            images.add(inspectonBody_Img)
+            intent.putExtra(PreviewActivity.PREVIEW_INTENT_IMAGES, images)
+            intent.putExtra(PreviewActivity.PREVIEW_INTENT_SHOW_NUM, false)
+            startActivity(intent)
         }
-
         return false
     }
 
@@ -57,6 +71,34 @@ class SeekSteelDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
         super.init()
         initView()
         refreshLayout.autoRefresh()
+    }
+
+
+    private fun initData() {
+
+        DataCtrlClass.getSteelInfo(mContext, intent.getStringExtra(Intent_Id), {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                name.text = it.data?.name ?: ""
+                className.text = "(" + it.data?.className + ")" ?: ""
+                weight.text = String.format(mContext.getString(R.string.heavy), it.data?.weight ?: "")//件重
+                QTY.text = it.data?.qty + "吨" ?: ""//供应量
+                price.text = it.data?.price + "元/件" ?: ""//价格
+                specification.text = it.data?.specification ?: "" //规格
+                materialQuality.text = it.data?.materialQuality ?: "" //材质
+                warehouse.text = it.data?.warehouse ?: "" //仓库
+                paymentModeName.text = it.data?.paymentModeName ?: "" //付款方式
+                inspectonBody.text = it.data?.inspectonBody ?: "" //检验机构
+                deliveryTime.text = it.data?.deliveryTime?.replace(",", "至") ?: ""//交货时间
+                deliveryWayName.text = it.data?.deliveryWayName ?: ""//交货方式
+                provinceCity.text = it.data?.provinceCity ?: ""//交货地点
+                remark.text = it.data?.remark ?: ""//备注
+                if (it.data?.isChoiceDelivery.equals("0")) { //是否可以选择交货方式：0否 1是"
+                    ll_lay_deliveryWay.visibility = View.GONE
+                }
+//                inspectonBody_Img=it.data?.inspectonBodyImg ?:""
+            }
+        })
     }
 
     private fun initView() {
@@ -93,7 +135,11 @@ class SeekSteelDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
         blurView.alpha = 0f
         pop = SelectGoodsTypePop(mContext, {
             if (!TextUtils.isEmpty(it)) {
-                startActivity(Intent(mContext, ConfirmOrderActivity::class.java).putExtra(ConfirmOrderActivity.Intent_Type,it))
+                var intent = Intent(mContext, ConfirmOrderActivity::class.java)
+                        .putExtra(ConfirmOrderActivity.Intent_Type_Address, it)
+                        .putExtra(ConfirmOrderActivity.Intent_Type, "2")
+                        .putExtra(ConfirmOrderActivity.Intent_Id, intent.getStringExtra(Intent_Id))
+                startActivity(intent)
             }
         })
         bt_submit.setOnClickListener(this)
@@ -101,14 +147,44 @@ class SeekSteelDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
     }
 
     override fun onRefresh(refreshlayout: RefreshLayout?) {
-        refreshlayout?.finishRefresh()
+
+        initData()
     }
+
 
     override fun onClick(p0: View) {
         when (p0) {
             bt_submit -> {
-                pop.showPopupWindow()
+                if (!MyApplication.checkUserLogin()) {
+                    startActivityForResult(Intent(mContext, LoginActivity::class.java), LoginActivity.RESULT_LOGIN_CANCELED)
+                    return
+                }
+                when (deliveryWayName.text.toString().trim()) {
+                    "物流配送" -> {
+                        var intent = Intent(mContext, ConfirmOrderActivity::class.java)
+                                .putExtra(ConfirmOrderActivity.Intent_Type_Address, "1")
+                                .putExtra(ConfirmOrderActivity.Intent_Type, "2")
+                                .putExtra(ConfirmOrderActivity.Intent_Id, intent.getStringExtra(Intent_Id))
+                        startActivity(intent)
+
+                    }
+                    "到场自提" -> {
+                        var intent = Intent(mContext, ConfirmOrderActivity::class.java)
+                                .putExtra(ConfirmOrderActivity.Intent_Type_Address, "2")
+                                .putExtra(ConfirmOrderActivity.Intent_Type, "2")
+                                .putExtra(ConfirmOrderActivity.Intent_Id, intent.getStringExtra(Intent_Id))
+                        startActivity(intent)
+                    }
+                    "物流配送/到场自提" -> {
+                        pop.showPopupWindow()
+                    }
+                }
+
             }
         }
+    }
+
+    companion object {
+        var Intent_Id = "id"
     }
 }

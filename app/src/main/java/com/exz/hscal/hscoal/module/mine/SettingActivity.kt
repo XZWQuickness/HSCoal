@@ -3,6 +3,7 @@ package com.exz.hscal.hscoal.module.mine
 import android.content.Intent
 import android.text.TextUtils
 import android.view.View
+import com.exz.carprofitmuch.config.Urls
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.module.login.EditPwdActivity
 import com.exz.hscal.hscoal.module.login.LoginActivity
@@ -65,10 +66,10 @@ class SettingActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(mContext,EditPwdActivity::class.java))
             }
             bt_user_agreement -> {//用户协议
-                startActivity(Intent(mContext,MyWebActivity::class.java).putExtra(Intent_Url,"http://www.baidu.com/").putExtra(Intent_Title,"用户协议"))
+                startActivity(Intent(mContext,MyWebActivity::class.java).putExtra(Intent_Url,Urls.Information).putExtra(Intent_Title,"用户协议"))
             }
             bt_about_us -> {//关于我们
-                startActivity(Intent(mContext,MyWebActivity::class.java).putExtra(Intent_Url,"http://www.baidu.com/").putExtra(Intent_Title,"关于我们"))
+                startActivity(Intent(mContext,MyWebActivity::class.java).putExtra(Intent_Url,Urls.Information2).putExtra(Intent_Title,"关于我们"))
             }
             bt_clear_cache->{//清除缓存
                 DialogUtils.clearCache(mContext,{
@@ -76,11 +77,11 @@ class SettingActivity : BaseActivity(), View.OnClickListener {
                     tv_clear_cache.setText("0.0K");
                 })
             }
-            bt_usinghelp -> {//关于我们
-                startActivity(Intent(mContext,MyWebActivity::class.java).putExtra(Intent_Url,"http://www.baidu.com/").putExtra(Intent_Title,"使用帮助"))
+            bt_usinghelp -> {//使用帮助
+                startActivity(Intent(mContext,MyWebActivity::class.java).putExtra(Intent_Url,Urls.help).putExtra(Intent_Title,"使用帮助"))
             }
             bt_finish->{//退出当前账号
-                PreferencesService.saveAccount(this, PreferencesService.getAccountKey(this) ?: "", "")
+                PreferencesService.saveAccount(mContext, "", "")
                 MyApplication.user = null
                 setResult(LoginActivity.RESULT_LOGIN_CANCELED)
                 onBackPressed()

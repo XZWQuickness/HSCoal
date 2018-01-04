@@ -21,7 +21,7 @@ import razerdp.basepopup.BasePopupWindow
  * Created by pc on 2017/12/6.
  */
 
-class AreaPop(context: Context, listener: (name: String, id: String, check: Boolean) -> Unit) : BasePopupWindow(context) {
+class AreaPop(context: Context, listener: (name: String, povinceId: String,cityId:String, check: Boolean) -> Unit) : BasePopupWindow(context) {
     private lateinit var inflate: View
     private var mOneAdapter: AreaOneAdapter
     private lateinit var mTwoAdapter: AreaTwoAdapter
@@ -74,7 +74,7 @@ class AreaPop(context: Context, listener: (name: String, id: String, check: Bool
                         it.cities.forEach { it.isCheck = false }
                     }
 
-                    listener.invoke("区域","",false)
+                    listener.invoke("区域","","",false)
                     dismiss()
                 }
                 mOneAdapter.data.get(position).isCheck = true
@@ -99,9 +99,9 @@ class AreaPop(context: Context, listener: (name: String, id: String, check: Bool
                 mTwoAdapter.data.get(position).isCheck = true
                 mTwoAdapter.notifyDataSetChanged()
                 if(position>0){
-                    listener.invoke(mTwoAdapter.data.get(position).areaName,mTwoAdapter.data.get(position).areaId,true)
+                    listener.invoke(mTwoAdapter.data.get(position).areaName,mTwoAdapter.data.get(position).areaId,entity.areaId,true)
                 }else{
-                    listener.invoke(if(entity.areaName.equals("不限")) "区域" else entity.areaName,entity.areaId,true)
+                    listener.invoke(if(entity.areaName.equals("不限")) "区域" else  entity.areaName,mTwoAdapter.data.get(position).areaId,"",true)
                 }
                 dismiss()
             }

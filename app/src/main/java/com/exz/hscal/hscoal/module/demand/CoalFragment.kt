@@ -51,6 +51,7 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
         refreshLayout.autoRefresh()
 
     }
+
     private var data = ArrayList<CargoListBean>()
     private fun initRecycler() {
         data.add(CargoListBean())
@@ -72,10 +73,10 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
         rb1.setOnClickListener(this)
         rb2.setOnClickListener(this)
         rb3.setOnClickListener(this)
-        mRecyclerView.addOnItemTouchListener(object :OnItemClickListener(){
+        mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-
-                startActivity(Intent(activity, DemandCocalDetailAtivity::class.java))
+                var entity = mAdapter.data.get(position)
+                startActivity(Intent(activity, DemandCocalDetailAtivity::class.java).putExtra(DemandCocalDetailAtivity.Intent_Id, entity.id))
             }
         })
     }
@@ -124,7 +125,7 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
                 radioGroup.clearCheck()
             }
         }
-        arePop = AreaPop(activity, { name, id, check ->
+        arePop = AreaPop(context, { name, povinceId, cityId, check ->
 
             setGaryOrblue(rb3, check, name)
         })
@@ -175,30 +176,29 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
     override fun onClick(v: View) {
         when (v) {
             rb1 -> {
-                if(!sortPop.isShowing){
+                if (!sortPop.isShowing) {
 
                     sortPop.showPopupWindow(radioGroup)
-                }else{
+                } else {
                     radioGroup.clearCheck()
                 }
             }
             rb2 -> {
-                if(!coalPop.isShowing) {
+                if (!coalPop.isShowing) {
                     coalPop.showPopupWindow(radioGroup)
-                }else{
+                } else {
                     radioGroup.clearCheck()
                 }
             }
             rb3 -> {
-                if(!arePop.isShowing) {
+                if (!arePop.isShowing) {
                     arePop.showPopupWindow(radioGroup)
-                }else{
+                } else {
                     radioGroup.clearCheck()
                 }
             }
         }
     }
-
 
 
     override fun onRefresh(refreshlayout: RefreshLayout?) {

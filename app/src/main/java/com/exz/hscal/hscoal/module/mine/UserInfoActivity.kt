@@ -6,11 +6,14 @@ import android.view.View
 import com.blankj.utilcode.util.ScreenUtils
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
+import com.exz.hscal.hscoal.module.login.LoginActivity
 import com.lzy.imagepicker.ImagePicker
 import com.lzy.imagepicker.bean.ImageItem
 import com.lzy.imagepicker.ui.ImageGridActivity
 import com.lzy.imagepicker.view.CropImageView
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
+import com.szw.framelibrary.config.PreferencesService
 import com.szw.framelibrary.imageloder.GlideImageLoader
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
@@ -45,6 +48,25 @@ class UserInfoActivity : BaseActivity(), View.OnClickListener {
     override fun init() {
         initCamera()
         initEvent()
+        getUserInfo()
+    }
+
+    private fun getUserInfo() {
+        if (!MyApplication.checkUserLogin()) {
+            startActivityForResult(Intent(mContext, LoginActivity::class.java), LoginActivity.RESULT_LOGIN_CANCELED)
+            return
+        }
+        DataCtrlClass.getUserInfo(mContext) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                iv_header.setImageURI(it.headImg)
+                tv_nicekname.text=it.nickname
+                tv_phone.text=it.mobile
+                tv_telephone.text=it.tel
+                tv_qq.text=it.qq
+            }
+
+        }
     }
 
 
@@ -79,6 +101,8 @@ class UserInfoActivity : BaseActivity(), View.OnClickListener {
         bt_header.setOnClickListener(this)
         bt_nicekname.setOnClickListener(this)
         bt_company_name.setOnClickListener(this)
+        bt_telephone.setOnClickListener(this)
+        bt_qq.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
@@ -88,19 +112,19 @@ class UserInfoActivity : BaseActivity(), View.OnClickListener {
             }
             bt_nicekname -> {
                 type = 1
-                startActivityForResult(Intent(mContext, UserInfoTextActivity::class.java).putExtra(UserInfoTextActivity.Intent_ClassName, "修改昵称"),RESULTCODE_TEXT)
+                startActivityForResult(Intent(mContext, UserInfoTextActivity::class.java).putExtra(UserInfoTextActivity.Intent_ClassName, "修改昵称").putExtra(Intent_Text,tv_nicekname.text.toString().trim()),RESULTCODE_TEXT)
             }
             bt_company_name -> {
                 type = 2
-                startActivityForResult(Intent(mContext, UserInfoTextActivity::class.java).putExtra(UserInfoTextActivity.Intent_ClassName, "修改公司名称"),RESULTCODE_TEXT)
+                startActivityForResult(Intent(mContext, UserInfoTextActivity::class.java).putExtra(UserInfoTextActivity.Intent_ClassName, "修改公司名称").putExtra(Intent_Text,tv_company_name.text.toString().trim()),RESULTCODE_TEXT)
             }
             bt_telephone -> {
                 type = 3
-                startActivityForResult(Intent(mContext, UserInfoTextActivity::class.java).putExtra(UserInfoTextActivity.Intent_ClassName, "修改固定电话"),RESULTCODE_TEXT)
+                startActivityForResult(Intent(mContext, UserInfoTextActivity::class.java).putExtra(UserInfoTextActivity.Intent_ClassName, "修改固定电话").putExtra(Intent_Text,tv_telephone.text.toString().trim()),RESULTCODE_TEXT)
             }
-            bt_telephone -> {
+            bt_qq -> {
                 type = 4
-                startActivityForResult(Intent(mContext, UserInfoTextActivity::class.java).putExtra(UserInfoTextActivity.Intent_ClassName, "修改QQ号"),RESULTCODE_TEXT)
+                startActivityForResult(Intent(mContext, UserInfoTextActivity::class.java).putExtra(UserInfoTextActivity.Intent_ClassName, "修改QQ号").putExtra(Intent_Text,tv_qq.text.toString().trim()),RESULTCODE_TEXT)
             }
         }
     }
@@ -109,11 +133,7 @@ class UserInfoActivity : BaseActivity(), View.OnClickListener {
     private fun editInfo(key: String, value: String) {
         DataCtrlClass.editPersonInfo(this, key, value) {
             if (it != null) {
-                if (key == "header") {
-                    iv_header.setImageURI(it)
-                } else if (key == "nickname") {
-                    tv_nicekname.text = value
-                }
+                getUserInfo()
             }
         }
     }
@@ -128,20 +148,20 @@ class UserInfoActivity : BaseActivity(), View.OnClickListener {
         try {
             if (resultCode == ImagePicker.RESULT_CODE_ITEMS && data != null) { //图片选择
                 val images = data?.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) as ArrayList<*>
-                editInfo("header", (images[0] as ImageItem).path)
+                editInfo("headImg", (images[0] as ImageItem).path)
             } else if (resultCode == RESULTCODE_TEXT && data != null) {
                 when (type) {
                     1 -> {
                         editInfo("nickname", data.getStringExtra(Intent_Text))
                     }
                     2 -> {
-                        editInfo("nickname", data.getStringExtra(Intent_Text))
+                        editInfo("nickname", data.getStringExtra(Intent_Text))//公司名称
                     }
                     3 -> {
-                        editInfo("nickname", data.getStringExtra(Intent_Text))
+                        editInfo("tel", data.getStringExtra(Intent_Text))
                     }
                     4 -> {
-                        editInfo("nickname", data.getStringExtra(Intent_Text))
+                        editInfo("qq", data.getStringExtra(Intent_Text))
                     }
                 }
             }

@@ -138,12 +138,13 @@
             android:id="@+id/marqueeView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_15"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/margin_3"
             app:mvAnimDuration="1000"
             app:mvInterval="3000"
             app:mvTextColor="@color/MaterialGrey800"
-            app:mvTextSize="14sp" />
+            app:mvTextSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -176,20 +177,22 @@
                 android:textColor="@color/MaterialGrey600"
                 android:text="@string/vol" />
             <TextView
+                android:id="@+id/coal_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:maxLines="1"
                 android:layout_marginTop="4dp"
-                android:textColor="@color/MaterialGrey600"
+                android:textColor="@color/Red"
                 android:text="@string/main_coal" />
             <TextView
+                android:id="@+id/steel_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:maxLines="1"
                 android:layout_marginTop="4dp"
-                android:textColor="@color/MaterialGrey600"
+                android:textColor="@color/Red"
                 android:text="@string/main_steel" />
 
         </LinearLayout>
@@ -208,20 +211,22 @@
                 android:textColor="@color/MaterialGrey600"
                 android:text="@string/vol" />
             <TextView
+                android:id="@+id/coal_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:maxLines="1"
                 android:layout_marginTop="4dp"
-                android:textColor="@color/MaterialGrey600"
+                android:textColor="@color/Red"
                 android:text="@string/main_coal" />
             <TextView
+                android:id="@+id/steel_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:maxLines="1"
                 android:layout_marginTop="4dp"
-                android:textColor="@color/MaterialGrey600"
+                android:textColor="@color/Red"
                 android:text="@string/main_steel" />
 
         </LinearLayout>

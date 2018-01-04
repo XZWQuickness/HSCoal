@@ -12,6 +12,7 @@ import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.adapter.AddressChooseAdapter
 import com.exz.hscal.hscoal.bean.AddressBean
+import com.exz.hscal.hscoal.module.main.ConfirmOrderActivity.Companion.Intent_Address_Id
 import com.exz.hscal.hscoal.utils.RecycleViewDivider
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -53,9 +54,10 @@ class AddressChooseActivity: BaseActivity(), OnRefreshListener {
     override fun setInflateId(): Int= R.layout.activity_address_choose
 
     override fun init() {
-        SZWUtils.setRefreshAndHeaderCtrl(this,header,refreshLayout)
+
         initRecycler()
         initEvent()
+        SZWUtils.setRefreshAndHeaderCtrl(this,header,refreshLayout)
         refreshLayout.autoRefresh()
     }
 
@@ -70,7 +72,7 @@ class AddressChooseActivity: BaseActivity(), OnRefreshListener {
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 10, ContextCompat.getColor(mContext, R.color.app_bg)))
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                setResult( Activity.RESULT_OK,intent.putExtra(Intent_Result_Address,mAdapter.data[position])  )
+                setResult( Activity.RESULT_OK,intent.putExtra(Intent_Address_Id,mAdapter.data[position].id)  )
                 onBackPressed()
             }
         })

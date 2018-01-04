@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
-import com.exz.hscal.hscoal.bean.User
 import com.exz.hscal.hscoal.widget.CustomViewpager
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.base.MyBaseFragment
@@ -114,10 +113,10 @@ class LoginFragment : MyBaseFragment(), View.OnFocusChangeListener, View.OnClick
             ed_pwd.setShakeAnimation()
             toast(getString(R.string.login_error_pwd))
         } else {
-            DataCtrlClass.login(context, ed_phone.text.toString(), ed_pwd.text.toString()) {
+            DataCtrlClass.login(context, ed_phone.text.toString().trim(), ed_pwd.text.toString().trim()) {
                 if (it != null) {
                     ed_phone.postDelayed({
-                        LoginActivity.loginSuccess(activity, ed_phone.text.toString(), ed_pwd.text.toString(), User(it))
+                        LoginActivity.loginSuccess(activity, ed_phone.text.toString(), ed_pwd.text.toString(), it)
                     }, 500)
                 }
 

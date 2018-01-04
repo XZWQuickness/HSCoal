@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager
 import android.support.v4.widget.NestedScrollView
 import android.text.TextUtils
 import com.exz.hscal.hscoal.R
-import com.exz.hscal.hscoal.bean.User
+import com.exz.hscal.hscoal.bean.LoginEntity
 import com.scwang.smartrefresh.layout.api.RefreshHeader
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener
 import com.scwang.smartrefresh.layout.util.DensityUtil
@@ -86,7 +86,7 @@ internal class LoginActivity : BaseActivity() {
         private val RESULT_LOGIN_OK = 2000
         val RESULT_LOGIN_CANCELED = 3000
 
-        fun loginSuccess(context: Activity, mobile: String,pwd: String, user: User?) {
+        fun loginSuccess(context: Activity, mobile: String,pwd: String, user: LoginEntity?) {
             PreferencesService.saveAccount(context, mobile, pwd)
             MyApplication.user=user
 //            PreferencesService.saveAutoLoginToken(context, user?.autoLoginToken ?: "")

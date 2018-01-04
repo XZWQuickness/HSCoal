@@ -2,6 +2,7 @@ package com.exz.hscal.hscoal.utils;
 
 import android.app.Activity
 import android.content.Context
+import android.text.Editable
 import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.KeyboardUtils
@@ -10,6 +11,9 @@ import com.common.controls.dialog.DialogUtil
 import com.common.controls.dialog.ICommonDialog
 import com.exz.hscal.hscoal.R
 import kotlinx.android.synthetic.main.dialog_change_num.view.*
+import android.text.InputFilter
+import android.text.TextWatcher
+
 
 /**
  * Created by 史忠文
@@ -32,6 +36,7 @@ object DialogUtils {
         dialog.setCanceledOnTouchOutside(true)
         dialog.show()
     }
+
     /**
      * 清除缓存
      */
@@ -96,17 +101,47 @@ object DialogUtils {
         dialog.show()
     }
 
+    /**
+     *
+     */
+    fun reason(context: Context, content: String) {
+        dialog = CommonDialogFactory.createDialogByType(context, DialogUtil.DIALOG_TYPE_103)
+        dialog.setTitleText("拒绝原因")
+        dialog.setContentText(content)
+        dialog.setOkBtn("确定") { v ->
+            dialog.dismiss()
+        }
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.show()
+    }
+
 
     /**
      * 数量更改弹窗
      */
-    fun changeNum(context: Context, count: Long, listener: (num: Long) -> Unit) {
+    fun changeNum(context: Context, count: Long, max: Int, listener: (num: Long) -> Unit) {
         dialog = DialogType104(context)
         val view = View.inflate(context, R.layout.dialog_change_num, null)
         ViewHolder(view)
         view.count.setText(String.format("%s", count))
         view.count.setSelection(view.count.text.length)
         countIndex = view.count.text.toString().toLong()
+        view.count.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (!TextUtils.isEmpty(p0.toString().trim())&&p0.toString().trim().toLong() > max) {
+                    view.count.setText(max.toString())
+                }else if(TextUtils.isEmpty(p0.toString().trim())){
+                    view.count.setText("1")
+                }
+            }
+        })
+        this.maxCount = max
         dialog.setTitleText("修改数量")
         dialog.setContentView(view)
         dialog.setOkBtn("确定") {
@@ -128,7 +163,10 @@ object DialogUtils {
         }
         dialog.show()
     }
+
     private var countIndex = 1.toLong()
+    private var maxCount = 0
+
     internal class ViewHolder(private var view: View) : View.OnClickListener {
         init {
             view.count.setSelection(view.count.text.length)
@@ -137,9 +175,12 @@ object DialogUtils {
         }
 
         override fun onClick(p0: View) {
+            countIndex = view.count.text.toString().toLong()
             when (p0.id) {
                 R.id.minus -> countIndex = if (countIndex <= 1) 1 else --countIndex
-                R.id.add -> countIndex += 1
+                R.id.add -> {
+                    if (maxCount > countIndex) countIndex += 1 else maxCount
+                }
             }
             view.count.setText(String.format("%s", countIndex))
             view.count.setSelection(view.count.text.length)

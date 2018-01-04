@@ -18,9 +18,9 @@ class AddressManagerAdapter<T : AddressBean> : BaseQuickAdapter<T, BaseViewHolde
         helper.addOnClickListener(R.id.bt_delete)
         helper.addOnClickListener(R.id.radioButton)
 
-        itemView.tv_userName.text = item.name
-        itemView.tv_userPhone.text = item.phone
-        itemView.tv_address.text = item.toString()
+        itemView.tv_userName.text = item.userName
+        itemView.tv_userPhone.text = item.mobile
+        itemView.tv_address.text = item.address
 
         if (item.isDefault()) {
             itemView.radioButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_mine_open_shop_select), null, null, null)

@@ -6,9 +6,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import com.alibaba.fastjson.JSON
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.adapter.CargoListAdapter
 import com.exz.hscal.hscoal.bean.AreaBean
@@ -37,8 +40,15 @@ import java.io.InputStreamReader
  * 找钢材
  */
 
-class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListener {
+class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, BaseQuickAdapter.RequestLoadMoreListener {
+    private var refreshState = com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH
+    private var currentPage = 1
 
+    private var keyword = ""//关键词
+    private var steelClassId = ""//有色金属分类id
+    private var povinceId = ""//省份id
+    private var cityId = ""//城市id
+    private var sortType = "0"//排序方式（0综合排序 1价格递增 2价格递减 3最新上架）
     private lateinit var sortPop: StairPop
     private lateinit var coalPop: StairPop
     private lateinit var arePop: AreaPop
@@ -57,7 +67,16 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
         }
         edTitle.visibility = View.GONE
         tvTitle.visibility = View.VISIBLE
-
+        toolbar.inflateMenu(R.menu.menu_seek_cocal_detail_text)
+        val actionView = toolbar.menu.getItem(0).actionView
+        actionView.setPadding(10,10,20,10)
+        (actionView as TextView).text = "清除"
+        actionView.setOnClickListener {
+            edTitle.setText("")
+            tvTitle.text = ""
+            keyword = edTitle.text.toString().trim { it <= ' ' }
+            refreshLayout.autoRefresh()
+        }
         return false
     }
 
@@ -70,25 +89,35 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);//关闭软键盘
         initRecycler()
         initPop()
+        initSteelClass()
         refreshLayout.autoRefresh()
     }
 
+    private fun initSteelClass() {
+        DataCtrlClass.steelClassData(mContext, {
+            if (it != null) {
+                coalPop.data = it as ArrayList<PopStairListBean>
 
-    private var data = ArrayList<CargoListBean>()
+            }
+        })
+
+    }
+
+
     private fun initRecycler() {
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
+        edTitle.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                // do something
+                keyword = edTitle.text.toString().trim { it <= ' ' }
+                refreshLayout.autoRefresh()
+                return@OnEditorActionListener true
+            }
+            false
+        })
         mAdapter = CargoListAdapter()
         mAdapter.setHeaderAndEmpty(true)
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
-        mAdapter.setNewData(data)
         mAdapter.loadMoreEnd()
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
@@ -96,28 +125,25 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
         rb2.setOnClickListener(this)
         rb3.setOnClickListener(this)
         tvTitle.setOnClickListener(this)
-
+        mAdapter.setOnLoadMoreListener(this, mRecyclerView)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(mContext, SeekSteelDetailActivity::class.java))
+                var entity = mAdapter.data.get(position)
+                startActivity(Intent(mContext, SeekSteelDetailActivity::class.java).putExtra(SeekSteelDetailActivity.Intent_Id, entity.id))
 
             }
         })
+        SZWUtils.setRefreshAndHeaderCtrl(this, header, refreshLayout)
     }
 
     var sortData = ArrayList<PopStairListBean>()
     var coalData = ArrayList<PopStairListBean>()
     private fun initPop() {
-        sortData.add(PopStairListBean("综合排序", true, "1"))
+        sortData.add(PopStairListBean("综合排序", true, "0"))
         sortData.add(PopStairListBean("价格由低到高", false, "1"))
-        sortData.add(PopStairListBean("价格由高到低", false, "1"))
-        sortData.add(PopStairListBean("最新上架", false, "1"))
-        coalData.add(PopStairListBean("全部", true, "1"))
-        coalData.add(PopStairListBean("热卷", false, "1"))
-        coalData.add(PopStairListBean("建材", false, "1"))
-        coalData.add(PopStairListBean("中厚板", false, "1"))
-        coalData.add(PopStairListBean("冷轧涂膜", false, "1"))
-        coalData.add(PopStairListBean("型管", false, "1"))
+        sortData.add(PopStairListBean("价格由高到低", false, "2"))
+        sortData.add(PopStairListBean("最新上架", false, "3"))
+
         sortPop = StairPop(mContext, {
             if (it != null) {
                 if (it.name.equals("综合排序")) {
@@ -125,15 +151,16 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
                 } else {
                     setGaryOrblue(rb1, true, it.name)
                 }
-
+                sortType = it.id
+                refreshLayout.autoRefresh()
             }
         })
+        sortPop.data = sortData
         sortPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
                 radioGroup.clearCheck()
             }
         }
-        sortPop.data = sortData
         coalPop = StairPop(mContext, {
             if (it != null) {
                 if (it.name.equals("全部")) {
@@ -141,7 +168,8 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
                 } else {
                     setGaryOrblue(rb2, true, it.name)
                 }
-
+                steelClassId = it.id
+                refreshLayout.autoRefresh()
             }
         })
         coalPop.data = coalData
@@ -150,9 +178,13 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
                 radioGroup.clearCheck()
             }
         }
-        arePop = AreaPop(mContext, { name, id, check ->
+        arePop = AreaPop(mContext, { name, povinceId, cityId, check ->
 
             setGaryOrblue(rb3, check, name)
+
+            this.povinceId = povinceId
+            this.cityId = cityId
+            refreshLayout.autoRefresh()
         })
         arePop.data = (JSON.parseArray(getJson(), AreaBean::class.java) as ArrayList<AreaBean>)
         arePop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
@@ -231,8 +263,38 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
     }
 
 
-    override fun onRefresh(refreshlayout: RefreshLayout?) {
-        refreshlayout?.finishRefresh()
+    override fun onRefresh(refreshLayout: RefreshLayout?) {
+        currentPage = 1
+        refreshState = com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH
+        iniData()
+
+    }
+
+    override fun onLoadMoreRequested() {
+        refreshState = com.szw.framelibrary.config.Constants.RefreshState.STATE_LOAD_MORE
+        iniData()
+    }
+
+    private fun iniData() {
+        DataCtrlClass.SteelListtData(mContext, currentPage, keyword, steelClassId, povinceId, cityId, sortType) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                if (refreshState == com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it)
+                } else {
+                    mAdapter.addData(it)
+
+                }
+                if (it.isNotEmpty()) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -241,6 +303,8 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
             SerachActivity.RESULTCODE_SEARCH -> {
                 if (data != null) {
                     tvTitle.text = data.getStringExtra(SerachActivity.Intent_Search_Content)
+                    keyword = data.getStringExtra(SerachActivity.Intent_Search_Content)
+                    refreshLayout.autoRefresh()
                 }
             }
             else -> {

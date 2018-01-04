@@ -25,6 +25,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener
 import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.config.Constants.Result.Intent_ClassName
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.UnsupportedEncodingException
 
 /**
  * Created by 史忠文
@@ -68,6 +71,7 @@ object SZWUtils {
             true
         }
     }
+
 
 
     fun matcherSearchTitle(textView: TextView, textStart: String, start: Int, end: Int, color: Int) {

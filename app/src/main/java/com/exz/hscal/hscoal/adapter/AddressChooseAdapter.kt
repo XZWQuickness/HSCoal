@@ -19,15 +19,15 @@ class AddressChooseAdapter<T : AddressBean> : BaseQuickAdapter<T, BaseViewHolder
 
     override fun convert(helper: BaseViewHolder, item: T) {
         val itemView=helper.itemView
-        itemView.tv_userName.text=item.name
-        itemView.tv_userPhone.text=item.phone
+        itemView.tv_userName.text=item.userName
+        itemView.tv_userPhone.text=item.mobile
         if (item.isDefault()) {
             val default = mContext.getString(R.string.address_choose_default)
-            val msp = SpannableString(default +item.toString())
+            val msp = SpannableString(item.address)
             msp.setSpan(ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.colorPrimary)), 0, default.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             itemView.tv_address.text = msp
         }else{
-            itemView.tv_address.text = item.toString()
+            itemView.tv_address.text = item.address
         }
 
     }

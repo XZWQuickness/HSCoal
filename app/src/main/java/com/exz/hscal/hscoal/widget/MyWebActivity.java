@@ -52,12 +52,11 @@ public class MyWebActivity extends BaseActivity implements Listener {
         this.mTitle.setTextColor(ContextCompat.getColor(this, R.color.White));
         this.mTitle.setMaxEms(7);
         this.toolbar.setContentInsetsAbsolute(0, 0);
-        this.mLeftImg.setVisibility(View.GONE);
-        this.toolbar.setNavigationIcon(ContextCompat.getDrawable(mContext,R.mipmap.icon_arrow_white_back));
         this.mTitle.setText(this.getIntent().getStringExtra(Intent_Title));
         this.toolbar.setBackgroundColor(ContextCompat.getColor(mContext,R.color.colorPrimary));
+        this. toolbar.setNavigationIcon(null);
         this.setSupportActionBar(this.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        this.mLeftImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

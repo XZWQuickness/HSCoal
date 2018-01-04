@@ -88,7 +88,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:background="@color/White"
                     android:hint="@string/Input_new_password"
-                    android:inputType="number"
+                    android:inputType="textPassword"
                     android:padding="@dimen/margin_15"
                     android:textColor="@color/MaterialGrey600"
                     android:textCursorDrawable="@drawable/color_cursor"
@@ -100,8 +100,8 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:background="@color/White"
                     android:hint="@string/Input_password"
-                    android:inputType="number"
                     android:padding="@dimen/margin_15"
+                    android:inputType="textPassword"
                     android:textColor="@color/MaterialGrey600"
                     android:textCursorDrawable="@drawable/color_cursor"
                     android:textSize="@dimen/sp_14" />

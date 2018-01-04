@@ -88,11 +88,46 @@
 
                     <EditText
                         android:id="@+id/ed_userPhone"
-                        android:inputType="phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:hint="@string/address_hint_userPhone"
+                        android:inputType="phone"
+                        android:minHeight="@dimen/margin_45"
+                        android:paddingEnd="@dimen/margin_15"
+                        android:paddingStart="0dp"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/MaterialGrey600"
+                        android:textColorHint="@color/MaterialGrey400"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_0.5"
+                    android:background="@color/White"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_15"
+                        android:layout_marginStart="@dimen/margin_15"
+                        android:minEms="4"
+                        android:text="@string/postal_code"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_12" />
+
+                    <EditText
+                        android:id="@+id/ed_postal_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/input_postal_code"
+                        android:inputType="phone"
                         android:minHeight="@dimen/margin_45"
                         android:paddingEnd="@dimen/margin_15"
                         android:paddingStart="0dp"
@@ -130,8 +165,8 @@
                         android:drawablePadding="@dimen/margin_5"
                         android:gravity="center_vertical|end"
                         android:hint="@string/address_hint_area"
-                        android:singleLine="true"
                         android:minHeight="@dimen/margin_45"
+                        android:singleLine="true"
                         android:text=""
                         android:textColor="@color/MaterialGrey600"
                         android:textColorHint="@color/MaterialGrey400"
@@ -186,6 +221,7 @@
                     android:textColor="@color/MaterialGrey600"
                     android:textOff=""
                     android:textOn=""
+                    android:checked="true"
                     android:textSize="@dimen/sp_12"
                     android:thumb="@drawable/billing_thumb"
                     android:track="@drawable/billing_track" />

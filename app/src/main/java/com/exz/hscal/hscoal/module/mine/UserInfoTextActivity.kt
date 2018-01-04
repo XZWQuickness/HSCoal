@@ -45,7 +45,7 @@ class UserInfoTextActivity : BaseActivity(), View.OnClickListener {
 
     private fun initView() {
 
-    if(intent.getStringExtra(Intent_ClassName).equals("联系人手机")||intent.getStringExtra(Intent_ClassName).equals("店铺电话")){
+    if(intent.getStringExtra(Intent_ClassName).equals("联系人手机")||intent.getStringExtra(Intent_ClassName).equals("公司电话")){
         ed_text.inputType= InputType.TYPE_CLASS_NUMBER
     }
 

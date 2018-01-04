@@ -17,7 +17,7 @@ class BannerImageLoader : ImageLoader() {
           传输的到的是什么格式，那么这种就使用Object接收和返回，你只需要强转成你传输的类型就行，
           切记不要胡乱强转！
          */
-        val uri = Uri.parse((path as BannersBean).imgUrl)
+        val uri = Uri.parse((path as BannersBean).image)
         imageView.scaleType = ImageView.ScaleType.FIT_XY
         GlideApp.with(context).load(uri).into(imageView)
 

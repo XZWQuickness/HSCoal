@@ -1,9 +1,11 @@
 package com.exz.hscal.hscoal.module.login
 
+import android.content.Intent
 import android.text.TextUtils
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.szw.framelibrary.base.BaseActivity
+import com.szw.framelibrary.config.PreferencesService
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_edit_pwd.*
@@ -55,9 +57,10 @@ class EditPwdActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            DataCtrlClass.editPwd(mContext,oldPwd,password,{
-                if(it!=null){
-                    finish()
+            DataCtrlClass.editPwd(mContext, oldPwd, password, {
+                if (it != null) {
+                    PreferencesService.saveAccount(this, PreferencesService.getAccountValue(this) ?: "", "")
+                    startActivity(Intent(mContext, LoginActivity::class.java))
                 }
             })
         }

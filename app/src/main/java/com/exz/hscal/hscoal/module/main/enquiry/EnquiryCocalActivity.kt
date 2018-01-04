@@ -13,7 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.adapter.ReleaseAdapter
-import com.exz.hscal.hscoal.app.ReleaseBean
+import com.exz.hscal.hscoal.bean.ReleaseBean
 import com.exz.hscal.hscoal.utils.RecycleViewDivider
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.lzy.imagepicker.ImagePicker
