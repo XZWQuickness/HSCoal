@@ -69,10 +69,9 @@
                         android:padding="@dimen/margin_15">
 
                         <TextView
-                            android:id="@+id/tv_title"
+                            android:id="@+id/name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="淮晟煤炭6号"
                             android:textColor="@color/MaterialGrey800"
                             android:textSize="@dimen/sp_14" />
 
@@ -80,8 +79,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:layout_toEndOf="@id/tv_title"
-                            android:text="淮晟煤炭6号"
+                            android:layout_toEndOf="@id/name"
+                            android:id="@+id/className"
                             android:textColor="@color/MaterialGrey400"
                             android:textSize="@dimen/sp_12" />
 
@@ -114,7 +113,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="320吨"
+                        android:id="@+id/purchaseQuantity"
                         android:textColor="@color/MaterialGrey800"
                         android:textSize="@dimen/sp_12" />
                     <TextView
@@ -123,6 +122,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="@string/heavy"
+                        android:id="@+id/weight"
                         android:textColor="@color/MaterialGrey800"
                         android:textSize="@dimen/sp_12" />
 
@@ -153,7 +153,7 @@
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:text="现金汇款"
+                        android:id="@+id/specification"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
@@ -182,8 +182,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
+                        android:id="@+id/materialQuality"
                         android:gravity="right"
-                        android:text="现金汇款"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
@@ -213,7 +213,37 @@
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:text="现金汇款"
+                        android:id="@+id/plannedDeliveryTime"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_12" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:drawableStart="@mipmap/icon_cocal_detail_delivery_goods_location"
+                        android:text="@string/main_cocal_detail_text11"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:drawablePadding="@dimen/dp_4"
+                        android:id="@+id/placeDelivery"
+                        android:gravity="right"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
@@ -243,7 +273,7 @@
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:text="现金汇款"
+                        android:id="@+id/remark"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 

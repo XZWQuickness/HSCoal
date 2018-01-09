@@ -2,7 +2,9 @@ package com.exz.hscal.hscoal.module.main
 
 import android.app.Activity
 import android.content.Intent
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
 import com.blankj.utilcode.util.AppUtils
@@ -32,7 +34,9 @@ class ConfirmOrderActivity : BaseActivity(), View.OnClickListener {
     private var count = ""//购买数量
     private var remark = ""//备注说明
 
-    private var residualCount = 0
+    private var residualCount = 0f
+
+    private var allPrice=0f
 
     override fun initToolbar(): Boolean {
         mTitle.text = "确认订单"
@@ -77,6 +81,21 @@ class ConfirmOrderActivity : BaseActivity(), View.OnClickListener {
             llAddress.visibility = View.GONE
         }
         getConfirmOrder()
+
+        tvCount.addTextChangedListener(object :TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+                if(!TextUtils.isEmpty(p0.toString().trim())){
+                    tvTotal.text="￥"+(p0.toString().trim().toFloat()*allPrice).toString()
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
     }
 
     private fun getConfirmOrder() {
@@ -86,7 +105,10 @@ class ConfirmOrderActivity : BaseActivity(), View.OnClickListener {
                 img.setImageURI(it.data?.image)
                 tvTitle.text = it.data?.name
                 price.text = it.data?.price
-                residualCount = it.data?.residualCount?.toInt() ?: 0
+                allPrice= it.data?.price!!.toFloat()
+                residualCount = it.data?.residualCount?.toFloat()!!
+
+              tvTotal.text="￥"+allPrice.toString()
 
             }
         })
@@ -106,7 +128,7 @@ class ConfirmOrderActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onClick(p0: View) {
-        var mCount = tvCount.text.toString().trim().toLong()
+        var mCount = tvCount.text.toString().trim().toFloat()
         when (p0) {
             llAddress -> {
                 startActivityForResult(Intent(mContext, AddressChooseActivity::class.java),100)
@@ -115,13 +137,13 @@ class ConfirmOrderActivity : BaseActivity(), View.OnClickListener {
                 if (residualCount > mCount) {
                     mCount++
                 } else {
-                    mCount = residualCount.toLong()
+                    mCount = residualCount
                 }
                 tvCount.text = mCount.toString()
 
             }
             tvCount -> {
-                DialogUtils.changeNum(mContext, mCount, residualCount, {
+                DialogUtils.changeNum(mContext, mCount, residualCount,type, {
                     if (it != null) {
                         tvCount.text = it.toString()
                     }

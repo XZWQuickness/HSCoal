@@ -11,13 +11,15 @@ import android.view.ViewGroup
 import com.alibaba.fastjson.JSON
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.adapter.DemandAdapter
 import com.exz.hscal.hscoal.bean.AreaBean
-import com.exz.hscal.hscoal.bean.CargoListBean
+import com.exz.hscal.hscoal.bean.DemandBean
 import com.exz.hscal.hscoal.bean.PopStairListBean
 import com.exz.hscal.hscoal.pop.AreaPop
 import com.exz.hscal.hscoal.pop.StairPop
+import com.exz.hscal.hscoal.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.szw.framelibrary.base.MyBaseFragment
@@ -34,7 +36,16 @@ import java.io.InputStreamReader
  * Created by pc on 2017/12/5.
  */
 
-class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
+class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, BaseQuickAdapter.RequestLoadMoreListener {
+
+    private var refreshState = com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH
+    private var currentPage = 1
+
+    private var steelClassId = ""//煤种id
+    private var provinceId = ""//省份
+    private var cityId = ""//城市
+    private var sortType = "0"//排序方式（0综合排序 1求购数递增 2求购数递减 3收货时间最近 4收货时间最远）
+
     private lateinit var sortPop: StairPop
     private lateinit var coalPop: StairPop
     private lateinit var arePop: AreaPop
@@ -48,27 +59,29 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener 
     override fun initView() {
         initRecycler()
         initPop()
+        initSteelClass()
         refreshLayout.autoRefresh()
+    }
+
+
+    private fun initSteelClass() {
+        DataCtrlClass.steelClassData(context, {
+            if (it != null) {
+                var list = it  as ArrayList < PopStairListBean >
+                list.add(0, PopStairListBean("全部类别",false,""))
+                coalPop.data = list
+
+            }
+        })
 
     }
 
-    private var data = ArrayList<CargoListBean>()
     private fun initRecycler() {
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
         mAdapter = DemandAdapter()
-        mAdapter.setHeaderAndEmpty(true)
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
-        mAdapter.setNewData(data)
         mAdapter.loadMoreEnd()
-        mRecyclerView.addItemDecoration(RecycleViewDivider(context, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(context, R.color.app_bg)))
+        mRecyclerView.addItemDecoration(RecycleViewDivider(context, LinearLayoutManager.VERTICAL, 2, ContextCompat.getColor(context, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
         rb1.setOnClickListener(this)
         rb2.setOnClickListener(this)
@@ -76,26 +89,23 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener 
 
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-
-                startActivity(Intent(activity, DemandSteelDetailAtivity::class.java))
+                var entity = mAdapter.data.get(position)
+                startActivity(Intent(activity, DemandSteelDetailAtivity::class.java)
+                        .putExtra(DemandSteelDetailAtivity.Intent_Detaile_Id,entity.id))
             }
         })
+
+        mAdapter.setOnLoadMoreListener(this, mRecyclerView)
+        SZWUtils.setRefreshAndHeaderCtrl(this, header, refreshLayout)
     }
 
 
-
-
     var sortData = ArrayList<PopStairListBean>()
-    var coalData = ArrayList<PopStairListBean>()
     private fun initPop() {
-        sortData.add(PopStairListBean("综合排序", true, "1"))
+        sortData.add(PopStairListBean("综合排序", true, "0"))
         sortData.add(PopStairListBean("价格由低到高", false, "1"))
-        sortData.add(PopStairListBean("价格由高到低", false, "1"))
-        sortData.add(PopStairListBean("最新上架", false, "1"))
-        coalData.add(PopStairListBean("全部煤种", true, "1"))
-        coalData.add(PopStairListBean("焦炭/焦粉/焦粒", false, "1"))
-        coalData.add(PopStairListBean("炼焦煤", false, "1"))
-        coalData.add(PopStairListBean("动力煤", false, "1"))
+        sortData.add(PopStairListBean("价格由高到低", false, "2"))
+        sortData.add(PopStairListBean("最新上架", false, "3"))
         sortPop = StairPop(activity, {
             if (it != null) {
                 if (it.name.equals("综合排序")) {
@@ -114,23 +124,27 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener 
         sortPop.data = sortData
         coalPop = StairPop(activity, {
             if (it != null) {
-                if (it.name.equals("全部煤种")) {
-                    setGaryOrblue(rb2, false, "全部煤种")
+                if (it.name.equals("全部类别")) {
+                    setGaryOrblue(rb2, false, "类别")
                 } else {
                     setGaryOrblue(rb2, true, it.name)
                 }
-
+                steelClassId = it.id
+                refreshLayout.autoRefresh()
             }
         })
-        coalPop.data = coalData
         coalPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
                 radioGroup.clearCheck()
             }
         }
-        arePop = AreaPop(activity, { name, povinceId, cityId, check ->
+        arePop = AreaPop(activity, { name, provinceId, cityId, check ->
 
             setGaryOrblue(rb3, check, name)
+
+            this.provinceId = provinceId
+            this.cityId = cityId
+            refreshLayout.autoRefresh()
         })
         arePop.data = (JSON.parseArray(getJson(), AreaBean::class.java) as ArrayList<AreaBean>)
         arePop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
@@ -179,23 +193,23 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener 
     override fun onClick(v: View) {
         when (v) {
             rb1 -> {
-                if(!sortPop.isShowing) {
+                if (!sortPop.isShowing) {
                     sortPop.showPopupWindow(radioGroup)
-                }else{
+                } else {
                     radioGroup.clearCheck()
                 }
             }
             rb2 -> {
-                if(!coalPop.isShowing) {
+                if (!coalPop.isShowing) {
                     coalPop.showPopupWindow(radioGroup)
-                }else{
+                } else {
                     radioGroup.clearCheck()
                 }
             }
             rb3 -> {
-                if(!arePop.isShowing) {
+                if (!arePop.isShowing) {
                     arePop.showPopupWindow(radioGroup)
-                }else{
+                } else {
                     radioGroup.clearCheck()
                 }
             }
@@ -203,8 +217,38 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener 
     }
 
 
-    override fun onRefresh(refreshlayout: RefreshLayout?) {
-        refreshLayout?.finishRefresh()
+    override fun onRefresh(refreshLayout: RefreshLayout?) {
+        currentPage = 1
+        refreshState = com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH
+        iniData()
+
+    }
+
+    override fun onLoadMoreRequested() {
+        refreshState = com.szw.framelibrary.config.Constants.RefreshState.STATE_LOAD_MORE
+        iniData()
+    }
+
+    private fun iniData() {
+        DataCtrlClass.steelEnquiryData(context, currentPage, steelClassId, provinceId, cityId, sortType) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                if (refreshState == com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it)
+                } else {
+                    mAdapter.addData(it)
+
+                }
+                if (it.isNotEmpty()) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
+        }
     }
 
 

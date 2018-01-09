@@ -113,24 +113,24 @@ class SellOrderFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.
     }
 
     private fun iniData() {
-        DataCtrlClass.GoodsManageListData(context, currentPage) {
-            refreshLayout?.finishRefresh()
-            if (it != null) {
-                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
-                    mAdapter.setNewData(it)
-                } else {
-                    mAdapter.addData(it)
-
-                }
-                if (it.isNotEmpty()) {
-                    mAdapter.loadMoreComplete()
-                    currentPage++
-                } else {
-                    mAdapter.loadMoreEnd()
-                }
-            } else {
-                mAdapter.loadMoreFail()
-            }
-        }
+//        DataCtrlClass.GoodsManageListData(context, currentPage,) {
+//            refreshLayout?.finishRefresh()
+//            if (it != null) {
+//                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
+//                    mAdapter.setNewData(it)
+//                } else {
+//                    mAdapter.addData(it)
+//
+//                }
+//                if (it.isNotEmpty()) {
+//                    mAdapter.loadMoreComplete()
+//                    currentPage++
+//                } else {
+//                    mAdapter.loadMoreEnd()
+//                }
+//            } else {
+//                mAdapter.loadMoreFail()
+//            }
+//        }
     }
 }

@@ -92,16 +92,18 @@ class AreaPop(context: Context, listener: (name: String, povinceId: String,cityI
 
         inflate.mRecyclerViewTwo.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+
                 mOneAdapter.data.forEach {
                     it.isCheck = false
                     it.cities.forEach { it.isCheck = false }
                 }
                 mTwoAdapter.data.get(position).isCheck = true
                 mTwoAdapter.notifyDataSetChanged()
+                var cityEntity=mTwoAdapter.data.get(position)
                 if(position>0){
-                    listener.invoke(mTwoAdapter.data.get(position).areaName,mTwoAdapter.data.get(position).areaId,entity.areaId,true)
+                    listener.invoke(mTwoAdapter.data.get(position).areaName,entity.areaId,cityEntity.areaId,true)
                 }else{
-                    listener.invoke(if(entity.areaName.equals("不限")) "区域" else  entity.areaName,mTwoAdapter.data.get(position).areaId,"",true)
+                    listener.invoke(if(entity.areaName.equals("不限")) "区域" else  entity.areaName,entity.areaId,cityEntity.areaId,true)
                 }
                 dismiss()
             }

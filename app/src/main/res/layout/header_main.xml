@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:layout_marginTop="30dp"
+            android:visibility="gone"
             android:layout_marginStart="15dp"
             android:drawableEnd="@mipmap/icon_main_arrow_location"
             android:drawablePadding="4dp"

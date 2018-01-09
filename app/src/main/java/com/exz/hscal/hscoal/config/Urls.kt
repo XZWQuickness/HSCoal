@@ -161,6 +161,27 @@ object Urls {
      */
     var ReleaseCoal = url + "App/Supply/ReleaseCoal.aspx"
 
+    /*
+     * 编辑煤炭，不允许修改煤种（供应商权限,未通过时，可以调用接口）
+     */
+    var EditCoal = url + "App/Supply/EditCoal.aspx"
+
+
+    /*
+     * 发布有色金属（供应商权限）
+     */
+    var ReleaseSteel = url + "App/Supply/ReleaseSteel.aspx"
+
+    /*
+     * 发布煤炭询价
+     */
+    var ReleaseCoalEnquiry = url + "App/Enquiry/ReleaseCoal.aspx"
+
+    /*
+     * 发布有色金属
+     */
+    var ReleaseSteelEnquiry = url + "App/Enquiry/ReleaseSteel.aspx"
+
 
     /*
      * 煤炭货源
@@ -168,9 +189,9 @@ object Urls {
     var CoalList = url + "App/Supply/Coal.aspx"
 
     /*
-     * 煤炭询价详情
+     * 煤炭货源详情
      */
-    var GetCoalInfo = url + "App/Enquiry/GetCoalInfo.aspx"
+    var GetCoalInfo = url + "App/Supply/GetCoalInfo.aspx"
 
     /*
      * 有色金属分类
@@ -203,6 +224,58 @@ object Urls {
      * 生成订单
      */
     var GenerateOrder = url + "App/Supply/GenerateOrder.aspx"
+
+    /*
+     * 待发货订单（司机权限）
+     */
+    var WaitDeliveryOrders = url + "App/WaitDelivery/Orders.aspx"
+
+    /*
+     * 订单详情（司机权限）
+     */
+    var WaitDeliveryOrderInfo = url + "App/WaitDelivery/OrderInfo.aspx"
+
+    /*
+     *  煤炭询价列表
+     */
+    var coalEnquiry = url + "App/Enquiry/Coal.aspx"
+
+    /*
+     *  有色金属询价列表
+     */
+    var steelEnquiry = url + "App/Enquiry/Steel.aspx"
+
+    /*
+     *  煤炭询价详情
+     */
+    var getCoalInfoEnquiry = url + "App/Enquiry/GetCoalInfo.aspx"
+    /*
+     *  有色金属询价详情
+     */
+    var GetSteelInfoEnquiry = url + "App/Enquiry/GetSteelInfo.aspx"
+
+    /*
+     *  立即报价（供应商权限）
+     */
+    var SubmitQuote = url + "App/Enquiry/SubmitQuote.aspx"
+
+
+    /*
+     *  商品管理 煤炭货源
+     */
+    var CoalSeller = url + "App/Account/Seller/Coal.aspx"
+
+
+    /*
+     *  商品管理 有色金属货源
+     */
+    var SteelSeller = url + "App/Account/Seller/Steel.aspx"
+
+
+    /*
+     *  删除货源信息（未通过时，可以调用接口）
+     */
+    var DeleteGoods = url + "App/Supply/Delete.aspx"
 
 
 

@@ -217,7 +217,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="￥11"
+                        android:id="@+id/tvTotal"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
 

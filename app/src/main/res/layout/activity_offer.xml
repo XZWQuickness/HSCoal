@@ -102,6 +102,7 @@
                             android:layout_marginTop="15dp"
                             android:minHeight="80dp"
                             android:textSize="12sp"
+                            android:imeOptions="actionDone"
                             android:gravity="top"
                             android:padding="@dimen/dp_10"
                             android:id="@+id/ed_content"

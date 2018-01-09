@@ -20,6 +20,7 @@
     android:id="@+id/edV"
     android:minWidth="60dp"
     android:gravity="right"
+    android:hint="请输入"
     android:padding="@dimen/margin_15"
     android:inputType="numberDecimal"
     android:imeOptions="actionDone"

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.alibaba.fastjson.JSON
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.adapter.DemandAdapter
 import com.exz.hscal.hscoal.bean.AreaBean
@@ -18,6 +19,7 @@ import com.exz.hscal.hscoal.bean.CargoListBean
 import com.exz.hscal.hscoal.bean.PopStairListBean
 import com.exz.hscal.hscoal.pop.AreaPop
 import com.exz.hscal.hscoal.pop.StairPop
+import com.exz.hscal.hscoal.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.szw.framelibrary.base.MyBaseFragment
@@ -34,7 +36,17 @@ import java.io.InputStreamReader
  * Created by pc on 2017/12/5.
  */
 
-class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
+class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, BaseQuickAdapter.RequestLoadMoreListener {
+
+
+    private var refreshState = com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH
+    private var currentPage = 1
+
+   private var coalVarietyId=""//煤种id
+   private var provinceId=""//省份
+   private var cityId=""//城市
+   private var sortType="0"//排序方式（0综合排序 1求购数递增 2求购数递减 3收货时间最近 4收货时间最远）
+
     private lateinit var sortPop: StairPop
     private lateinit var coalPop: StairPop
     private lateinit var arePop: AreaPop
@@ -52,23 +64,11 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
 
     }
 
-    private var data = ArrayList<CargoListBean>()
     private fun initRecycler() {
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
         mAdapter = DemandAdapter()
-        mAdapter.setHeaderAndEmpty(true)
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
-        mAdapter.setNewData(data)
-        mAdapter.loadMoreEnd()
-        mRecyclerView.addItemDecoration(RecycleViewDivider(context, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(context, R.color.app_bg)))
+        mRecyclerView.addItemDecoration(RecycleViewDivider(context, LinearLayoutManager.VERTICAL, 2, ContextCompat.getColor(context, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
         rb1.setOnClickListener(this)
         rb2.setOnClickListener(this)
@@ -76,23 +76,26 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
                 var entity = mAdapter.data.get(position)
-                startActivity(Intent(activity, DemandCocalDetailAtivity::class.java).putExtra(DemandCocalDetailAtivity.Intent_Id, entity.id))
+                startActivity(Intent(activity, DemandCocalDetailAtivity::class.java).putExtra(DemandCocalDetailAtivity.Intent_Detaile_Id, entity.id))
             }
         })
+        mAdapter.setOnLoadMoreListener(this, mRecyclerView)
+        SZWUtils.setRefreshAndHeaderCtrl(this, header, refreshLayout)
+
     }
 
 
     var sortData = ArrayList<PopStairListBean>()
     var coalData = ArrayList<PopStairListBean>()
     private fun initPop() {
-        sortData.add(PopStairListBean("综合排序", true, "1"))
+        sortData.add(PopStairListBean("综合排序", true, "0"))
         sortData.add(PopStairListBean("价格由低到高", false, "1"))
-        sortData.add(PopStairListBean("价格由高到低", false, "1"))
-        sortData.add(PopStairListBean("最新上架", false, "1"))
-        coalData.add(PopStairListBean("全部煤种", true, "1"))
+        sortData.add(PopStairListBean("价格由高到低", false, "2"))
+        sortData.add(PopStairListBean("最新上架", false, "3"))
+        coalData.add(PopStairListBean("全部煤种", true, ""))
         coalData.add(PopStairListBean("焦炭/焦粉/焦粒", false, "1"))
-        coalData.add(PopStairListBean("炼焦煤", false, "1"))
-        coalData.add(PopStairListBean("动力煤", false, "1"))
+        coalData.add(PopStairListBean("炼焦煤", false, "2"))
+        coalData.add(PopStairListBean("动力煤", false, "3"))
         sortPop = StairPop(activity, {
             if (it != null) {
                 if (it.name.equals("综合排序")) {
@@ -100,6 +103,9 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
                 } else {
                     setGaryOrblue(rb1, true, it.name)
                 }
+                sortType = it.id
+                refreshLayout.autoRefresh()
+
 
             }
         })
@@ -117,6 +123,8 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
                     setGaryOrblue(rb2, true, it.name)
                 }
 
+                coalVarietyId=it.id
+                refreshLayout.autoRefresh()
             }
         })
         coalPop.data = coalData
@@ -125,9 +133,13 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
                 radioGroup.clearCheck()
             }
         }
-        arePop = AreaPop(context, { name, povinceId, cityId, check ->
+        arePop = AreaPop(context, { name, provinceId, cityId, check ->
 
             setGaryOrblue(rb3, check, name)
+
+            this.provinceId = provinceId
+            this.cityId = cityId
+            refreshLayout.autoRefresh()
         })
         arePop.data = (JSON.parseArray(getJson(), AreaBean::class.java) as ArrayList<AreaBean>)
         arePop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
@@ -201,8 +213,38 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener {
     }
 
 
-    override fun onRefresh(refreshlayout: RefreshLayout?) {
-        refreshLayout?.finishRefresh()
+    override fun onRefresh(refreshLayout: RefreshLayout?) {
+        currentPage = 1
+        refreshState = com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH
+        iniData()
+
+    }
+
+    override fun onLoadMoreRequested() {
+        refreshState = com.szw.framelibrary.config.Constants.RefreshState.STATE_LOAD_MORE
+        iniData()
+    }
+
+    private fun iniData() {
+        DataCtrlClass.coalEnquiryData(context, currentPage,  coalVarietyId, provinceId, cityId, sortType) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                if (refreshState == com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it)
+                } else {
+                    mAdapter.addData(it)
+
+                }
+                if (it.isNotEmpty()) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
+        }
     }
 
 

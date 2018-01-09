@@ -3,28 +3,31 @@ package com.exz.hscal.hscoal.module.main.enquiry
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.text.InputType
-import android.util.TypedValue
+import android.text.TextUtils
 import android.view.View
+import android.view.WindowManager
 import com.alibaba.fastjson.JSON
 import com.bigkoo.pickerview.OptionsPickerView
 import com.bigkoo.pickerview.TimePickerView
 import com.blankj.utilcode.util.KeyboardUtils
-import com.blankj.utilcode.util.ScreenUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.exz.carprofitmuch.config.Urls
+import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.adapter.ReleaseAdapter
-import com.exz.hscal.hscoal.bean.ReleaseBean
 import com.exz.hscal.hscoal.bean.CityBean
+import com.exz.hscal.hscoal.bean.PopStairListBean
+import com.exz.hscal.hscoal.bean.ReleaseBean
+import com.exz.hscal.hscoal.bean.TextBean
 import com.exz.hscal.hscoal.utils.RecycleViewDivider
 import com.exz.hscal.hscoal.utils.SZWUtils
-import com.lzy.imagepicker.ImagePicker
-import com.lzy.imagepicker.view.CropImageView
 import com.szw.framelibrary.base.BaseActivity
-import com.szw.framelibrary.imageloder.GlideImageLoader
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_release_cocale.*
+import kotlinx.android.synthetic.main.footer_release_button.view.*
+import org.jetbrains.anko.toast
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -44,7 +47,6 @@ class EnquirySteelActivity : BaseActivity() {
     lateinit var mCoclaOptionPicker: OptionsPickerView<String>
     lateinit var mTimePicker: TimePickerView
     lateinit var entity: ReleaseBean
-    var cocalType = "1"
     var dateType = ""
 
     private lateinit var pvOptionsAddress: OptionsPickerView<String>
@@ -55,6 +57,32 @@ class EnquirySteelActivity : BaseActivity() {
     private var optionsAddress1 = 0
     private var optionsAddress2 = 0
     private var optionsAddress3 = 0
+    private lateinit var mOptionsSteelClass: OptionsPickerView<String>
+
+    private var steelClass = java.util.ArrayList<PopStairListBean>()
+    private var steelClassStr = java.util.ArrayList<String>()
+
+    private lateinit var mOptionsGoodsType: OptionsPickerView<String>
+    private val deliveryWay = java.util.ArrayList<TextBean>()
+    private val deliveryWayStr = java.util.ArrayList<String>()
+
+    var steelClassId = ""//有色金属分类id
+    var name = ""//品名
+    var weight = ""//件重,最多3位小数
+    var purchaseQuantity = ""//求购数量（件）
+    var specification = ""//规格
+    var materialQuality = ""//材质
+    var provinceId = ""//交货省份id
+    var cityId = ""//交货城市id
+    var placeDelivery = ""//交货地
+    var deliveryWayId = ""//交货方式id
+    var plannedDeliveryTime = ""//计划收货时间
+    var contactName = ""//联系人
+    var contactMobile = ""//联系电话
+    var remark = ""//备注
+
+
+    var url = Urls.ReleaseSteelEnquiry
 
     private lateinit var mAdapter: ReleaseAdapter<ReleaseBean>
     override fun initToolbar(): Boolean {
@@ -69,10 +97,14 @@ class EnquirySteelActivity : BaseActivity() {
         toolbar.setNavigationOnClickListener {
             finish()
         }
+
+        toolbar.inflateMenu(R.menu.menu_seek_cocal_detail_text)
+
         return false
     }
 
     override fun setInflateId(): Int {
+        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         return R.layout.activity_release_cocale
     }
 
@@ -81,32 +113,127 @@ class EnquirySteelActivity : BaseActivity() {
         initListData()
         initView()
         initOptionPicker()
-        initCamera()
         initPicker()
+        initSteelClass()
+        getDeliveryWay()
+        initCommint()
     }
 
-    private fun initCamera() {
-        val w = ScreenUtils.getScreenWidth() * 0.2
-        val imagePicker = ImagePicker.getInstance()
-        imagePicker.imageLoader = GlideImageLoader()
-        //显示相机
-        imagePicker.isShowCamera = true
-        //是否裁剪
-        imagePicker.isCrop = true
-        //是否按矩形区域保存裁剪图片
-        imagePicker.isSaveRectangle = true
-        //圖片緩存
-        imagePicker.imageLoader = GlideImageLoader()
-        imagePicker.isMultiMode = false//单选
-        //矩形尺寸
-        imagePicker.style = CropImageView.Style.RECTANGLE
-        val width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300f, resources.displayMetrics).toInt()
-        imagePicker.focusWidth = width
-        imagePicker.focusHeight = width
-        //圖片輸出尺寸
-        imagePicker.outPutX = width
-        imagePicker.outPutY = width
+    private fun isReturn(content: String): Boolean {
+        return content.equals("请输入值") || content.equals("请输入可供吨数") || content.equals("请输入单价")
+                || content.equals("请选择") || content.equals("请输入") || content.equals("请输入品名") || content.equals("请输入产地")
     }
+
+    private fun initCommint() {
+        mFooterView.bt_submit.setOnClickListener {
+            // 发布煤炭
+
+            for (bean in mAdapter.data) {
+
+                when (bean.lay) {
+                    1 -> {
+                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
+                            toast("请输入" + bean.k.replace(":", ""))
+                            return@setOnClickListener
+                        }
+                    }
+                    2 -> {
+                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
+                            toast("请选择" + bean.k.replace(":", ""))
+                            return@setOnClickListener
+                        }
+                    }
+                    3 -> {
+                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.left) || TextUtils.isEmpty(bean.right) || bean.check.equals("0") && isReturn(bean.v)) {
+                            toast("请选择" + bean.k.replace(":", ""))
+                            return@setOnClickListener
+                        }
+                    }
+                    4 -> {
+                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.left) || TextUtils.isEmpty(bean.right) || bean.check.equals("0") && isReturn(bean.v)) {
+                            toast("请输入" + bean.k.replace(":", ""))
+                            return@setOnClickListener
+                        }
+                    }
+                }
+
+
+                if (bean.k.equals("品名:")) {
+                    name = bean.v
+                }
+                if (bean.k.equals("件重:")) {
+                    weight = bean.v
+                }
+                if (bean.k.equals("求购数(件):")) {
+                    purchaseQuantity = bean.v
+                }
+                if (bean.k.equals("规格:")) {
+                    specification = bean.v
+                }
+                if (bean.k.equals("材质:")) {
+                    materialQuality = bean.v
+                }
+                if (bean.k.equals("计划收货时间:")) {
+                    plannedDeliveryTime = bean.v
+                }
+                if (bean.k.equals("详细地址:")) {
+                    placeDelivery = bean.v
+                }
+                if (bean.k.equals("联系人:")) {
+                    contactName = bean.v
+                }
+                if (bean.k.equals("手机号:")) {
+                    contactMobile = bean.v
+                }
+                if (bean.k.equals("备注:")) {
+                    remark = bean.v
+                }
+
+            }
+            DataCtrlClass.releaseSteelEnquiry(mContext, steelClassId, name, weight, purchaseQuantity, specification, materialQuality, provinceId,
+                    cityId, placeDelivery, deliveryWayId, plannedDeliveryTime, contactName, contactMobile, remark, url, {
+                if (it != null) {
+                    finish()
+                }
+            })
+
+        }
+    }
+
+    private fun initSteelClass() {
+        DataCtrlClass.steelClassData(mContext, {
+            if (it != null) {
+                steelClass = it as ArrayList<PopStairListBean>
+                for (bean in steelClass) {
+                    steelClassStr.add(bean.name)
+                }
+
+                mOptionsSteelClass.setPicker(steelClassStr)
+                mOptionsSteelClass.setCyclic(false)
+            }
+        })
+
+    }
+
+    /*
+   *
+   * 交货方式
+   */
+    private fun getDeliveryWay() {
+        //交货方式
+        DataCtrlClass.deliveryWayData(mContext, {
+            if (it != null) {
+                deliveryWay.addAll(it)
+                for (bean in deliveryWay) {
+                    deliveryWayStr.add(bean.name)
+                }
+                mOptionsGoodsType.setPicker(deliveryWayStr)
+                mOptionsGoodsType.setCyclic(false)
+            }
+
+        })
+    }
+
 
     private fun initOptionPicker() {
         cocalStr.add("焦炭/焦粉/焦粒")
@@ -129,11 +256,33 @@ class EnquirySteelActivity : BaseActivity() {
 
         mTimePicker.setOnTimeSelectListener {
             if (it != null) {
-                val format = SimpleDateFormat("yyyy-MM-dd-HH")
-                entity.v = format.format(it)
+                val format = SimpleDateFormat("yyyy-MM-dd")
+                    entity.v = format.format(it)
                 mAdapter.notifyItemChanged(mAdapter.data.indexOf(entity))
             }
         }
+
+        mOptionsSteelClass = OptionsPickerView(mContext)
+        mOptionsSteelClass.setOnoptionsSelectListener { options1, option2, options3 ->
+            steelClassId = steelClass.get(options1).id
+            entity.v = steelClass.get(options1).name
+            entity.check = "3"
+            mAdapter.notifyItemChanged(mAdapter.data.indexOf(entity))
+
+        }
+
+        mOptionsGoodsType = OptionsPickerView(mContext)
+        mOptionsGoodsType.setOnoptionsSelectListener { options1, option2, options3 ->
+            try {
+                entity.v = deliveryWay[options1].name
+                deliveryWayId = deliveryWay[options1].id
+                entity.check = "3"
+                mAdapter.notifyItemChanged(mAdapter.data.indexOf(entity))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
     }
 
     private fun initView() {
@@ -152,20 +301,47 @@ class EnquirySteelActivity : BaseActivity() {
                     "煤种:" -> {
                         mCoclaOptionPicker.show()
                     }
+                    "类别:" -> {
+                        KeyboardUtils.hideSoftInput(mContext as EnquirySteelActivity)
+                        mOptionsSteelClass.show()
+                    }
                     "交货地点:" -> {
                         KeyboardUtils.hideSoftInput(mContext as EnquirySteelActivity)
-                        pvOptionsAddress.setPicker(optionsProvinces, optionsCities, optionsCounties,
+                        pvOptionsAddress.setPicker(optionsProvinces, optionsCities,
                                 true)
-                        pvOptionsAddress.setSelectOptions(optionsAddress1, optionsAddress2, optionsAddress3)
+                        pvOptionsAddress.setSelectOptions(optionsAddress1, optionsAddress2)
                         //三级选择器
                         pvOptionsAddress.setCyclic(false)
                         pvOptionsAddress.show()
                     }
                     "计划收货时间:" -> {
+                        KeyboardUtils.hideSoftInput(this@EnquirySteelActivity)
                         mTimePicker.show()
                     }
+                    "交货方式:" -> {
+                        KeyboardUtils.hideSoftInput(this@EnquirySteelActivity)
+                        mOptionsGoodsType.show()
+                    }
+
                 }
 
+            }
+
+            override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View, position: Int) {
+                super.onItemChildClick(adapter, view, position)
+                entity = mAdapter.data.get(position)
+                when (view.id) {
+                    R.id.tvLeft -> {//交货时间 左边
+                        dateType = "1"
+                        mTimePicker.show()
+                    }
+                    R.id.tvRight -> {//交货时间 右边
+                        dateType = "2"
+                        mTimePicker.show()
+                    }
+
+
+                }
             }
 
         })
@@ -173,21 +349,19 @@ class EnquirySteelActivity : BaseActivity() {
 
     private fun initListData() {
         //lay 1 输入文本 2 选择文本 3  交货时间 4 输入区间 5 图片
-        data1.add(ReleaseBean(2, "类别:", "请选择", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "品名:", "请输入品名", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "件重:", "请输入件重", "0", InputType.TYPE_CLASS_NUMBER, 0))
-        data1.add(ReleaseBean(1, "求购数(件):", "请输入求购数", "0", InputType.TYPE_CLASS_NUMBER, 15))
-        data1.add(ReleaseBean(1, "规格:", "请输规格", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "材质:", "请输入材质", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data1.add(ReleaseBean(2, "计划收货时间:", "请选择", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(2, "交货地点:", "请选择", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "详细地址:", "请输入", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "联系人:", "请输入", "0", InputType.TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data1.add(ReleaseBean(1, "手机号:", "请输入", "0", InputType.TYPE_CLASS_NUMBER, 15))
-        data1.add(ReleaseBean(1, "备注:", "请选择", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "联系人:", "请输入联系人", "0", InputType.TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data1.add(ReleaseBean(1, "手机号:", "请输入手机号", "0", InputType.TYPE_CLASS_NUMBER, 15))
-        data1.add(ReleaseBean(1, "备注:", "请输入", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data1.add(ReleaseBean(2, "类别:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "品名:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "件重:", "", "0", InputType.TYPE_CLASS_NUMBER, 0))
+        data1.add(ReleaseBean(1, "求购数(件):", "", "0", InputType.TYPE_CLASS_NUMBER, 15))
+        data1.add(ReleaseBean(1, "规格:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "材质:", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data1.add(ReleaseBean(2, "计划收货时间:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(2, "交货地点:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(2, "交货方式:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "详细地址:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "联系人:", "", "0", InputType.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data1.add(ReleaseBean(1, "手机号:", "", "0", InputType.TYPE_CLASS_NUMBER, 15))
+        data1.add(ReleaseBean(1, "备注:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
     }
 
     private fun initPicker() {
@@ -218,11 +392,11 @@ class EnquirySteelActivity : BaseActivity() {
                 optionsAddress1 = options1
                 optionsAddress2 = option2
                 optionsAddress3 = options3
-                entity.v = String.format(listAddress[options1].areaName + listAddress[options1].cities[option2].areaName + listAddress[options1].cities[option2].counties[options3].areaName)
+                entity.v = String.format(listAddress[options1].areaName + listAddress[options1].cities[option2].areaName)
+                entity.check = "3"
+                provinceId = listAddress[options1].areaId
+                cityId = listAddress[options1].cities[option2].areaId
                 mAdapter.notifyItemChanged(mAdapter.data.indexOf(entity))
-//                provinceId = listAddress[options1].areaId
-//                cityId = listAddress[options1].cities[option2].areaId
-//                districtId = listAddress[options1].cities[option2].counties[options3].areaId
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -251,6 +425,5 @@ class EnquirySteelActivity : BaseActivity() {
 
         return stringBuilder.toString()
     }
-
 
 }

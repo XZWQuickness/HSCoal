@@ -2,8 +2,7 @@ package com.exz.hscal.hscoal.utils;
 
 import android.app.Activity
 import android.content.Context
-import android.text.Editable
-import android.text.TextUtils
+import android.text.*
 import android.view.View
 import com.blankj.utilcode.util.KeyboardUtils
 import com.common.controls.dialog.CommonDialogFactory
@@ -11,8 +10,6 @@ import com.common.controls.dialog.DialogUtil
 import com.common.controls.dialog.ICommonDialog
 import com.exz.hscal.hscoal.R
 import kotlinx.android.synthetic.main.dialog_change_num.view.*
-import android.text.InputFilter
-import android.text.TextWatcher
 
 
 /**
@@ -20,7 +17,7 @@ import android.text.TextWatcher
  * on 2017/10/24.
  */
 object DialogUtils {
-    private lateinit var dialog: ICommonDialog
+    lateinit var dialog: ICommonDialog
     /**
      * 清除提醒
      */
@@ -119,13 +116,24 @@ object DialogUtils {
     /**
      * 数量更改弹窗
      */
-    fun changeNum(context: Context, count: Long, max: Int, listener: (num: Long) -> Unit) {
+    fun changeNum(context: Context, count: Float, max: Float, type: String, listener: (num: Float) -> Unit) {
         dialog = DialogType104(context)
         val view = View.inflate(context, R.layout.dialog_change_num, null)
         ViewHolder(view)
-        view.count.setText(String.format("%s", count))
+
         view.count.setSelection(view.count.text.length)
-        countIndex = view.count.text.toString().toLong()
+
+        if (type.equals("1")) {
+            view.count.inputType=InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_CLASS_NUMBER
+            view.count.setText(String.format("%s", count))
+        } else {
+            view.count.inputType=InputType.TYPE_CLASS_NUMBER
+            if(type.equals("2")){
+                view.count.setText(String.format("%s", count).replace(".0",""))
+            }
+        }
+        countIndex = view.count.text.toString().toFloat()
+        view.count.setSelection(view.count.text.toString().trim().length)
         view.count.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
@@ -134,11 +142,12 @@ object DialogUtils {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (!TextUtils.isEmpty(p0.toString().trim())&&p0.toString().trim().toLong() > max) {
+                if (!TextUtils.isEmpty(p0.toString().trim()) && p0.toString().trim().toFloat() > max) {
                     view.count.setText(max.toString())
-                }else if(TextUtils.isEmpty(p0.toString().trim())){
+                } else if (TextUtils.isEmpty(p0.toString().trim())) {
                     view.count.setText("1")
                 }
+
             }
         })
         this.maxCount = max
@@ -147,14 +156,14 @@ object DialogUtils {
         dialog.setOkBtn("确定") {
             val trim = view.count.text.toString().trim()
             if (!TextUtils.isEmpty(trim)) {
-                listener.invoke(trim.toLong())
+                listener.invoke(trim.toFloat())
             }
             dialog.dismiss()
-            countIndex = 1
+            countIndex = 1f
         }
         dialog.setCancelBtn("取消") {
             dialog.dismiss()
-            countIndex = 1
+            countIndex = 1f
         }
         dialog.setOnShowListener { KeyboardUtils.toggleSoftInput() }
         (dialog as DialogType104).setOnBeforeDismiss {
@@ -164,8 +173,8 @@ object DialogUtils {
         dialog.show()
     }
 
-    private var countIndex = 1.toLong()
-    private var maxCount = 0
+    private var countIndex = 1.toFloat()
+    private var maxCount = 0f
 
     internal class ViewHolder(private var view: View) : View.OnClickListener {
         init {
@@ -175,14 +184,15 @@ object DialogUtils {
         }
 
         override fun onClick(p0: View) {
-            countIndex = view.count.text.toString().toLong()
+            countIndex = view.count.text.toString().toFloat()
             when (p0.id) {
-                R.id.minus -> countIndex = if (countIndex <= 1) 1 else --countIndex
+                R.id.minus -> countIndex = if (countIndex <= 1) 1f else --countIndex
                 R.id.add -> {
                     if (maxCount > countIndex) countIndex += 1 else maxCount
                 }
             }
-            view.count.setText(String.format("%s", countIndex))
+
+            view.count.setText(String.format("%s", countIndex).replace(".0",""))
             view.count.setSelection(view.count.text.length)
         }
 

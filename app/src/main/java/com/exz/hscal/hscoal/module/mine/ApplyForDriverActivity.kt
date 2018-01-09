@@ -117,7 +117,7 @@ class ApplyForDriverActivity : BaseActivity(), View.OnClickListener {
       *
       */
     private fun checkData() {
-        checkDriverIdentityData(mContext, PreferencesService.getAccountKey(mContext) ?: "", PreferencesService.getAccountValue(mContext) ?: "", {
+        checkDriverIdentityData(mContext,  {
             if (it != null) {
                 mEntity = it.data!!.checkResult
                 if (!TextUtils.isEmpty(mEntity.reason)) {

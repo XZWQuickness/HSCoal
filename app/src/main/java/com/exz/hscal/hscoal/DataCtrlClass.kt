@@ -632,16 +632,18 @@ object DataCtrlClass {
     /**
      * 商品管理
      * */
-    fun GoodsManageListData(context: Context, currentPage: Int, listener: (addressBean: List<CargoListBean>?) -> Unit) {
+    fun GoodsManageListData(context: Context, currentPage: Int, state: Int, url: String, listener: (addressBean: List<GoodsManagEntity>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
-        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, MyApplication.salt).toLowerCase())
-        OkGo.post<NetEntity<List<CargoListBean>>>(Urls.url)
+        params.put("page", currentPage.toString())
+        params.put("state", state.toString())
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + currentPage, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<List<GoodsManagEntity>>>(url)
                 .params(params)
                 .tag(this)
-                .execute(object : DialogCallback<NetEntity<List<CargoListBean>>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<List<CargoListBean>>>) {
+                .execute(object : DialogCallback<NetEntity<List<GoodsManagEntity>>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<List<GoodsManagEntity>>>) {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
                             listener.invoke(response.body().data)
                         } else {
@@ -649,7 +651,7 @@ object DataCtrlClass {
                         }
                     }
 
-                    override fun onError(response: Response<NetEntity<List<CargoListBean>>>) {
+                    override fun onError(response: Response<NetEntity<List<GoodsManagEntity>>>) {
                         super.onError(response)
                         listener.invoke(null)
                     }
@@ -700,13 +702,11 @@ object DataCtrlClass {
     /**
      * 供应商审核结果接口
      */
-    fun CheckBusinessIdentityData(context: Context, phone: String, passowrd: String, listener: (NetEntity<CheckBusinessIdentityBean>?) -> Unit) {
+    fun CheckBusinessIdentityData(context: Context, listener: (NetEntity<CheckBusinessIdentityBean>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
-        if (!TextUtils.isEmpty(phone)) params.put("mobile", phone)
-        if (!TextUtils.isEmpty(passowrd)) params.put("password", passowrd)
-        params.put("requestCheck", EncryptUtils.encryptMD5ToString(phone, MyApplication.salt).toLowerCase())
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, MyApplication.salt).toLowerCase())
         OkGo.post<NetEntity<CheckBusinessIdentityBean>>(Urls.CheckBusinessIdentity)
                 .params(params)
                 .tag(this)
@@ -765,13 +765,11 @@ object DataCtrlClass {
     /**
      * 司机审核结果接口
      */
-    fun checkDriverIdentityData(context: Context, phone: String, passowrd: String, listener: (NetEntity<CheckDriverIdentityBean>?) -> Unit) {
+    fun checkDriverIdentityData(context: Context, listener: (NetEntity<CheckDriverIdentityBean>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
-        if (!TextUtils.isEmpty(phone)) params.put("mobile", phone)
-        if (!TextUtils.isEmpty(passowrd)) params.put("password", passowrd)
-        params.put("requestCheck", EncryptUtils.encryptMD5ToString(phone, MyApplication.salt).toLowerCase())
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, MyApplication.salt).toLowerCase())
         OkGo.post<NetEntity<CheckDriverIdentityBean>>(Urls.CheckDriverIdentity)
                 .params(params)
                 .tag(this)
@@ -851,13 +849,14 @@ object DataCtrlClass {
     /**
      * 发布煤炭（供应商权限）
      * */
-    fun releaseCoal(context: Context, coalVarietyId: String, name: String, place: String, fixedCarbon: String, calorificValue: String, ashSpecification: String, volatiles: String, inherentMoisture: String,
+    fun releaseCoal(context: Context,coalId:String, coalVarietyId: String, name: String, place: String, fixedCarbon: String, calorificValue: String, ashSpecification: String, volatiles: String, inherentMoisture: String,
                     totalSulfurContent: String, bond: String, y_Value: String, lithofacies: String, csr: String, lowerCalorificValue: String, airDrySulfur: String, ashFusionPoint: String, airDryRadicalVolatiles: String,
                     baseVolatiles: String, totalMoisture: String, g_Value: String, remark: String, provinceId: String, cityId: String, deliveryTime: String, deliveryWayId: String, qty: String,
-                    price: String, paymentModeId: String, inspectonBody: String, inspectonBody_Img: String, image: String, url: String, listener: (NetEntity<Void>?) -> Unit) {
+                    price: String, paymentModeId: String, inspectonBody: String, inspectonBody_Img: String, image: String, url: String, requestCheck:String,listener: (NetEntity<Void>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
+        if (!TextUtils.isEmpty(coalId)) params.put("coalId", coalId)
         if (!TextUtils.isEmpty(coalVarietyId)) params.put("coalVarietyId", coalVarietyId)
         if (!TextUtils.isEmpty(name)) params.put("name", name)
         if (!TextUtils.isEmpty(place)) params.put("place", place)
@@ -889,7 +888,7 @@ object DataCtrlClass {
         if (!TextUtils.isEmpty(inspectonBody)) params.put("inspectonBody", inspectonBody)
         if (!TextUtils.isEmpty(inspectonBody_Img)) params.put("inspectonBody_Img", inspectonBody_Img)
         if (!TextUtils.isEmpty(image)) params.put("image", image)
-        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + coalVarietyId, MyApplication.salt).toLowerCase())
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(requestCheck , MyApplication.salt).toLowerCase())
         OkGo.post<NetEntity<Void>>(url)
                 .params(params)
                 .tag(this)
@@ -912,6 +911,57 @@ object DataCtrlClass {
 
     }
 
+
+    /**
+     * 发布有色金属（供应商权限）
+     *
+     * */
+    fun releaseSteel(context: Context, steelClassId: String, name: String, steelworks: String, specification: String, materialQuality: String, warehouse: String, remark: String,
+                     provinceId: String, cityId: String, deliveryTime: String, deliveryWayId: String, weight: String, qty: String,
+                     price: String, paymentModeId: String, inspectonBody: String, inspectonBody_Img: String, image: String, url: String, listener: (NetEntity<Void>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        if (!TextUtils.isEmpty(steelClassId)) params.put("steelClassId", steelClassId) //有色金属分类id
+        if (!TextUtils.isEmpty(name)) params.put("name", name) //品名
+        if (!TextUtils.isEmpty(steelworks)) params.put("steelworks", steelworks)//钢厂
+        if (!TextUtils.isEmpty(specification)) params.put("specification", specification)//规格
+        if (!TextUtils.isEmpty(materialQuality)) params.put("materialQuality", materialQuality)//材质
+        if (!TextUtils.isEmpty(warehouse)) params.put("warehouse", warehouse)//仓库
+        if (!TextUtils.isEmpty(remark)) params.put("remark", remark)//备注
+        if (!TextUtils.isEmpty(provinceId)) params.put("provinceId", provinceId)//省
+        if (!TextUtils.isEmpty(cityId)) params.put("cityId", cityId)//市
+        if (!TextUtils.isEmpty(deliveryTime)) params.put("deliveryTime", deliveryTime)//交货时间
+        if (!TextUtils.isEmpty(deliveryWayId)) params.put("deliveryWayId", deliveryWayId)//交货方式id
+        if (!TextUtils.isEmpty(weight)) params.put("weight", weight)//件重,最多3位小数
+        if (!TextUtils.isEmpty(qty)) params.put("qty", qty)//供应数量（件）
+        if (!TextUtils.isEmpty(price)) params.put("price", price)//价格（元/件）
+        if (!TextUtils.isEmpty(paymentModeId)) params.put("paymentModeId", paymentModeId)//付款方式id
+        if (!TextUtils.isEmpty(inspectonBody)) params.put("inspectonBody", inspectonBody)//检验机构
+        if (!TextUtils.isEmpty(inspectonBody_Img)) params.put("inspectonBody_Img", inspectonBody_Img)//检验机构_报告图片
+        if (!TextUtils.isEmpty(image)) params.put("image", image)//商品图
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + steelClassId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<Void>>(url)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<Void>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+
+    }
 
     /**
      * 煤炭货源
@@ -950,16 +1000,16 @@ object DataCtrlClass {
     /**
      * 煤炭货源详情
      */
-    fun getCoalInfo(context: Context, coalEnquiryId: String, listener: (NetEntity<Void>?) -> Unit) {
+    fun getCoalInfo(context: Context, coalId: String, listener: (NetEntity<SeekCocalDetaileEntity>?) -> Unit) {
 
         val params = HashMap<String, String>()
-        params.put("coalEnquiryId", coalEnquiryId)
-        params.put("requestCheck", EncryptUtils.encryptMD5ToString(coalEnquiryId, MyApplication.salt).toLowerCase())
-        OkGo.post<NetEntity<Void>>(Urls.GetCoalInfo)
+        params.put("coalId", coalId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(coalId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<SeekCocalDetaileEntity>>(Urls.GetCoalInfo)
                 .params(params)
                 .tag(this)
-                .execute(object : DialogCallback<NetEntity<Void>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                .execute(object : DialogCallback<NetEntity<SeekCocalDetaileEntity>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<SeekCocalDetaileEntity>>) {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
                             listener.invoke(response.body())
                         } else {
@@ -968,7 +1018,7 @@ object DataCtrlClass {
                         }
                     }
 
-                    override fun onError(response: Response<NetEntity<Void>>) {
+                    override fun onError(response: Response<NetEntity<SeekCocalDetaileEntity>>) {
                         super.onError(response)
                         listener.invoke(null)
                     }
@@ -1164,4 +1214,358 @@ object DataCtrlClass {
 
                 })
     }
+
+
+    fun releaseCoalEnquiry(context: Context, coalVarietyId: String, name: String, purchaseQuantity: String, fixedCarbon: String, calorificValue: String,
+                           ashSpecification: String, volatiles: String, inherentMoisture: String, totalSulfurContent: String, bond: String, y_Value: String,
+                           lithofacies: String, csr: String, lowerCalorificValue: String, airDrySulfur: String, airDryRadicalVolatiles: String, provinceId: String,
+                           cityId: String, placeDelivery: String, deliveryTime: String, deliveryWayId: String, plannedDeliveryTime: String, contactName: String,
+                           contactMobile: String, remark: String, url: String, listener: (NetEntity<Void>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        if (!TextUtils.isEmpty(coalVarietyId)) params.put("coalVarietyId", coalVarietyId)
+        if (!TextUtils.isEmpty(name)) params.put("name", name)
+        if (!TextUtils.isEmpty(purchaseQuantity)) params.put("purchaseQuantity", purchaseQuantity)
+        if (!TextUtils.isEmpty(fixedCarbon)) params.put("fixedCarbon", fixedCarbon)
+        if (!TextUtils.isEmpty(calorificValue)) params.put("calorificValue", calorificValue)
+        if (!TextUtils.isEmpty(ashSpecification)) params.put("ashSpecification", ashSpecification)
+        if (!TextUtils.isEmpty(volatiles)) params.put("volatiles", volatiles)
+        if (!TextUtils.isEmpty(inherentMoisture)) params.put("inherentMoisture", inherentMoisture)
+        if (!TextUtils.isEmpty(totalSulfurContent)) params.put("totalSulfurContent", totalSulfurContent)
+        if (!TextUtils.isEmpty(bond)) params.put("bond", bond)
+        if (!TextUtils.isEmpty(y_Value)) params.put("y_Value", y_Value)
+        if (!TextUtils.isEmpty(lithofacies)) params.put("lithofacies", lithofacies)
+        if (!TextUtils.isEmpty(csr)) params.put("csr", csr)
+        if (!TextUtils.isEmpty(lowerCalorificValue)) params.put("lowerCalorificValue", lowerCalorificValue)
+        if (!TextUtils.isEmpty(airDrySulfur)) params.put("airDrySulfur", airDrySulfur)
+        if (!TextUtils.isEmpty(airDryRadicalVolatiles)) params.put("airDryRadicalVolatiles", airDryRadicalVolatiles)
+        if (!TextUtils.isEmpty(provinceId)) params.put("provinceId", provinceId)
+        if (!TextUtils.isEmpty(cityId)) params.put("cityId", cityId)
+        if (!TextUtils.isEmpty(placeDelivery)) params.put("placeDelivery", placeDelivery)
+        if (!TextUtils.isEmpty(deliveryTime)) params.put("deliveryTime", deliveryTime)
+        if (!TextUtils.isEmpty(deliveryWayId)) params.put("deliveryWayId", deliveryWayId)
+        if (!TextUtils.isEmpty(plannedDeliveryTime)) params.put("plannedDeliveryTime", plannedDeliveryTime)
+        if (!TextUtils.isEmpty(contactName)) params.put("contactName", contactName)
+        if (!TextUtils.isEmpty(contactMobile)) params.put("contactMobile", contactMobile)
+        if (!TextUtils.isEmpty(remark)) params.put("remark", remark)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + coalVarietyId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<Void>>(url)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<Void>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+
+    }
+
+    fun releaseSteelEnquiry(context: Context, steelClassId: String, name: String, weight: String, purchaseQuantity: String, specification: String,
+                            materialQuality: String, provinceId: String, cityId: String, placeDelivery: String, deliveryWayId: String,
+                            plannedDeliveryTime: String, contactName: String, contactMobile: String, remark: String, url: String, listener: (NetEntity<Void>?) -> Unit) {
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        if (!TextUtils.isEmpty(steelClassId)) params.put("steelClassId", steelClassId)
+        if (!TextUtils.isEmpty(name)) params.put("name", name)
+        if (!TextUtils.isEmpty(weight)) params.put("weight", weight)
+        if (!TextUtils.isEmpty(purchaseQuantity)) params.put("purchaseQuantity", purchaseQuantity)
+        if (!TextUtils.isEmpty(specification)) params.put("specification", specification)
+        if (!TextUtils.isEmpty(materialQuality)) params.put("materialQuality", materialQuality)
+        if (!TextUtils.isEmpty(provinceId)) params.put("provinceId", provinceId)
+        if (!TextUtils.isEmpty(cityId)) params.put("cityId", cityId)
+        if (!TextUtils.isEmpty(placeDelivery)) params.put("placeDelivery", placeDelivery)
+        if (!TextUtils.isEmpty(deliveryWayId)) params.put("deliveryWayId", deliveryWayId)
+        if (!TextUtils.isEmpty(plannedDeliveryTime)) params.put("plannedDeliveryTime", plannedDeliveryTime)
+        if (!TextUtils.isEmpty(contactName)) params.put("contactName", contactName)
+        if (!TextUtils.isEmpty(contactMobile)) params.put("contactMobile", contactMobile)
+        if (!TextUtils.isEmpty(remark)) params.put("remark", remark)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + steelClassId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<Void>>(url)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<Void>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+
+    }
+
+    /**
+     * 报价列表
+     * */
+    fun waitDeliveryOrders(context: Context, currentPage: Int, type: String, listener: (addressBean: List<SeekGoodsEntity>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("page", currentPage.toString())
+        if (!TextUtils.isEmpty(type)) params.put("type", type)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + currentPage, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<List<SeekGoodsEntity>>>(Urls.WaitDeliveryOrders)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<List<SeekGoodsEntity>>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<List<SeekGoodsEntity>>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body().data)
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<List<SeekGoodsEntity>>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+
+    /**
+     * 订单详情（司机权限）
+     *
+     */
+    fun waitDeliveryOrderInfo(context: Context, orderId: String, listener: (NetEntity<SeekGoodsDetaile>?) -> Unit) {
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("orderId", orderId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(orderId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<SeekGoodsDetaile>>(Urls.WaitDeliveryOrderInfo)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<SeekGoodsDetaile>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<SeekGoodsDetaile>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<SeekGoodsDetaile>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+
+    /**
+     * 煤炭货源询价
+     * */
+    fun coalEnquiryData(context: Context, page: Int, coalVarietyId: String, provinceId: String, cityId: String, sortType: String, listener: (bannersBean: ArrayList<DemandBean>?) -> Unit) {
+//        type	string	必填	位置
+
+        val params = HashMap<String, String>()
+        if (!TextUtils.isEmpty(coalVarietyId)) params.put("coalVarietyId", coalVarietyId)
+        if (!TextUtils.isEmpty(provinceId)) params.put("provinceId", provinceId)
+        if (!TextUtils.isEmpty(cityId)) params.put("cityId", cityId)
+        if (!TextUtils.isEmpty(sortType)) params.put("sortType", sortType)
+        if (!TextUtils.isEmpty(page.toString())) params.put("page", page.toString())
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(page.toString(), MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<ArrayList<DemandBean>>>(Urls.coalEnquiry)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<ArrayList<DemandBean>>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<ArrayList<DemandBean>>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body().data)
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<ArrayList<DemandBean>>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 有色金属询价列表
+     * */
+    fun steelEnquiryData(context: Context, page: Int, steelClassId: String, provinceId: String, cityId: String, sortType: String, listener: (bannersBean: ArrayList<DemandBean>?) -> Unit) {
+//        type	string	必填	位置
+
+        val params = HashMap<String, String>()
+        if (!TextUtils.isEmpty(steelClassId)) params.put("steelClassId", steelClassId)
+        if (!TextUtils.isEmpty(provinceId)) params.put("provinceId", provinceId)
+        if (!TextUtils.isEmpty(cityId)) params.put("cityId", cityId)
+        if (!TextUtils.isEmpty(sortType)) params.put("sortType", sortType)
+        if (!TextUtils.isEmpty(page.toString())) params.put("page", page.toString())
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(page.toString(), MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<ArrayList<DemandBean>>>(Urls.steelEnquiry)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<ArrayList<DemandBean>>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<ArrayList<DemandBean>>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body().data)
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<ArrayList<DemandBean>>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 煤炭货源询价详情
+     */
+    fun getCoalInfoEnquiry(context: Context, coalEnquiryId: String, listener: (NetEntity<DemandCocalDetailEntity>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("coalEnquiryId", coalEnquiryId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(coalEnquiryId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<DemandCocalDetailEntity>>(Urls.getCoalInfoEnquiry)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<DemandCocalDetailEntity>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<DemandCocalDetailEntity>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<DemandCocalDetailEntity>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 有色金属货源详情
+     */
+    fun getSteelInfoEnquiry(context: Context, steelEnquiryId: String, listener: (NetEntity<DemandSteelDetailEntity>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("steelEnquiryId", steelEnquiryId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(steelEnquiryId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<DemandSteelDetailEntity>>(Urls.GetSteelInfoEnquiry)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<DemandSteelDetailEntity>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<DemandSteelDetailEntity>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<DemandSteelDetailEntity>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+
+    /**
+     * 立即报价（供应商权限）
+     */
+    fun submitQuote(context: Context, type: String, objectId: String, price: String, remark: String, listener: (NetEntity<Void>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("type", type)
+        params.put("objectId", objectId)
+        params.put("price", price)
+        params.put("remark", remark)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + objectId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<Void>>(Urls.SubmitQuote)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            listener.invoke(null)
+                        }
+                        context.toast(response.body().message)
+                    }
+
+                    override fun onError(response: Response<NetEntity<Void>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 删除货源信息（未通过时，可以调用接口）
+     * type	string	必填	类型：1煤炭 2有色金属
+     *  objectId	string	必填	煤炭、有色金属货源id
+     */
+    fun delteGoods(context: Context, type: String, objectId: String, listener: (NetEntity<Void>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("type", type)
+        params.put("objectId", objectId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + objectId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<Void>>(Urls.DeleteGoods)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            listener.invoke(null)
+                        }
+                        context.toast(response.body().message)
+                    }
+
+                    override fun onError(response: Response<NetEntity<Void>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+
 }

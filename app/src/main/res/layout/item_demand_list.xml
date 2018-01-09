@@ -29,8 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@string/jian"
             android:maxLines="1"
+            android:id="@+id/purchaseQuantity"
             android:textColor="@color/Red"
             android:textSize="14sp" />
 
@@ -41,14 +41,14 @@
         android:layout_toStartOf="@id/llLay"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
+
         android:layout_toEndOf="@id/img"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/coalVarietyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="11"
             android:maxLines="1"
             android:textColor="@color/MaterialGrey800"
             android:textSize="16sp" />
@@ -58,13 +58,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="11"
             android:maxLines="1"
             android:textColor="@color/MaterialGrey600"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tvAddress"
+            android:id="@+id/provinceCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -74,7 +73,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tvUnit"
+            android:id="@+id/plannedDeliveryTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

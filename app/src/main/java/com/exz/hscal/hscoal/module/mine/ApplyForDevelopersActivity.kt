@@ -150,7 +150,7 @@ class ApplyForDevelopersActivity : BaseActivity(), View.OnClickListener {
     *
     */
     private fun checkData() {
-        DataCtrlClass.CheckBusinessIdentityData(mContext, PreferencesService.getAccountKey(mContext) ?: "", PreferencesService.getAccountValue(mContext) ?: "", {
+        DataCtrlClass.CheckBusinessIdentityData(mContext,  {
             if (it != null) {
 
 

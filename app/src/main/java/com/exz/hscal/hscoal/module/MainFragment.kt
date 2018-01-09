@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.carprofitmuch.config.Urls
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
@@ -18,10 +20,13 @@ import com.exz.hscal.hscoal.bean.CargoListBean
 import com.exz.hscal.hscoal.bean.NewsBean
 import com.exz.hscal.hscoal.bean.TabEntity
 import com.exz.hscal.hscoal.imageloader.BannerImageLoader
+import com.exz.hscal.hscoal.module.login.LoginActivity
 import com.exz.hscal.hscoal.module.main.coal.SeekCoalActivity
+import com.exz.hscal.hscoal.module.main.coal.SeekCocalDetailActivity
 import com.exz.hscal.hscoal.module.main.goods.SeekGoodsActivity
 import com.exz.hscal.hscoal.module.main.release.ReleaseGoodsActivity
 import com.exz.hscal.hscoal.module.main.steel.SeekSteelActivity
+import com.exz.hscal.hscoal.module.main.steel.SeekSteelDetailActivity
 import com.exz.hscal.hscoal.module.mine.ApplyForDevelopersActivity
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.exz.hscal.hscoal.widget.MyWebActivity
@@ -30,6 +35,7 @@ import com.flyco.tablayout.listener.OnTabSelectListener
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.scwang.smartrefresh.layout.util.DensityUtil
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.MyBaseFragment
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -172,6 +178,8 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
             }
         })
 
+
+
         headerView.bt_tab_1.setOnClickListener(this)
         headerView.bt_tab_2.setOnClickListener(this)
         headerView.bt_tab_3.setOnClickListener(this)
@@ -203,7 +211,8 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
 
         headerView.marqueeView.setOnItemClickListener { position, textView ->
 
-            startActivity(Intent(context, MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title, startWithList.get(position)).putExtra(MyWebActivity.Intent_Url, news.get(position).url))
+
+                startActivity(Intent(context, MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title, startWithList.get(position)).putExtra(MyWebActivity.Intent_Url, news.get(position).url))
         }
 
         headerView.mainTabBar.setOnTabSelectListener(object : OnTabSelectListener {
@@ -222,6 +231,18 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
             override fun onTabReselect(position: Int) {
             }
         })
+
+        mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
+            override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                var entity=mAdapter.data.get(position)
+                if(headerView.mainTabBar.currentTab==0) {
+                    startActivity(Intent(context, SeekCocalDetailActivity::class.java).putExtra(SeekCocalDetailActivity.Intent_Id, entity.id))
+                }else{
+                    startActivity(Intent(context, SeekSteelDetailActivity::class.java).putExtra(SeekSteelDetailActivity.Intent_Id, entity.id))
+                }
+            }
+        })
+
     }
 
     override fun OnBannerClick(position: Int) {
@@ -236,11 +257,37 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
             headerView.bt_tab_2 -> {//找钢材
                 startActivity(Intent(context, SeekSteelActivity::class.java))
             }
-            headerView.bt_tab_3 -> {
+            headerView.bt_tab_3 -> {//找货源
 
-                startActivity(Intent(context, SeekGoodsActivity::class.java))
+                if (!MyApplication.checkUserLogin()) {
+                    startActivityForResult(Intent(context, LoginActivity::class.java), LoginActivity.RESULT_LOGIN_CANCELED)
+                    return
+                }
+                //"供应商认证：-1未申请 0待审核，1已认证 2未通过",
+                when (MineFragment.driverAuthentication) {
+                    "-1" -> {
+                        startActivity(Intent(context, ApplyForDevelopersActivity::class.java))
+                    }
+                    "0" -> {
+                        toast("司机证审核中")
+                    }
+                    "1" -> {
+
+                        startActivity(Intent(context, SeekGoodsActivity::class.java))
+                    }
+                    "2" -> {
+                        startActivity(Intent(context, ApplyForDevelopersActivity::class.java).putExtra(ApplyForDevelopersActivity.Intent_State, MineFragment.driverAuthentication))
+                    }
+                }
+
+
+
             }
             headerView.bt_tab_4 -> {//发布询价
+                if (!MyApplication.checkUserLogin()) {
+                    startActivityForResult(Intent(context, LoginActivity::class.java), LoginActivity.RESULT_LOGIN_CANCELED)
+                    return
+                }
                 //"供应商认证：-1未申请 0待审核，1已认证 2未通过",
                 when (MineFragment.businessAuthentication) {
                     "-1" -> {
@@ -260,6 +307,10 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
 
             }
             headerView.bt_tab_5 -> {//发布卖品
+                if (!MyApplication.checkUserLogin()) {
+                    startActivityForResult(Intent(context, LoginActivity::class.java), LoginActivity.RESULT_LOGIN_CANCELED)
+                    return
+                }
                 //"供应商认证：-1未申请 0待审核，1已认证 2未通过",
                 when (MineFragment.businessAuthentication) {
                     "-1" -> {

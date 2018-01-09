@@ -3,7 +3,9 @@ package com.exz.hscal.hscoal.adapter
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.RelativeLayout
+import com.alibaba.fastjson.JSON
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.exz.hscal.hscoal.R
@@ -31,44 +33,36 @@ class ReleaseAdapter<T : ReleaseBean> : BaseMultiItemQuickAdapter<T, BaseViewHol
 
     override fun convert(helper: BaseViewHolder, item: T) {
         var v = helper.itemView
+
+        Log.i("text",""+JSON.toJSON(item));
         when (item.lay) {//1 输入文本 2 选择文本 3  交货时间 4 输入区间 5 图片
             1 -> {
                 v.tvK1.text = item.k
                 v.edV.inputType = item.inputType
-                when (item.check) {
-                    "0" -> {
-                        v.edV.hint = item.v
+                v.edV.setText(item.v)
+                if (v.edV.getTag() is TextWatcher) {
+                    v.edV.removeTextChangedListener(v.edV.getTag() as TextWatcher);
+                }
+                val watcher = object : TextWatcher {
+                    override fun beforeTextChanged(p0: CharSequence, start: Int, count: Int, after: Int) {
+
                     }
-                    "3" -> {
-                        v.edV.setText(item.v)
+
+                    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+
+                    override fun afterTextChanged(p0: Editable) {
+                        data.get(helper.adapterPosition).v = p0.toString().trim().replace("-","")
+                        data.get(helper.adapterPosition).check = "3"
                     }
                 }
-                v.edV.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(p0: Editable?) {
-                    }
 
-                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    }
-
-                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        item.v = p0.toString().trim()
-                        item.check = "3"
-                    }
-
-                })
+                v.edV.addTextChangedListener(watcher)
+                v.edV.tag = watcher
 
             }
             2 -> {
                 v.tvk2.text = item.k
-
-                when (item.check) {
-                    "0" -> {
-                        v.tvV2.hint = item.v
-                    }
-                    "3" -> {
-                        v.tvV2.setText(item.v)
-                    }
-                }
+                v.tvV2.setText(item.v)
             }
             3 -> {
                 v.tvK3.text = item.k
@@ -79,37 +73,50 @@ class ReleaseAdapter<T : ReleaseBean> : BaseMultiItemQuickAdapter<T, BaseViewHol
                 v.tvK4.text = item.k
                 v.edLeft.setText(item.left)
                 v.edLeft.inputType = item.inputType
+                if (v.edLeft.getTag() is TextWatcher) {
+                    v.edLeft.removeTextChangedListener(v.edLeft.getTag() as TextWatcher);
+                }
+                val watcherLeft = object : TextWatcher {
+                    override fun beforeTextChanged(p0: CharSequence, start: Int, count: Int, after: Int) {
+
+                    }
+
+                    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+
+                    override fun afterTextChanged(p0: Editable) {
+                        data.get(helper.adapterPosition).left = p0.toString().trim().replace("-","")
+                        if (!TextUtils.isEmpty(v.edLeft.text.toString().trim())) {
+                            data.get(helper.adapterPosition).check = "3"
+                        }
+                    }
+                }
+
+                v.edLeft.addTextChangedListener(watcherLeft)
+                v.edLeft.tag = watcherLeft
+
                 v.edRight.setText(item.right)
                 v.edRight.inputType = item.inputType
 
-                v.edLeft.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(p0: Editable?) {
+                if (v.edRight.getTag() is TextWatcher) {
+                    v.edRight.removeTextChangedListener(v.edRight.getTag() as TextWatcher);
+                }
+                val watcherRight = object : TextWatcher {
+                    override fun beforeTextChanged(p0: CharSequence, start: Int, count: Int, after: Int) {
+
                     }
 
-                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    }
+                    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
-                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        if (!TextUtils.isEmpty(v.edRight.text.toString().trim())) {
-                            item.check = "3"
+                    override fun afterTextChanged(p0: Editable) {
+                        data.get(helper.adapterPosition).right = p0.toString().trim().replace("-","")
+                        if (!TextUtils.isEmpty(p0.toString().trim())) {
+                            data.get(helper.adapterPosition).check = "3"
                         }
                     }
+                }
+                v.edRight.addTextChangedListener(watcherRight)
+                v.edRight.tag = watcherRight
 
-                })
-                v.edRight.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(p0: Editable?) {
-                    }
-
-                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    }
-
-                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        if (!TextUtils.isEmpty(v.edLeft.text.toString().trim())) {
-                            item.check = "3"
-                        }
-                    }
-
-                })
             }
             5 -> {
                 v.tvK5.text = item.k

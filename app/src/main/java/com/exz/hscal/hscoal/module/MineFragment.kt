@@ -179,7 +179,7 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
                     startActivityForResult(Intent(context, LoginActivity::class.java), RESULT_LOGIN_CANCELED)
                     return
                 }
-                if(driverAuthentication.equals("0")||businessAuthentication.equals("1")){ //审核中 审核通过
+                if(driverAuthentication.equals("0")||driverAuthentication.equals("1")){ //审核中 审核通过
                     context.toast(if(driverAuthentication.equals("0")) "司机认证审核中" else "司机认证已认证")
                     return
                 }

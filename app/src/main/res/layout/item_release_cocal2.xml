@@ -22,6 +22,7 @@
         android:minWidth="60dp"
         android:gravity="right"
         android:padding="@dimen/margin_15"
+        android:hint="请选择"
         android:background="@color/White"
         android:layout_alignParentEnd="true"
         android:textCursorDrawable="@drawable/color_cursor"

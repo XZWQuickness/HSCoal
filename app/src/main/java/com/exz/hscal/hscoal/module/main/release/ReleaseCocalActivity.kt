@@ -26,12 +26,16 @@ import com.exz.hscal.hscoal.adapter.ReleaseAdapter
 import com.exz.hscal.hscoal.bean.CityBean
 import com.exz.hscal.hscoal.bean.ReleaseBean
 import com.exz.hscal.hscoal.bean.TextBean
+import com.exz.hscal.hscoal.module.main.coal.SeekCocalDetailActivity
+import com.exz.hscal.hscoal.module.mine.UserInfoActivity
+import com.exz.hscal.hscoal.module.mine.UserInfoTextActivity
 import com.exz.hscal.hscoal.utils.RecycleViewDivider
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.lzy.imagepicker.ImagePicker
 import com.lzy.imagepicker.bean.ImageItem
 import com.lzy.imagepicker.ui.ImageGridActivity
 import com.lzy.imagepicker.view.CropImageView
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.imageloder.GlideImageLoader
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -62,7 +66,6 @@ class ReleaseCocalActivity : BaseActivity() {
     lateinit var mCoclaOptionPicker: OptionsPickerView<String>
     lateinit var mTimePicker: TimePickerView
     lateinit var entity: ReleaseBean
-    var cocalType = "1"
     var dateType = ""
 
 
@@ -98,6 +101,8 @@ class ReleaseCocalActivity : BaseActivity() {
     var inspectonBody_Img: String = ""//检验机构_报告图片（数据流）
     var image: String = ""//商品图（数据流）
     var url = Urls.ReleaseCoal
+    var requestCheck=""
+    var coalId = ""//煤炭id
     private lateinit var mOptionsGoodsType: OptionsPickerView<String>
     private lateinit var mOptionsPaymentMode: OptionsPickerView<String>
 
@@ -145,11 +150,156 @@ class ReleaseCocalActivity : BaseActivity() {
         getDeliveryWay()
         getPaymentMode()
         initCommint()
+        if (intent.hasExtra(Intent_Order_Id) && !TextUtils.isEmpty(intent.getStringExtra(Intent_Order_Id))) {
+
+            iniDetalie()
+        }
+    }
+
+    private fun iniDetalie() {
+        coalId = intent.getStringExtra(Intent_Order_Id)
+        url = Urls.EditCoal
+        DataCtrlClass.getCoalInfo(mContext, intent.getStringExtra(Intent_Order_Id), {
+            if (it != null) {
+                when (it.data?.coalVarietyName) {
+                    "焦炭/焦粉/焦粒" -> {
+                        mAdapter.setNewData(data1)
+                        coalVarietyId = "1"
+                    }
+                    "炼焦煤" -> {
+                        mAdapter.setNewData(data2)
+                        coalVarietyId = "2"
+                    }
+                    "动力煤" -> {
+                        mAdapter.setNewData(data3)
+                        coalVarietyId = "3"
+                    }
+                }
+                for (bean in mAdapter.data) {
+                    when (bean.k) {
+                        "品名:" -> {
+                            bean.v = it.data?.name ?: ""
+                        }
+                        "产地:" -> {
+                            bean.v = it.data?.place ?: ""
+                        }
+                        "固定碳(%):" -> {
+                            bean.v = it.data?.fixedCarbon ?: ""//固定碳
+                        }
+                        "发热量(MJ/kg):" -> {
+                            bean.v = it.data?.calorificValue ?: ""//发热量
+                        }
+                        "灰份(%):" -> {
+                            bean.v = it.data?.ashSpecification ?: "" //灰份
+                        }
+                        "挥发份(%):" -> {
+                            bean.v = it.data?.volatiles ?: "" //挥发份
+                        }
+                        "内水(%):" -> {
+                            bean.v = it.data?.inherentMoisture ?: "" //内水
+                        }
+                        "全硫份(%):" -> {
+                            bean.v = it.data?.totalSulfurContent ?: "" //全硫份
+                        }
+                        "粘结(%):" -> {
+                            bean.v = it.data?.bond ?: "" //粘结
+                        }
+                        "挥发份(%):" -> {
+                            bean.v = it.data?.volatiles ?: "" //挥发份
+                        }
+                        "Y值(mm):" -> {
+                            bean.v = it.data?.yValue ?: "" //y值
+                        }
+                        "岩相:" -> {
+                            bean.v = it.data?.lithofacies ?: "" //岩相（煤种：炼焦煤）
+                        }
+                        "G值(选填):"->{
+                            bean.v = it.data?.gValue ?: ""
+                        }
+                        "CSR:" -> {
+                            bean.v = it.data?.csr ?: ""
+                        }
+                        "低位热值(kcal/kg):" -> {
+                            val lowerCalorificValue = it.data?.lowerCalorificValue?.split(",")
+                            if (lowerCalorificValue?.size ?: 0 == 2) {
+                                bean.left = lowerCalorificValue?.get(0) ?: ""
+                                bean.right = lowerCalorificValue?.get(1) ?: ""
+                            }
+                        }
+                        "空干基硫分(%):" -> {
+
+                            val airDrySulfur = it.data?.airDrySulfur?.split(",")
+                            if (airDrySulfur?.size ?: 0 == 2) {
+                                bean.left = airDrySulfur?.get(0) ?: ""
+                                bean.right = airDrySulfur?.get(1) ?: ""
+                            }
+                        }
+                        "空干基挥发分(%):" -> {
+
+                            val airDryRadicalVolatiles = it.data?.airDryRadicalVolatiles?.split(",")
+                            if (airDryRadicalVolatiles?.size ?: 0 == 2) {
+                                bean.left = airDryRadicalVolatiles?.get(0) ?: ""
+                                bean.right = airDryRadicalVolatiles?.get(1) ?: ""
+                            }
+                        }
+                        "收到基挥发分(%):" -> {
+                            bean.v = it.data?.baseVolatiles ?: ""//收到基挥发分
+                        }
+                        "全水分(%):" -> {
+                            val totalMoisture = it.data?.totalMoisture?.split(",")
+                            if (totalMoisture?.size ?: 0 == 2) {
+                                bean.left = totalMoisture?.get(0) ?: ""
+                                bean.right = totalMoisture?.get(1) ?: ""
+                            }
+                        }
+                        "灰熔点:" -> {
+                            bean.v = it.data?.ashFusionPoint ?: "" //灰熔点
+                        }
+                        "可供吨数(吨):" -> {
+                            bean.v = it.data?.qty ?: ""//供应量
+                        }
+                        "单价(元):" -> {
+                            bean.v = it.data?.price ?: ""
+                        }
+                        "付款方式:" -> {
+                            bean.v = it.data?.paymentModeName ?: "" //付款方式
+                        }
+                        "检测机构:" -> {
+                            bean.v = it.data?.inspectonBody ?: "" // 检验机构
+                        }
+                        "交货时间:" -> {
+                            val deliveryTime = it.data?.deliveryTime?.split(",")
+                            if (deliveryTime?.size ?: 0 == 2) {
+                                bean.left = deliveryTime?.get(0) ?: ""
+                                bean.right = deliveryTime?.get(1) ?: ""
+                            }
+                        }
+                        "交货方式:" -> {
+                            bean.v = it.data?.deliveryWayName ?: "" //交货方式
+                        }
+                        "交货地点:" -> {
+                            bean.v = it.data?.provinceCity ?: ""//交货地点
+                        }
+                        "备注:" -> {
+                            bean.v = it.data?.remark ?: ""//备注
+                        }
+                        "点击上传检测报告照片:" -> {
+                            bean.v = it.data?.inspectonBodyImg ?: ""//点击上传检测报告照片
+                        }
+                        "点击上传产品照片:" -> {
+                            bean.v = it.data?.image ?: ""//点击上传产品照片
+                        }
+                    }
+                }
+                mAdapter.notifyDataSetChanged()
+
+            }
+        })
     }
 
     private fun isReturn(content: String): Boolean {
-        return content.equals("请输入值")  || content.equals("请输入可供吨数")  || content.equals("请输入单价")
-                || content.equals("请选择")  || content.equals("请输入") || content.equals("请输入品名")  || content.equals("请输入产地")
+        return content.equals("请输入值") || content.equals("请输入可供吨数") || content.equals("请输入单价")
+                || content.equals("请选择") || content.equals("请输入") || content.equals("请输入品名") || content.equals("请输入产地")
     }
 
     private fun initCommint() {
@@ -158,122 +308,242 @@ class ReleaseCocalActivity : BaseActivity() {
 
             for (bean in mAdapter.data) {
 
+                if(TextUtils.isEmpty(coalId)){
+                    requestCheck=MyApplication.loginUserId + coalVarietyId
                 when (bean.lay) {
                     1 -> {
-                        if (bean.k.contains("选填")  || TextUtils.isEmpty(bean.v)  || bean.check.equals("0") && isReturn(bean.v)) {
+                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
                             toast("请输入" + bean.k.replace(":", ""))
                             return@setOnClickListener
                         }
                     }
                     2 -> {
-                        if (bean.k.contains("选填")  || TextUtils.isEmpty(bean.v)  || bean.check.equals("0") && isReturn(bean.v)) {
+                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
                             toast("请选择" + bean.k.replace(":", ""))
                             return@setOnClickListener
                         }
                     }
                     3 -> {
-                        if (bean.k.contains("选填")  || TextUtils.isEmpty(bean.left)  || TextUtils.isEmpty(bean.right)  || bean.check.equals("0") && isReturn(bean.v)) {
+                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
                             toast("请选择" + bean.k.replace(":", ""))
                             return@setOnClickListener
                         }
                     }
                     4 -> {
-                        if (bean.k.contains("选填")  || TextUtils.isEmpty(bean.left)  || TextUtils.isEmpty(bean.right)  || bean.check.equals("0") && isReturn(bean.v)) {
+                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.left) || !bean.k.contains("选填") && TextUtils.isEmpty(bean.right) || bean.check.equals("0") && isReturn(bean.v)) {
                             toast("请输入" + bean.k.replace(":", ""))
                             return@setOnClickListener
                         }
                     }
                 }
-
-                if (bean.k.equals("煤种:")) {
-                    coalVarietyId = if (bean.v.equals("焦炭/焦粉/焦粒")) "1" else if (bean.v.equals("炼焦煤")) "2" else "3"
+                }else{
+                    requestCheck=MyApplication.loginUserId + coalId
                 }
+
                 if (bean.k.equals("品名:")) {
-                    name = bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        name = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        name = bean.v
+                    }
+
                 }
                 if (bean.k.equals("产地:")) {
-                    place = bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        place = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        place = bean.v
+                    }
                 }
-                if (bean.k.equals("固定碳:")) {
-                    fixedCarbon = bean.v
+                if (bean.k.equals("固定碳:") || bean.k.equals("固定碳(%):")) {
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        fixedCarbon = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        fixedCarbon = bean.v
+                    }
                 }
 
                 if (bean.k.equals("发热量(MJ/kg):")) {
-                    calorificValue = bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        calorificValue = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        calorificValue = bean.v
+                    }
                 }
 
                 if (bean.k.equals("灰份(%):")) {
-                    ashSpecification = bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        ashSpecification = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        ashSpecification = bean.v
+                    }
                 }
                 if (bean.k.equals("挥发份(%):")) {
-                    volatiles = bean.v
+
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        volatiles = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        volatiles = bean.v
+                    }
                 }
-                if (bean.k.equals("内水(%):")) {
-                    inherentMoisture = bean.v
+                if (bean.k.equals("内水(%):") || bean.k.equals("内水(%):")) {
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        inherentMoisture = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        inherentMoisture = bean.v
+                    }
                 }
                 if (bean.k.equals("全硫份(%):")) {
-                    totalSulfurContent = bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        totalSulfurContent = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        totalSulfurContent = bean.v
+                    }
                 }
                 if (bean.k.equals("粘结(%):")) {
-                    bond = bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        bond = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        bond = bean.v
+                    }
                 }
                 if (bean.k.equals("Y值(mm):")) {
-                    Y_Value = bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        Y_Value = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        Y_Value = bean.v
+                    }
                 }
                 if (bean.k.equals("岩相:")) {
-                    lithofacies = bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        lithofacies = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        lithofacies = bean.v
+                    }
                 }
                 if (bean.k.equals("CSR:")) {
-                    CSR = bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        CSR = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        CSR = bean.v
+                    }
                 }
-                if (bean.k.equals("低位热值(kcal/kg):")) {
-                    lowerCalorificValue = bean.left + "," + bean.right
+                if (bean.k.equals("低位热值(kcal/kg):") || bean.k.equals("低位热值(kcal/kg):")) {
+
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        lowerCalorificValue =if ((bean.left + "-" + bean.right).equals("-")) "" else bean.left + "-" + bean.right
+                    }else if(TextUtils.isEmpty(coalId)){
+                        lowerCalorificValue =if ((bean.left + "-" + bean.right).equals("-")) "" else bean.left + "-" + bean.right
+                    }
                 }
-                if (bean.k.equals("空干基硫分(%):")) {
-                    airDrySulfur = bean.left + "," + bean.right
+                if (bean.k.equals("空干基硫分(%):") || bean.k.equals("空干基硫分(%):")) {
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        airDrySulfur =if ((bean.left + "-" + bean.right).equals("-")) "" else bean.left + "-" + bean.right
+                    }else if(TextUtils.isEmpty(coalId)){
+                        airDrySulfur =if ((bean.left + "-" + bean.right).equals("-")) "" else bean.left + "-" + bean.right
+                    }
                 }
-                if (bean.k.equals("灰熔点(选填):")) {
-                    ashFusionPoint = bean.v
+                if (bean.k.equals("灰熔点:")) {
+
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        ashFusionPoint = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        ashFusionPoint = bean.v
+                    }
                 }
-                if (bean.k.equals("空干挥发分(%):")) {
-                    airDryRadicalVolatiles = bean.left + "," + bean.right
+                if (bean.k.contains("空干基挥发分(%):") || bean.k.equals("空干基挥发分(%):")) {
+
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        airDryRadicalVolatiles =if ((bean.left + "-" + bean.right).equals("-")) "" else bean.left + "-" + bean.right
+                    }else if(TextUtils.isEmpty(coalId)){
+                        airDryRadicalVolatiles =if ((bean.left + "-" + bean.right).equals("-")) "" else bean.left + "-" + bean.right
+                    }
                 }
-                if (bean.k.equals("收到基挥发份(%[选填]):")) {
-                    baseVolatiles = bean.v
+                if (bean.k.equals("收到基挥发份(%):")) {
+
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        baseVolatiles = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        baseVolatiles = bean.v
+                    }
                 }
-                if (bean.k.equals("全水分(%[选填]):")) {
-                    totalMoisture = bean.left + "," + bean.right
+                if (bean.k.equals("全水分(%):")) {
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        totalMoisture =if ((bean.left + "-" + bean.right).equals("-")) "" else bean.left + "-" + bean.right
+                    }else if(TextUtils.isEmpty(coalId)){
+                        totalMoisture =if ((bean.left + "-" + bean.right).equals("-")) "" else bean.left + "-" + bean.right
+                    }
                 }
                 if (bean.k.equals("G值(选填):")) {
-                    G_Value =bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        G_Value = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        G_Value = bean.v
+                    }
                 }
                 if (bean.k.equals("备注:")) {
-                    remark = bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        remark = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        remark = bean.v
+                    }
                 }
 
                 if (bean.k.equals("交货时间:")) {
-                    deliveryTime = bean.left + "," + bean.right
+
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        deliveryTime = if ((bean.left + "," + bean.right).equals(",")) "" else bean.left + "," + bean.right
+                    }else if(TextUtils.isEmpty(coalId)){
+                        deliveryTime = if ((bean.left + "," + bean.right).equals(",")) "" else bean.left + "," + bean.right
+                    }
                 }
                 if (bean.k.equals("可供吨数(吨):")) {
-                    QTY = bean.v
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        QTY = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        QTY = bean.v
+                    }
                 }
                 if (bean.k.equals("单价(元):")) {
-                    price = bean.v
+
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        price = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        price = bean.v
+                    }
                 }
                 if (bean.k.equals("检测机构:")) {
-                    inspectonBody = bean.v
+
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        inspectonBody = bean.v
+                    }else if(TextUtils.isEmpty(coalId)){
+                        inspectonBody = bean.v
+                    }
                 }
                 if (bean.k.equals("点击上传检测报告照片:")) {
-                    inspectonBody_Img = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        inspectonBody_Img = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+
+                    }else if(TextUtils.isEmpty(coalId)){
+                        inspectonBody_Img = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+
+                    }
                 }
                 if (bean.k.equals("点击上传产品照片:")) {
-                    image = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+                    if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
+                        image = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+                    }else if(TextUtils.isEmpty(coalId)){
+                        image = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+                    }
                 }
-
 
             }
 
-            DataCtrlClass.releaseCoal(mContext, coalVarietyId, name, place, fixedCarbon, calorificValue, ashSpecification, volatiles, inherentMoisture, totalSulfurContent, bond, Y_Value, lithofacies, CSR, lowerCalorificValue, airDrySulfur, ashFusionPoint, airDryRadicalVolatiles, baseVolatiles, totalMoisture, G_Value, remark, povinceId, cityId, deliveryTime, deliveryWayId, QTY, price, paymentModeId, inspectonBody, inspectonBody_Img, image, url, {
+            DataCtrlClass.releaseCoal(mContext, coalId, coalVarietyId, name, place, fixedCarbon, calorificValue, ashSpecification,
+                    volatiles, inherentMoisture, totalSulfurContent, bond, Y_Value, lithofacies, CSR, lowerCalorificValue,
+                    airDrySulfur, ashFusionPoint, airDryRadicalVolatiles, baseVolatiles, totalMoisture, G_Value, remark,
+                    povinceId, cityId, deliveryTime, deliveryWayId, QTY, price, paymentModeId, inspectonBody, inspectonBody_Img, image, url,requestCheck, {
                 if (it != null) {
                     finish()
                 }
@@ -356,16 +626,19 @@ class ReleaseCocalActivity : BaseActivity() {
             when (cocalStr.get(options1)) {
                 "焦炭/焦粉/焦粒" -> {
                     mAdapter.setNewData(data1)
+                    coalVarietyId = "1"
                 }
                 "炼焦煤" -> {
                     mAdapter.setNewData(data2)
+                    coalVarietyId = "2"
                 }
 
                 "动力煤" -> {
                     mAdapter.setNewData(data3)
+                    coalVarietyId = "3"
                 }
             }
-            mAdapter.loadMoreEnd()
+            mAdapter.notifyDataSetChanged()
         }
 
         mTimePicker.setOnTimeSelectListener {
@@ -380,6 +653,7 @@ class ReleaseCocalActivity : BaseActivity() {
 
                 if (!TextUtils.isEmpty(entity.left) && !TextUtils.isEmpty(entity.right)) {
                     entity.v = entity.left + "," + entity.right
+                    entity.check = "3"
                 }
                 mAdapter.notifyItemChanged(mAdapter.data.indexOf(entity))
             }
@@ -486,9 +760,14 @@ class ReleaseCocalActivity : BaseActivity() {
                 entity = mAdapter.data.get(position)
                 when (entity.k) {
                     "煤种:" -> {
+                        if (!TextUtils.isEmpty(coalId)) {
+                            return
+                        }
+                        KeyboardUtils.hideSoftInput(this@ReleaseCocalActivity)
                         mCoclaOptionPicker.show()
                     }
                     "交货地点:" -> {
+                        KeyboardUtils.hideSoftInput(this@ReleaseCocalActivity)
                         pvOptionsAddress.setPicker(optionsProvinces, optionsCities,
                                 true)
                         pvOptionsAddress.setSelectOptions(optionsAddress1, optionsAddress2)
@@ -497,12 +776,16 @@ class ReleaseCocalActivity : BaseActivity() {
                         pvOptionsAddress.show()
                     }
                     "交货时间:" -> {
-                        mTimePicker.show()                    }
+                        KeyboardUtils.hideSoftInput(this@ReleaseCocalActivity)
+                        mTimePicker.show()
+                    }
 
                     "交货方式:" -> {
+                        KeyboardUtils.hideSoftInput(this@ReleaseCocalActivity)
                         mOptionsGoodsType.show()
                     }
                     "付款方式:" -> {
+                        KeyboardUtils.hideSoftInput(this@ReleaseCocalActivity)
                         mOptionsPaymentMode.show()
                     }
                     "点击上传检测报告照片:" -> {
@@ -534,71 +817,73 @@ class ReleaseCocalActivity : BaseActivity() {
         })
     }
 
+    private var textType = "1" // 1 正常输入 2 左边输入 3 右边输入
+
     private fun initListData() {
         //lay 1 输入文本 2 选择文本 3  交货时间 4 输入区间 5 图片
         data1.add(ReleaseBean(2, "煤种:", "焦炭/焦粉/焦粒", "3", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "品名:", "请输入品名", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "产地:", "请输入产地", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data1.add(ReleaseBean(1, "固定碳:", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "发热量(MJ/kg):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "灰份(%):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "挥发份(%):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "内水(%):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "全硫份(%):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data1.add(ReleaseBean(1, "可供吨数(吨):", "请输入可供吨数", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data1.add(ReleaseBean(1, "单价(元):", "请输入单价", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 15))
-        data1.add(ReleaseBean(2, "付款方式:", "请选择", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data1.add(ReleaseBean(3, "交货时间:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data1.add(ReleaseBean(2, "交货方式:", "请选择", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data1.add(ReleaseBean(2, "交货地点:", "请输入", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(1, "备注:", "请输入", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data1.add(ReleaseBean(1, "检测机构:", "请输入", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data1.add(ReleaseBean(5, "点击上传检测报告照片:", "0", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data1.add(ReleaseBean(5, "点击上传产品照片:", "0", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "品名:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "产地:", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data1.add(ReleaseBean(1, "固定碳(%):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "发热量(MJ/kg):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "灰份(%):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "挥发份(%):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "内水(%):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "全硫份(%):", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data1.add(ReleaseBean(1, "可供吨数(吨):", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data1.add(ReleaseBean(1, "单价(元):", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 15))
+        data1.add(ReleaseBean(2, "付款方式:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data1.add(ReleaseBean(3, "交货时间:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data1.add(ReleaseBean(2, "交货方式:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data1.add(ReleaseBean(2, "交货地点:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(1, "备注:", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data1.add(ReleaseBean(1, "检测机构:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data1.add(ReleaseBean(5, "点击上传检测报告照片:", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data1.add(ReleaseBean(5, "点击上传产品照片:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
         //lay 1 输入文本 2 选择文本 3  交货时间 4 输入区间 5 图片
         data2.add(ReleaseBean(2, "煤种:", "炼焦煤", "3", InputType.TYPE_CLASS_TEXT, 0))
-        data2.add(ReleaseBean(1, "品名:", "请输入品名", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data2.add(ReleaseBean(1, "产地:", "请输入产地", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data2.add(ReleaseBean(1, "灰份(%):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data2.add(ReleaseBean(1, "全硫份(%):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data2.add(ReleaseBean(1, "粘结(%):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data2.add(ReleaseBean(1, "挥发份(%):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data2.add(ReleaseBean(1, "Y值(mm):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data2.add(ReleaseBean(1, "岩相:", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data2.add(ReleaseBean(1, "CSR:", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data2.add(ReleaseBean(1, "可供吨数(吨):", "请输入可供吨数", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data2.add(ReleaseBean(1, "单价(元):", "请输入单价", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 15))
-        data2.add(ReleaseBean(2, "付款方式:", "请选择", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data2.add(ReleaseBean(3, "交货时间:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data2.add(ReleaseBean(2, "交货方式:", "请选择", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data2.add(ReleaseBean(2, "交货地点:", "请输入", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data2.add(ReleaseBean(1, "备注:", "请输入", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data2.add(ReleaseBean(1, "检测机构:", "请输入", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data2.add(ReleaseBean(5, "点击上传检测报告照片:", "0", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data2.add(ReleaseBean(5, "点击上传产品照片:", "0", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data2.add(ReleaseBean(1, "品名:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data2.add(ReleaseBean(1, "产地:", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data2.add(ReleaseBean(1, "灰份(%):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data2.add(ReleaseBean(1, "全硫份(%):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data2.add(ReleaseBean(1, "粘结(%):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data2.add(ReleaseBean(1, "挥发份(%):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data2.add(ReleaseBean(1, "Y值(mm):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data2.add(ReleaseBean(1, "岩相:", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data2.add(ReleaseBean(1, "CSR:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data2.add(ReleaseBean(1, "可供吨数(吨):", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data2.add(ReleaseBean(1, "单价(元):", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 15))
+        data2.add(ReleaseBean(2, "付款方式:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data2.add(ReleaseBean(3, "交货时间:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data2.add(ReleaseBean(2, "交货方式:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data2.add(ReleaseBean(2, "交货地点:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data2.add(ReleaseBean(1, "备注:", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data2.add(ReleaseBean(1, "检测机构:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data2.add(ReleaseBean(5, "点击上传检测报告照片:", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data2.add(ReleaseBean(5, "点击上传产品照片:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
         //lay 1 输入文本 2 选择文本 3  交货时间 4 输入区间 5 图片
         data3.add(ReleaseBean(2, "煤种:", "动力煤", "3", InputType.TYPE_CLASS_TEXT, 0))
-        data3.add(ReleaseBean(1, "品名:", "请输入品名", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data3.add(ReleaseBean(1, "产地:", "请输入产地", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data3.add(ReleaseBean(4, "低位热值(kcal/kg):", "请输入值", "0", InputType.TYPE_CLASS_NUMBER, 0))
-        data3.add(ReleaseBean(4, "空干基硫分(%):", "请输入值", "0", InputType.TYPE_CLASS_NUMBER, 0))
-        data3.add(ReleaseBean(4, "空干挥发分(%):", "请输入值", "0", InputType.TYPE_CLASS_NUMBER, 0))
-        data3.add(ReleaseBean(1, "内水(%):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data3.add(ReleaseBean(1, "固定碳(%):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data3.add(ReleaseBean(1, "收到基挥发份(%[选填]):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data3.add(ReleaseBean(4, "全水分(%[选填]):", "请输入值", "0", InputType.TYPE_CLASS_NUMBER, 0))
-        data3.add(ReleaseBean(1, "灰份(%[选填]):", "请输入值", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data3.add(ReleaseBean(1, "灰熔点(选填):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data3.add(ReleaseBean(2, "G值(选填):", "请选择", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data3.add(ReleaseBean(2, "Y值(mm[选填]):", "请输入值", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data3.add(ReleaseBean(1, "可供吨数(吨):", "请输入可供吨数", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data3.add(ReleaseBean(1, "单价(元):", "请输入单价", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 15))
-        data3.add(ReleaseBean(2, "付款方式:", "请选择", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data3.add(ReleaseBean(3, "交货时间:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data3.add(ReleaseBean(2, "交货方式:", "请输入值", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo . TYPE_NUMBER_FLAG_DECIMAL, 0))
-        data3.add(ReleaseBean(2, "交货地点:", "请输入", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data3.add(ReleaseBean(1, "备注:", "请输入", "0", InputType.TYPE_CLASS_TEXT, 15))
-        data3.add(ReleaseBean(1, "检测机构:", "请输入", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data3.add(ReleaseBean(1, "品名:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data3.add(ReleaseBean(1, "产地:", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data3.add(ReleaseBean(4, "低位热值(kcal/kg):", "", "0", InputType.TYPE_CLASS_NUMBER, 0))
+        data3.add(ReleaseBean(4, "空干基硫分(%):", "", "0", InputType.TYPE_CLASS_NUMBER, 0))
+        data3.add(ReleaseBean(4, "空干基挥发分(%):", "", "0", InputType.TYPE_CLASS_NUMBER, 0))
+        data3.add(ReleaseBean(1, "内水(%):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data3.add(ReleaseBean(1, "固定碳(%):", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data3.add(ReleaseBean(1, "收到基挥发分(%):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data3.add(ReleaseBean(4, "全水分(%):", "", "0", InputType.TYPE_CLASS_NUMBER, 0))
+        data3.add(ReleaseBean(1, "灰份(%):", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data3.add(ReleaseBean(1, "灰熔点:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data3.add(ReleaseBean(1, "G值(选填):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data3.add(ReleaseBean(1, "Y值(mm):", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data3.add(ReleaseBean(1, "可供吨数(吨):", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data3.add(ReleaseBean(1, "单价(元):", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 15))
+        data3.add(ReleaseBean(2, "付款方式:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data3.add(ReleaseBean(3, "交货时间:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data3.add(ReleaseBean(2, "交货方式:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
+        data3.add(ReleaseBean(2, "交货地点:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
+        data3.add(ReleaseBean(1, "备注:", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data3.add(ReleaseBean(1, "检测机构:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
         data3.add(ReleaseBean(5, "点击上传检测报告照片:", "", "0", InputType.TYPE_CLASS_TEXT, 15))
         data3.add(ReleaseBean(5, "点击上传产品照片:", "", "0", InputType.TYPE_CLASS_TEXT, 0))
 
@@ -610,11 +895,18 @@ class ReleaseCocalActivity : BaseActivity() {
         try {
             if (resultCode == ImagePicker.RESULT_CODE_ITEMS && data != null) { //图片选择
                 val images = data?.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) as ArrayList<*>
-                entity.v =  (images[0] as ImageItem).path
+                entity.v = (images[0] as ImageItem).path
+                entity.check="3"
                 mAdapter.notifyItemChanged(mAdapter.data.indexOf(entity))
             }
         } catch (e: Exception) {
         }
+    }
+
+    companion object {
+
+        var Intent_Order_Id = ""//煤炭id
+
     }
 
 }

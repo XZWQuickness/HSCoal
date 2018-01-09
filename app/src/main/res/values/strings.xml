@@ -70,7 +70,7 @@
     <string name="favorite_selectAll">全选</string>
     <string name="sort">综合排序</string>
     <string name="area">区域</string>
-    <string name="quantity">数量:%s</string>
+    <string name="quantity">数量:</string>
     <string name="delivery_type">交货方式</string>
     <string name="trade_name">品名</string>
     <string name="texture">材质</string>
@@ -79,12 +79,45 @@
     <string name="metals">有色金属</string>
     <string name="origin">产地:%s</string>
     <string name="heavy">件重:%s</string>
-    <string name="main_cocal_detail_text1">固定碳(FC)</string>
-    <string name="main_cocal_detail_text2">发热量(Qnet)</string>
-    <string name="main_cocal_detail_text3">灰份(Ad)</string>
-    <string name="main_cocal_detail_text4">挥发份(Var)</string>
-    <string name="main_cocal_detail_text5">内水(Mad)</string>
-    <string name="main_cocal_detail_text6">全硫份(Start)</string>
+    <string name="main_cocal_detail_text1">固定碳(FC):</string>
+    <string name="main_cocal_detail_text2">发热量(Qnet):</string>
+    <string name="main_cocal_detail_text3">灰份(Ad):</string>
+    <string name="main_cocal_detail_text4">挥发份(Var):</string>
+    <string name="main_cocal_detail_text5">内水(Mad):</string>
+    <string name="main_cocal_detail_text6">全硫份(Start):</string>
+
+
+    <string name="main_cocal_detail2_text1">灰份(Ad):</string>
+    <string name="main_cocal_detail2_text2">全硫份(Start):</string>
+    <string name="main_cocal_detail2_text3">粘结(RG):</string>
+    <string name="main_cocal_detail2_text4">挥发份(Var):</string>
+    <string name="main_cocal_detail2_text5">Y值:</string>
+    <string name="main_cocal_detail2_text6">岩相:</string>
+    <string name="main_cocal_detail2_text7">SCR:</string>
+
+
+    <string name="main_cocal_detail3_text1">低位热值:</string>
+    <string name="main_cocal_detail3_text2">空干基硫分:</string>
+    <string name="main_cocal_detail3_text3">空干基挥发分:</string>
+    <string name="main_cocal_detail3_text4">内水(Mad):</string>
+    <string name="main_cocal_detail3_text5">固定碳(FC):</string>
+    <string name="main_cocal_detail3_text6">收到基挥发分:</string>
+    <string name="main_cocal_detail3_text7">全水份:</string>
+    <string name="main_cocal_detail3_text8">灰份(Ad):</string>
+    <string name="main_cocal_detail3_text9">灰熔点(ST):</string>
+    <string name="main_cocal_detail3_text10">G值:</string>
+    <string name="main_cocal_detail3_text11">Y值:</string>
+
+
+
+
+
+
+
+
+
+
+
     <string name="main_cocal_detail_supply">供应量:</string>
     <string name="main_cocal_detail_unit_price">单价: </string>
     <string name="CNY">￥ %s</string>
@@ -100,8 +133,8 @@
     <string name="main_steel_text2">材质</string>
     <string name="main_steel_text3">仓库</string>
     <string name="commit">提交</string>
-    <string name="ship_to">交货地</string>
-    <string name="take_goods_date">收货时间</string>
+    <string name="ship_to">交货地: %s</string>
+    <string name="take_goods_date">收货时间: %s</string>
     <string name="buy">求购数</string>
     <string name="jian">%s件</string>
     <string name="dun">%s吨</string>

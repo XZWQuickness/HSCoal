@@ -96,8 +96,8 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
     private fun initSteelClass() {
         DataCtrlClass.steelClassData(mContext, {
             if (it != null) {
-                coalPop.data = it as ArrayList<PopStairListBean>
-
+                var list = it  as ArrayList < PopStairListBean >
+                list.add(0, PopStairListBean("全部类别",false,""))
             }
         })
 
@@ -163,8 +163,9 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
         }
         coalPop = StairPop(mContext, {
             if (it != null) {
-                if (it.name.equals("全部")) {
-                    setGaryOrblue(rb2, false, "全部")
+                if (it.name.equals("全部类别")) {
+                    setGaryOrblue(rb2, false, ".." +
+                            "类别")
                 } else {
                     setGaryOrblue(rb2, true, it.name)
                 }

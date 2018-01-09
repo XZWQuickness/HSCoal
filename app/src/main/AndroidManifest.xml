@@ -17,6 +17,9 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!-- 访问手机当前状态, 需要某些信息用于网络定位 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!-- 拨号权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
     <application
         android:name="com.exz.carprofitmuch.app.ToolApplication"
         android:allowBackup="true"

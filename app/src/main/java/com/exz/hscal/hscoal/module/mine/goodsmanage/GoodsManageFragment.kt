@@ -9,13 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.exz.carprofitmuch.config.Urls
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
-import com.exz.hscal.hscoal.adapter.CargoListAdapter
+import com.exz.hscal.hscoal.adapter.GoodsManageAdapter
 import com.exz.hscal.hscoal.bean.CargoListBean
 import com.exz.hscal.hscoal.bean.TabEntity
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.flyco.tablayout.listener.CustomTabEntity
+import com.flyco.tablayout.listener.OnTabSelectListener
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.szw.framelibrary.base.MyBaseFragment
@@ -29,13 +31,17 @@ import kotlinx.android.synthetic.main.fragment_goods_manage.*
  */
 
 class GoodsManageFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+
+    private var classType = 1 //1 煤炭 2 有色金属
+    private var state = 1 //状态：0审核中 1已通过 2未通过
+    private var url = Urls.CoalSeller
     private var refreshState = Constants.RefreshState.STATE_REFRESH
     private var currentPage = 1
     private val mSubTitles = arrayOf("已通过", "审核中", "未通过")
     private val mIconUnSelectIds = intArrayOf(R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher)
-    private val mIconSelectIds = intArrayOf(R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher  )
+    private val mIconSelectIds = intArrayOf(R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher)
     private val mTabEntities = java.util.ArrayList<CustomTabEntity>()
-    private lateinit var mAdapter: CargoListAdapter
+    private lateinit var mAdapter: GoodsManageAdapter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_goods_manage, container, false)
         return rootView
@@ -46,26 +52,51 @@ class GoodsManageFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapte
         initRecycler()
     }
 
+    override fun onResume() {
+        super.onResume()
+        refreshLayout.autoRefresh()
+    }
     private fun initToolbar() {
+        classType = arguments.getInt(Fragment_Type)
+        if (classType == 1) {
+            url = Urls.CoalSeller
+        } else {
+            url = Urls.SteelSeller
+        }
         SZWUtils.setPaddingSmart(mRecyclerView, 55f)
         SZWUtils.setMargin(header, 55f)
         StatusBarUtil.setPaddingSmart(activity, mRecyclerView)
         StatusBarUtil.setMargin(activity, header)
         mSubTitles.indices.mapTo(mTabEntities) { TabEntity(mSubTitles[it], mIconSelectIds[it], mIconUnSelectIds[it]) }
         mainTabBar.setTabData(mTabEntities)
+        mainTabBar.setOnTabSelectListener(object : OnTabSelectListener {
+            override fun onTabReselect(position: Int) {
+            }
+
+            override fun onTabSelect(position: Int) {
+                when (position) {
+                    0 -> {
+                        state = 1
+                        refreshLayout.autoRefresh()
+                    }
+                    1 -> {
+                        state = 0
+                        refreshLayout.autoRefresh()
+                    }
+                    2 -> {
+                        state = 2
+                        refreshLayout.autoRefresh()
+                    }
+                }
+
+            }
+        })
     }
 
-    private var data = ArrayList<CargoListBean>()
     private fun initRecycler() {
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        data.add(CargoListBean())
-        mAdapter = CargoListAdapter()
-        mAdapter.setHeaderAndEmpty(true)
+        mAdapter = GoodsManageAdapter(classType)
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(activity)
-        mAdapter.setNewData(data)
         mAdapter.loadMoreEnd()
         SZWUtils.setRefreshAndHeaderCtrl(this, header, refreshLayout)
         mAdapter.setOnLoadMoreListener(this, mRecyclerView)
@@ -73,13 +104,18 @@ class GoodsManageFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapte
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                var mEntity = mAdapter.data.get(position)
                 when (arguments.getInt(Fragment_Type)) {
                     1 -> {//煤炭
-                        startActivity(Intent(context, GoodsManageCocalDetailActivity::class.java).putExtra(GoodsManageCocalDetailActivity.Intent_State,"3"))
+                        startActivity(Intent(context, GoodsManageCocalDetailActivity::class.java)
+                                .putExtra(GoodsManageCocalDetailActivity.Intent_Id, mEntity.id)
+                                .putExtra(GoodsManageCocalDetailActivity.Intent_State, state.toString()))
                     }
                     2 -> {//金属
 
-                        startActivity(Intent(context, GoodsManageSteelDetailActivity::class.java).putExtra(GoodsManageCocalDetailActivity.Intent_State,"3"))
+                        startActivity(Intent(context, GoodsManageSteelDetailActivity::class.java).
+                                putExtra(GoodsManageSteelDetailActivity.Intent_Id, mEntity.id)
+                                .putExtra(GoodsManageSteelDetailActivity.Intent_State, state.toString()))
                     }
                 }
 
@@ -113,7 +149,7 @@ class GoodsManageFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapte
     }
 
     private fun iniData() {
-        DataCtrlClass.GoodsManageListData(context, currentPage) {
+        DataCtrlClass.GoodsManageListData(context, currentPage, state, url) {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {
