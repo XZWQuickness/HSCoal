@@ -125,7 +125,9 @@ class EnquiryCocalActivity : BaseActivity() {
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         return R.layout.activity_release_cocale
     }
-
+companion object {
+   var Intent_Id="coalId"
+}
 
     override fun init() {
         super.init()

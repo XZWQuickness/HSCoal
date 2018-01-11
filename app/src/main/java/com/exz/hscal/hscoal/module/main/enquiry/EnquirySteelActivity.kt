@@ -108,6 +108,10 @@ class EnquirySteelActivity : BaseActivity() {
         return R.layout.activity_release_cocale
     }
 
+
+    companion object {
+        var Intent_Id="steelId"
+    }
     override fun init() {
         super.init()
         initListData()

@@ -99,6 +99,7 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
         super.onResume()
         if (!MyApplication.checkUserLogin()) {
            nickname.text="未登录"
+            img_head.setImageURI("http://hs.xzsem.cn/userImg/default.png")
             return
         }
         refreshLayout.autoRefresh()

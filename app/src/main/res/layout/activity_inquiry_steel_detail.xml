@@ -34,11 +34,11 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/ll_offer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="15dp"
-                    android:visibility="gone"
                     android:background="@color/White"
                     android:layout_marginTop="@dimen/dp_10"
                     >
@@ -46,12 +46,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/inquriy_cocal_detail_state"
+                        android:id="@+id/tvState"
                         android:textColor="@color/MaterialGrey800"
                         android:textSize="@dimen/sp_14" />
                     <TextView
                         android:layout_width="match_parent"
                         android:gravity="right"
+                        android:id="@+id/tvQuoteCount"
                         android:drawableEnd="@mipmap/icon_main_gray_next"
                         android:layout_height="wrap_content"
                         android:text="@string/referrer_offer"
@@ -60,11 +61,14 @@
 
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:padding="15dp"
+                    android:id="@+id/llQuote"
                     android:background="@color/White"
                     android:layout_marginTop="1dp"
                     >
@@ -73,14 +77,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Offer_contact"
+                        android:id="@+id/tvQquoteContactName"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_14" />
                     <TextView
                         android:layout_width="match_parent"
                         android:gravity="right"
+                        android:id="@+id/tvQquoteContactPhone"
                         android:layout_height="wrap_content"
-                        android:text="13236027713"
-                        android:textColor="@color/MaterialGrey600"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/sp_14" />
 
 
@@ -91,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/White"
-                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -102,70 +107,54 @@
                         android:padding="@dimen/margin_15">
 
                         <TextView
-                            android:id="@+id/tv_title"
+                            android:id="@+id/name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="淮晟煤炭6号"
                             android:textColor="@color/MaterialGrey800"
                             android:textSize="@dimen/sp_14" />
 
                         <TextView
+                            android:id="@+id/className"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:layout_toEndOf="@id/tv_title"
-                            android:text="淮晟煤炭6号"
+                            android:layout_toEndOf="@id/name"
+                            android:textColor="@color/MaterialGrey400"
+                            android:textSize="@dimen/sp_12" />
+
+                        <TextView
+                            android:id="@+id/weight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_gravity="right"
+                            android:layout_marginStart="4dp"
+                            android:drawablePadding="@dimen/dp_4"
+                            android:drawableStart="@mipmap/icon_main_steel_heavy"
+                            android:gravity="right"
+                            android:text="@string/heavy"
                             android:textColor="@color/MaterialGrey400"
                             android:textSize="@dimen/sp_12" />
 
                     </RelativeLayout>
 
 
-
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/app_bg"></View>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/app_bg"></View>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/White"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/buy"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="320吨"
-                        android:textColor="@color/MaterialGrey800"
-                        android:textSize="@dimen/sp_12" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_gravity="right"
-                        android:layout_marginStart="4dp"
-                        android:drawablePadding="@dimen/dp_4"
-                        android:gravity="right"
-                        android:text="@string/heavy"
-
-                        android:textColor="@color/MaterialGrey400"
-                        android:textSize="@dimen/sp_12" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:background="@color/White"
                     android:orientation="horizontal"
                     android:padding="15dp">
@@ -180,12 +169,12 @@
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/specification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:text="现金汇款"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
@@ -210,17 +199,19 @@
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/materialQuality"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:text="现金汇款"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
 
                 </LinearLayout>
+
+
 
 
                 <LinearLayout
@@ -236,22 +227,23 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/dp_10"
                         android:drawableStart="@mipmap/icon_cocal_detail_delivery_goods_date"
-                        android:text="@string/demand_detail_text8"
+                        android:text="@string/main_cocal_detail_text9"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/deliveryTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:text="现金汇款"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
 
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -276,7 +268,7 @@
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:text="现金汇款"
+                        android:id="@+id/provinceCity"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
@@ -284,63 +276,71 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llcontact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/White"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
+                    android:visibility="gone"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:drawableStart="@mipmap/icon_contact"
-                        android:text="@string/contact"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:drawablePadding="@dimen/dp_4"
-                        android:gravity="right"
-                        android:text="现金汇款"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_12" />
+                        android:layout_marginTop="1dp"
+                        android:background="@color/White"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:drawableStart="@mipmap/icon_contact"
+                            android:text="@string/contact"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/contactName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:drawablePadding="@dimen/dp_4"
+                            android:gravity="right"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_12" />
 
 
-                </LinearLayout>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/White"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:drawableStart="@mipmap/icon_contact_type_phone"
-                        android:text="@string/contact_type"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:drawablePadding="@dimen/dp_4"
-                        android:gravity="right"
-                        android:text="现金汇款"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_12" />
+                        android:layout_marginTop="1dp"
+                        android:background="@color/White"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:drawableStart="@mipmap/icon_contact_type_phone"
+                            android:text="@string/contact_type"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/contactMobile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:drawablePadding="@dimen/dp_4"
+                            android:gravity="right"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_12" />
 
 
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -361,12 +361,12 @@
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/placeDelivery"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:text="现金汇款"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
@@ -396,7 +396,7 @@
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:text="现金汇款"
+                        android:id="@+id/remark"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
@@ -420,6 +420,8 @@
                     app:rv_cornerRadius="@dimen/margin_20"
                     android:textColor="@color/White"
                     android:textSize="@dimen/sp_14" />
+
+
 
             </LinearLayout>
 

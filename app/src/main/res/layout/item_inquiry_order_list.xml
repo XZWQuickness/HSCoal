@@ -52,6 +52,7 @@
                 android:layout_marginTop="8dp"
                 android:maxLines="1"
                 android:text="@string/dun"
+                android:id="@+id/purchaseQuantity"
                 android:textColor="@color/Red"
                 android:textSize="14sp" />
 
@@ -66,11 +67,10 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvTitle"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="11"
                 android:textColor="@color/MaterialGrey800"
                 android:textSize="16sp" />
 
@@ -80,12 +80,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:maxLines="1"
-                android:text="11"
                 android:textColor="@color/MaterialGrey600"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tvAddress"
+                android:id="@+id/provinceCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -95,7 +94,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tvUnit"
+                android:id="@+id/plannedDeliveryTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -120,6 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:maxLines="1"
+            android:id="@+id/createDate"
             android:layout_centerVertical="true"
             android:text="@string/Offer_time"
             android:textColor="@color/MaterialGrey600"
@@ -129,6 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:maxLines="1"
+            android:id="@+id/price"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:text="@string/money"

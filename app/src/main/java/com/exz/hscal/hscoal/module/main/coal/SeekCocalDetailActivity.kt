@@ -123,7 +123,7 @@ class SeekCocalDetailActivity : BaseActivity(), View.OnClickListener, OnRefreshL
                 }
                 place.text = String.format(mContext.getString(R.string.origin), it.data?.place ?: "")//产地
                 QTY.text = it.data?.qty + "吨" ?: ""//供应量
-                price.text= price.text
+                price.text=it.data?.price
                 paymentModeName.text=it.data?.paymentModeName //付款方式
                 inspectonBody.text=it.data?.inspectonBody // 检验机构
                 deliveryTime.text=it.data?.deliveryTime?.replace(",", "至") ?: "" //交货时间
@@ -174,6 +174,7 @@ class SeekCocalDetailActivity : BaseActivity(), View.OnClickListener, OnRefreshL
                         .putExtra(ConfirmOrderActivity.Intent_Type, "1")//类型：1煤炭 2有色金属
                         .putExtra(ConfirmOrderActivity.Intent_Id, intent.getStringExtra(SeekCocalDetailActivity.Intent_Id))
                 startActivity(intent)
+                finish()
             }
         })
         bt_submit.setOnClickListener(this)
@@ -200,7 +201,7 @@ class SeekCocalDetailActivity : BaseActivity(), View.OnClickListener, OnRefreshL
                                 .putExtra(ConfirmOrderActivity.Intent_Type, "1")//类型：1煤炭 2有色金属
                                 .putExtra(ConfirmOrderActivity.Intent_Id, intent.getStringExtra(SeekCocalDetailActivity.Intent_Id))
                         startActivity(intent)
-
+                        finish()
                     }
                     "到场自提" -> {
                         var intent = Intent(mContext, ConfirmOrderActivity::class.java)
@@ -208,8 +209,9 @@ class SeekCocalDetailActivity : BaseActivity(), View.OnClickListener, OnRefreshL
                                 .putExtra(ConfirmOrderActivity.Intent_Type, "1") //类型：1煤炭 2有色金属
                                 .putExtra(ConfirmOrderActivity.Intent_Id, intent.getStringExtra(SeekCocalDetailActivity.Intent_Id))
                         startActivity(intent)
+                        finish()
                     }
-                    "物流配送/到场自提" -> {
+                    "物流配送 / 到场自提" -> {
                         pop.showPopupWindow()
                     }
                 }

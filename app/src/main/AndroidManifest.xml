@@ -215,6 +215,10 @@
         <activity
             android:name=".module.login.EditPwdActivity"
             android:screenOrientation="portrait" />
+        <!--确认付款-->
+        <activity
+            android:name=".module.mine.sellorder.ConfirmPaymentActivity"
+            android:screenOrientation="portrait" />
         <!--显示图片-->
         <activity
             android:name="com.szw.framelibrary.view.preview.PreviewActivity"

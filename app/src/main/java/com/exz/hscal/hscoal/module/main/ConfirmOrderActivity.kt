@@ -116,7 +116,7 @@ class ConfirmOrderActivity : BaseActivity(), View.OnClickListener {
 
     private fun initAddress() {
         DataCtrlClass.confirmOrderShippingAddress(mContext, shippingAddressId, {
-            if (it != null) {
+            if (it?.data != null&&!it.data?.id.equals("")) {
                 tv_address.visibility = View.VISIBLE
                 tv_name.text = it.data?.userName + it.data?.mobile
                 tv_address.text = it.data?.address ?: ""

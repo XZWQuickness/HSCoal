@@ -41,7 +41,10 @@ class GoodsManageSteelDetailActivity : BaseActivity() {
             (actionView as TextView).text = "修改"
             actionView.setOnClickListener {
 
-                startActivity(Intent(mContext, ReleaseSteelActivity::class.java))
+                startActivity(Intent(mContext, ReleaseSteelActivity::class.java)
+                        .putExtra(ReleaseSteelActivity.Intent_Id,intent.getStringExtra(Intent_Id)))
+
+                finish()
             }
         }
         return false
@@ -101,7 +104,7 @@ class GoodsManageSteelDetailActivity : BaseActivity() {
     private fun initEvent() {
         bt_delete.setOnClickListener{
             DialogUtils.delete(mContext, {
-                DataCtrlClass.delteGoods(mContext, "2", intent.getStringExtra(SeekCocalDetailActivity.Intent_Id), {
+                DataCtrlClass.delteGoods(mContext, "2", intent.getStringExtra(Intent_Id), {
                     if (it != null) {
                         finish()
                     }

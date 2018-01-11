@@ -576,12 +576,15 @@ object DataCtrlClass {
     /**
      * 报价列表
      * */
-    fun OfferListData(context: Context, currentPage: Int, listener: (addressBean: List<OfferBean>?) -> Unit) {
+    fun OfferListData(context: Context, currentPage: Int,type : String,  objectId: String, listener: (addressBean: List<OfferBean>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
-        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, MyApplication.salt).toLowerCase())
-        OkGo.post<NetEntity<List<OfferBean>>>(Urls.url)
+        params.put("objectId", objectId)
+        params.put("type", type)
+        params.put("page", currentPage.toString())
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + objectId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<List<OfferBean>>>(Urls.QuoteEnquiry)
                 .params(params)
                 .tag(this)
                 .execute(object : DialogCallback<NetEntity<List<OfferBean>>>(context) {
@@ -604,12 +607,14 @@ object DataCtrlClass {
     /**
      * 询盘订单
      * */
-    fun InquiryOrderListData(context: Context, currentPage: Int, listener: (addressBean: List<InquiryOrderBean>?) -> Unit) {
+    fun InquiryOrderListData(context: Context, currentPage: Int, state: String, url: String, listener: (addressBean: List<InquiryOrderBean>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
-        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, MyApplication.salt).toLowerCase())
-        OkGo.post<NetEntity<List<InquiryOrderBean>>>(Urls.url)
+        params.put("page", currentPage.toString())
+        params.put("state", state)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + state, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<List<InquiryOrderBean>>>(url)
                 .params(params)
                 .tag(this)
                 .execute(object : DialogCallback<NetEntity<List<InquiryOrderBean>>>(context) {
@@ -849,10 +854,10 @@ object DataCtrlClass {
     /**
      * 发布煤炭（供应商权限）
      * */
-    fun releaseCoal(context: Context,coalId:String, coalVarietyId: String, name: String, place: String, fixedCarbon: String, calorificValue: String, ashSpecification: String, volatiles: String, inherentMoisture: String,
+    fun releaseCoal(context: Context, coalId: String, coalVarietyId: String, name: String, place: String, fixedCarbon: String, calorificValue: String, ashSpecification: String, volatiles: String, inherentMoisture: String,
                     totalSulfurContent: String, bond: String, y_Value: String, lithofacies: String, csr: String, lowerCalorificValue: String, airDrySulfur: String, ashFusionPoint: String, airDryRadicalVolatiles: String,
                     baseVolatiles: String, totalMoisture: String, g_Value: String, remark: String, provinceId: String, cityId: String, deliveryTime: String, deliveryWayId: String, qty: String,
-                    price: String, paymentModeId: String, inspectonBody: String, inspectonBody_Img: String, image: String, url: String, requestCheck:String,listener: (NetEntity<Void>?) -> Unit) {
+                    price: String, paymentModeId: String, inspectonBody: String, inspectonBody_Img: String, image: String, url: String, requestCheck: String, listener: (NetEntity<Void>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
@@ -888,7 +893,7 @@ object DataCtrlClass {
         if (!TextUtils.isEmpty(inspectonBody)) params.put("inspectonBody", inspectonBody)
         if (!TextUtils.isEmpty(inspectonBody_Img)) params.put("inspectonBody_Img", inspectonBody_Img)
         if (!TextUtils.isEmpty(image)) params.put("image", image)
-        params.put("requestCheck", EncryptUtils.encryptMD5ToString(requestCheck , MyApplication.salt).toLowerCase())
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(requestCheck, MyApplication.salt).toLowerCase())
         OkGo.post<NetEntity<Void>>(url)
                 .params(params)
                 .tag(this)
@@ -897,9 +902,10 @@ object DataCtrlClass {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
                             listener.invoke(response.body())
                         } else {
-                            context.toast(response.body().message)
+
                             listener.invoke(null)
                         }
+                        context.toast(response.body().message)
                     }
 
                     override fun onError(response: Response<NetEntity<Void>>) {
@@ -916,12 +922,13 @@ object DataCtrlClass {
      * 发布有色金属（供应商权限）
      *
      * */
-    fun releaseSteel(context: Context, steelClassId: String, name: String, steelworks: String, specification: String, materialQuality: String, warehouse: String, remark: String,
+    fun releaseSteel(context: Context, steelId: String, steelClassId: String, name: String, steelworks: String, specification: String, materialQuality: String, warehouse: String, remark: String,
                      provinceId: String, cityId: String, deliveryTime: String, deliveryWayId: String, weight: String, qty: String,
-                     price: String, paymentModeId: String, inspectonBody: String, inspectonBody_Img: String, image: String, url: String, listener: (NetEntity<Void>?) -> Unit) {
+                     price: String, paymentModeId: String, inspectonBody: String, inspectonBody_Img: String, image: String, url: String, requestCheck: String, listener: (NetEntity<Void>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
+        if (!TextUtils.isEmpty(steelId)) params.put("steelId", steelId) //有色金属id
         if (!TextUtils.isEmpty(steelClassId)) params.put("steelClassId", steelClassId) //有色金属分类id
         if (!TextUtils.isEmpty(name)) params.put("name", name) //品名
         if (!TextUtils.isEmpty(steelworks)) params.put("steelworks", steelworks)//钢厂
@@ -940,7 +947,7 @@ object DataCtrlClass {
         if (!TextUtils.isEmpty(inspectonBody)) params.put("inspectonBody", inspectonBody)//检验机构
         if (!TextUtils.isEmpty(inspectonBody_Img)) params.put("inspectonBody_Img", inspectonBody_Img)//检验机构_报告图片
         if (!TextUtils.isEmpty(image)) params.put("image", image)//商品图
-        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + steelClassId, MyApplication.salt).toLowerCase())
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(requestCheck, MyApplication.salt).toLowerCase())
         OkGo.post<NetEntity<Void>>(url)
                 .params(params)
                 .tag(this)
@@ -952,6 +959,7 @@ object DataCtrlClass {
                             context.toast(response.body().message)
                             listener.invoke(null)
                         }
+                        context.toast(response.body().message)
                     }
 
                     override fun onError(response: Response<NetEntity<Void>>) {
@@ -1258,9 +1266,9 @@ object DataCtrlClass {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
                             listener.invoke(response.body())
                         } else {
-                            context.toast(response.body().message)
                             listener.invoke(null)
                         }
+                        context.toast(response.body().message)
                     }
 
                     override fun onError(response: Response<NetEntity<Void>>) {
@@ -1300,9 +1308,10 @@ object DataCtrlClass {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
                             listener.invoke(response.body())
                         } else {
-                            context.toast(response.body().message)
+
                             listener.invoke(null)
                         }
+                        context.toast(response.body().message)
                     }
 
                     override fun onError(response: Response<NetEntity<Void>>) {
@@ -1568,4 +1577,342 @@ object DataCtrlClass {
     }
 
 
+    /**
+     * 煤炭订单列表 有色金属订单列表
+     * */
+    fun OrderListData(context: Context, currentPage: Int, state: String, url: String, listener: (addressBean: List<OrderBean>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("page", currentPage.toString())
+        params.put("state", state)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + currentPage, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<List<OrderBean>>>(url)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<List<OrderBean>>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<List<OrderBean>>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body().data)
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<List<OrderBean>>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+
+    /**
+     * 有色金属订单详情（与卖家共用）
+     */
+    fun cocalOrderDetail(context: Context, orderId: String, listener: (NetEntity<CocalOrderDetaileBean>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("orderId", orderId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + orderId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<CocalOrderDetaileBean>>(Urls.getCoalOrderInfo)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<CocalOrderDetaileBean>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<CocalOrderDetaileBean>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<CocalOrderDetaileBean>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 有色金属订单详情（与卖家共用
+     */
+    fun getSteelOrderInfo(context: Context, orderId: String, listener: (NetEntity<SteelOrderInfoBean>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("orderId", orderId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + orderId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<SteelOrderInfoBean>>(Urls.getSteelOrderInfo)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<SteelOrderInfoBean>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<SteelOrderInfoBean>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<SteelOrderInfoBean>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 煤炭订单列表 有色金属订单列表
+     * */
+    fun sellerOrderListData(context: Context, currentPage: Int, state: String, url: String, listener: (addressBean: List<SellOrderBean>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("page", currentPage.toString())
+        params.put("state", state)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + currentPage, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<List<SellOrderBean>>>(url)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<List<SellOrderBean>>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<List<SellOrderBean>>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body().data)
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<List<SellOrderBean>>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 煤炭报价详情
+     */
+    fun getCoalInfoQuote(context: Context, coalQuoteId: String, listener: (NetEntity<CoalInfoQuoteBean>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("coalQuoteId", coalQuoteId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + coalQuoteId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<CoalInfoQuoteBean>>(Urls.getCoalInfoQuote)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<CoalInfoQuoteBean>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<CoalInfoQuoteBean>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<CoalInfoQuoteBean>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 确认付款（未付款的订单，可以调用此接口）
+     */
+    fun confirmPay(context: Context, orderId: String, sendTime: String, listener: (NetEntity<Void>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("orderId", orderId)
+        params.put("sendTime", sendTime)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + orderId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<Void>>(Urls.ConfirmPay)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+
+                            listener.invoke(null)
+                        }
+                        context.toast(response.body().message)
+                    }
+
+                    override fun onError(response: Response<NetEntity<Void>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 删除询价信息（未通过时，可以调用接口）
+     * type	string	必填	类型：1煤炭 2有色金属
+     *  objectId	string	必填	煤炭、有色金属货源id
+     */
+    fun delteEnquiry(context: Context, type: String, objectId: String, listener: (NetEntity<Void>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("type", type)
+        params.put("objectId", objectId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + objectId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<Void>>(Urls.DeleteEnquiry)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            listener.invoke(null)
+                        }
+                        context.toast(response.body().message)
+                    }
+
+                    override fun onError(response: Response<NetEntity<Void>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 有色金属报价详情（与卖家共用
+     */
+    fun getSteelInfoQuote(context: Context, steelQuoteId: String, listener: (NetEntity<SteelInfoQuoteBean>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("steelQuoteId", steelQuoteId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + steelQuoteId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<SteelInfoQuoteBean>>(Urls.GetSteelInfoQuote)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<SteelInfoQuoteBean>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<SteelInfoQuoteBean>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<SteelInfoQuoteBean>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 询盘管理 煤炭货源详情
+     */
+    fun getCoalInfoEnquiryMamage(context: Context, coalEnquiryId: String, listener: (NetEntity<CoalInfoEnquiryMamageBean>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("coalEnquiryId", coalEnquiryId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + coalEnquiryId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<CoalInfoEnquiryMamageBean>>(Urls.GetCoalInfoyEnquiryManage)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<CoalInfoEnquiryMamageBean>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<CoalInfoEnquiryMamageBean>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<CoalInfoEnquiryMamageBean>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+
+    /**
+     * 接收/拒绝报价（待确认时，调用此接口）
+     * */
+    fun ConfirmEnquiry(context: Context, type: String, objectId: String,quoteId: String,state: String,listener: (s: NetEntity<Void>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("type", type)
+        params.put("objectId", objectId)
+        params.put("quoteId", quoteId)
+        params.put("state", state)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + quoteId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<Void>>(Urls.ConfirmEnquiry)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<Void>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
+    /**
+     * 有色金属报价详情（与卖家共用
+     */
+    fun getSteelInfoMamage(context: Context, steelEnquiryId: String, listener: (NetEntity<SteelInfoMamageBean>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("steelEnquiryId", steelEnquiryId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + steelEnquiryId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<SteelInfoMamageBean>>(Urls.GetSteelInfoManage)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<SteelInfoMamageBean>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<SteelInfoMamageBean>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<SteelInfoMamageBean>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
 }

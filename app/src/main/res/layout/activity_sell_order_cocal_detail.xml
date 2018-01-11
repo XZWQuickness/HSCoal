@@ -34,483 +34,1080 @@
                 android:orientation="vertical">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:background="@color/White"
-                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/White"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/margin_15">
+
+                            <TextView
+                                android:id="@+id/name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/MaterialGrey800"
+                                android:textSize="@dimen/sp_14" />
+
+                            <TextView
+                                android:id="@+id/coalVarietyName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_toEndOf="@id/name"
+                                android:textColor="@color/MaterialGrey400"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/place"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_gravity="right"
+                                android:layout_marginStart="4dp"
+                                android:drawablePadding="@dimen/dp_4"
+                                android:drawableStart="@mipmap/icon_main_cocal_origin"
+                                android:gravity="right"
+                                android:text="@string/origin"
+                                android:textColor="@color/MaterialGrey400"
+                                android:textSize="@dimen/sp_12" />
+
+                        </RelativeLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/llLayCocal1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_15"
+                            android:layout_marginEnd="@dimen/margin_15"
+                            android:layout_marginStart="@dimen/margin_15"
+                            android:background="@drawable/shape_cocal_app_bg"
+                            android:orientation="vertical"
+                            android:padding="15dp"
+                            >
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail_text1"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/fixedCarbon"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail_text2"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/calorificValue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail_text3"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/ashSpecification"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail_text4"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/volatiles"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail_text5"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/inherentMoisture"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail_text6"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/totalSulfurContent"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llLayCocal2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_15"
+                            android:layout_marginEnd="@dimen/margin_15"
+                            android:layout_marginStart="@dimen/margin_15"
+                            android:background="@drawable/shape_cocal_app_bg"
+                            android:orientation="vertical"
+                            android:padding="15dp"
+                            >
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail2_text1"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/ashSpecification2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail2_text2"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/totalSulfurContent2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail2_text3"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/bond"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail2_text4"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/volatiles2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxLines="1"
+                                        android:text="@string/main_cocal_detail2_text5"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/Y_Value"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail2_text6"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/lithofacies"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_cocal_detail2_text7"
+                                    android:textColor="@color/MaterialGrey600"
+                                    android:textSize="@dimen/sp_14" />
+
+                                <TextView
+                                    android:id="@+id/scr"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:maxLines="1"
+                                    android:textColor="@color/MaterialOrange400"
+                                    android:textSize="@dimen/sp_14" />
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llLayCocal3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_15"
+                            android:layout_marginEnd="@dimen/margin_15"
+                            android:layout_marginStart="@dimen/margin_15"
+                            android:background="@drawable/shape_cocal_app_bg"
+                            android:orientation="vertical"
+                            android:padding="15dp"
+                            >
+
+                            <LinearLayout
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/main_cocal_detail3_text1"
+                                    android:textColor="@color/MaterialGrey600"
+                                    android:textSize="@dimen/sp_14" />
+
+                                <TextView
+                                    android:id="@+id/lowerCalorificValue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:textColor="@color/MaterialOrange400"
+                                    android:textSize="@dimen/sp_14" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail3_text2"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/airDrySulfur"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail3_text3"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/airDryRadicalVolatiles"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail3_text4"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/inherentMoisture3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail3_text5"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/fixedCarbon3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail3_text6"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/baseVolatiles"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail3_text7"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/totalMoisture"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail3_text8"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/ashSpecification3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail3_text9"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/ashFusionPoint"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail3_text10"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/G_Value"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/main_cocal_detail3_text11"
+                                        android:textColor="@color/MaterialGrey600"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <TextView
+                                        android:id="@+id/Y_Value3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:maxLines="1"
+                                        android:textColor="@color/MaterialOrange400"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/White"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:drawableStart="@mipmap/icon_cocal_detail_payment_type"
+                            android:text="@string/main_cocal_detail_text7"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/paymentModeName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:drawablePadding="@dimen/dp_4"
+                            android:gravity="right"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_12" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/White"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:drawableStart="@mipmap/icon_cocal_detail_checkout"
+                            android:text="@string/main_cocal_detail_text8"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/inspectonBody"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:drawablePadding="@dimen/dp_4"
+                            android:gravity="right"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_12" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/White"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:drawableStart="@mipmap/icon_cocal_detail_delivery_goods_date"
+                            android:text="@string/main_cocal_detail_text9"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/deliveryTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:drawablePadding="@dimen/dp_4"
+                            android:gravity="right"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_12" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/White"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:drawableStart="@mipmap/icon_cocal_detail_delivery_goods_type"
+                            android:text="@string/main_cocal_detail_text10"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/deliveryWayName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:drawablePadding="@dimen/dp_4"
+                            android:gravity="right"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_12" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/White"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:drawableStart="@mipmap/icon_cocal_detail_delivery_goods_location"
+                            android:text="@string/main_cocal_detail_text11"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/provinceCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:drawablePadding="@dimen/dp_4"
+                            android:gravity="right"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_12" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/White"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:drawableStart="@mipmap/icon_cocal_detail_remark"
+                            android:text="@string/main_cocal_detail_text12"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/remark"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:drawablePadding="@dimen/dp_4"
+                            android:gravity="right"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_12" />
+
+
+                    </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/White"
                         android:padding="@dimen/margin_15">
 
                         <TextView
-                            android:id="@+id/tv_title"
+                            android:id="@+id/price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="淮晟煤炭6号"
-                            android:textColor="@color/MaterialGrey800"
-                            android:textSize="@dimen/sp_14" />
+                            android:layout_centerVertical="true"
+                            android:text="@string/main_cocal_detail_unit_price"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="14sp" />
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:layout_toEndOf="@id/tv_title"
-                            android:text="淮晟煤炭6号"
-                            android:textColor="@color/MaterialGrey400"
-                            android:textSize="@dimen/sp_12" />
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:orientation="vertical">
 
+                            <TextView
+                                android:id="@+id/count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/my_order_buy_num"
+                                android:textColor="@color/MaterialGrey600"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/payMoney"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:textColor="@color/MaterialGrey600"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/White"
+                        android:id="@+id/rlConsignee"
+                        android:padding="@dimen/margin_15">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/contact"
+                                android:id="@+id/consignee"
+                                android:textColor="@color/MaterialGrey600"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:id="@+id/mobile"
+                                android:textColor="@color/MaterialGrey600"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_gravity="right"
-                            android:layout_marginStart="4dp"
-                            android:drawablePadding="@dimen/dp_4"
-                            android:drawableStart="@mipmap/icon_main_cocal_origin"
-                            android:gravity="right"
-                            android:text="@string/origin"
-                            android:textColor="@color/MaterialGrey400"
-                            android:textSize="@dimen/sp_12" />
-
+                            android:id="@+id/address"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="14sp" />
                     </RelativeLayout>
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_15"
-                        android:layout_marginEnd="@dimen/margin_15"
-                        android:layout_marginStart="@dimen/margin_15"
-                        android:background="@drawable/shape_cocal_app_bg"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="@dimen/dp_40"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@color/White"
                         android:orientation="vertical"
-                        android:padding="15dp">
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/main_cocal_detail_text1"
-                                    android:textColor="@color/MaterialGrey600"
-                                    android:textSize="@dimen/sp_14" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:text="88.27"
-                                    android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/main_cocal_detail_text2"
-                                    android:textColor="@color/MaterialGrey600"
-                                    android:textSize="@dimen/sp_14" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:text="88.27"
-                                    android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="6dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/main_cocal_detail_text3"
-                                    android:textColor="@color/MaterialGrey600"
-                                    android:textSize="@dimen/sp_14" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:text="88.27"
-                                    android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/main_cocal_detail_text4"
-                                    android:textColor="@color/MaterialGrey600"
-                                    android:textSize="@dimen/sp_14" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:text="88.27"
-                                    android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/main_cocal_detail_text5"
-                                    android:textColor="@color/MaterialGrey600"
-                                    android:textSize="@dimen/sp_14" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:text="88.27"
-                                    android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/main_cocal_detail_text6"
-                                    android:textColor="@color/MaterialGrey600"
-                                    android:textSize="@dimen/sp_14" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:text="88.27"
-                                    android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/White"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:drawableStart="@mipmap/icon_cocal_detail_payment_type"
-                        android:text="@string/main_cocal_detail_text7"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:drawablePadding="@dimen/dp_4"
-                        android:gravity="right"
-                        android:text="现金汇款"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_12" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/White"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:drawableStart="@mipmap/icon_cocal_detail_checkout"
-                        android:text="@string/main_cocal_detail_text8"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:drawablePadding="@dimen/dp_4"
-                        android:gravity="right"
-                        android:text="现金汇款"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_12" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/White"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:drawableStart="@mipmap/icon_cocal_detail_delivery_goods_date"
-                        android:text="@string/main_cocal_detail_text9"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:drawablePadding="@dimen/dp_4"
-                        android:gravity="right"
-                        android:text="现金汇款"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_12" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/White"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:drawableStart="@mipmap/icon_cocal_detail_delivery_goods_type"
-                        android:text="@string/main_cocal_detail_text10"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:drawablePadding="@dimen/dp_4"
-                        android:gravity="right"
-                        android:text="现金汇款"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_12" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/White"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:drawableStart="@mipmap/icon_cocal_detail_delivery_goods_location"
-                        android:text="@string/main_cocal_detail_text11"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:drawablePadding="@dimen/dp_4"
-                        android:gravity="right"
-                        android:text="现金汇款"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_12" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/White"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:drawableStart="@mipmap/icon_cocal_detail_remark"
-                        android:text="@string/main_cocal_detail_text12"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:drawablePadding="@dimen/dp_4"
-                        android:gravity="right"
-                        android:text="现金汇款"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="@dimen/sp_12" />
-
-
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/White"
-                    android:padding="@dimen/margin_15">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="@string/main_cocal_detail_unit_price"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:orientation="vertical">
+                        android:padding="@dimen/margin_15">
 
                         <TextView
+                            android:id="@+id/orderId"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/my_order_buy_num"
+                            android:text="@string/my_order_num"
                             android:textColor="@color/MaterialGrey600"
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/createDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="合计:100"
+                            android:text="@string/my_order_create_time"
                             android:textColor="@color/MaterialGrey600"
                             android:textSize="14sp" />
 
                     </LinearLayout>
-                </RelativeLayout>
+
+
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginBottom="@dimen/dp_40"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:background="@color/White"
-                    android:orientation="vertical"
-                    android:padding="@dimen/margin_15">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/my_order_num"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/my_order_create_time"
-                        android:textColor="@color/MaterialGrey600"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                    android:id="@+id/llBtLay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/White"
@@ -538,6 +1135,7 @@
                         android:gravity="center"
                         android:padding="15dp"
                         android:text="联系买家"
+                        android:visibility="gone"
                         android:textColor="@color/White"
                         android:textSize="@dimen/sp_14"
                         app:rv_backgroundColor="@color/MaterialTealA700"

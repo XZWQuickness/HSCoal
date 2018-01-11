@@ -140,6 +140,7 @@ class SeekSteelDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
                         .putExtra(ConfirmOrderActivity.Intent_Type, "2")
                         .putExtra(ConfirmOrderActivity.Intent_Id, intent.getStringExtra(Intent_Id))
                 startActivity(intent)
+                finish()
             }
         })
         bt_submit.setOnClickListener(this)
@@ -166,7 +167,7 @@ class SeekSteelDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
                                 .putExtra(ConfirmOrderActivity.Intent_Type, "2")
                                 .putExtra(ConfirmOrderActivity.Intent_Id, intent.getStringExtra(Intent_Id))
                         startActivity(intent)
-
+                        finish()
                     }
                     "到场自提" -> {
                         var intent = Intent(mContext, ConfirmOrderActivity::class.java)
@@ -174,8 +175,9 @@ class SeekSteelDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
                                 .putExtra(ConfirmOrderActivity.Intent_Type, "2")
                                 .putExtra(ConfirmOrderActivity.Intent_Id, intent.getStringExtra(Intent_Id))
                         startActivity(intent)
+                        finish()
                     }
-                    "物流配送/到场自提" -> {
+                    "物流配送 / 到场自提" -> {
                         pop.showPopupWindow()
                     }
                 }

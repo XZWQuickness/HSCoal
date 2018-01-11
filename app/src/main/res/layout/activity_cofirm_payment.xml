@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar_custom"></include>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/margin_15"
+    android:id="@+id/llTitme"
+    android:background="@color/White"
+    android:layout_gravity="center_vertical"
+    android:layout_marginTop="@dimen/dp_10"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delivery_time"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/MaterialGrey600"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:layout_height="wrap_content"
+        android:hint="请选择"
+        android:textSize="@dimen/sp_14"
+        android:id="@+id/tvSendTime"
+        android:textColor="@color/MaterialGrey600"
+        android:textColorHint="@color/MaterialGrey400"
+        />
+</LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/White"
+    android:visibility="gone"
+    android:layout_gravity="center_vertical"
+    android:layout_marginTop="1dp"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remark"
+        android:paddingStart="@dimen/margin_15"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/MaterialGrey600"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:layout_height="wrap_content"
+        android:hint="请输入(选填)"
+        android:padding="@dimen/margin_15"
+        android:textSize="@dimen/sp_14"
+        android:id="@+id/edRemark"
+        android:textColor="@color/MaterialGrey600"
+        android:textColorHint="@color/MaterialGrey400"
+        />
+</LinearLayout>
+
+    <com.flyco.roundview.RoundTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="确认"
+        android:id="@+id/tv_submit"
+        android:textColor="@color/White"
+        app:rv_cornerRadius="20dp"
+        android:padding="@dimen/margin_15"
+        android:layout_margin="@dimen/margin_30"
+        android:gravity="center"
+        android:layout_marginEnd="5dp"
+        app:rv_backgroundColor="@color/colorPrimary"
+        />
+
+
+</LinearLayout>

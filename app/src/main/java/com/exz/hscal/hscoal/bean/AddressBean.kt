@@ -7,16 +7,16 @@ import java.io.Serializable
  */
 
 open class AddressBean(var state: String = "1") : Serializable {
-    var id="1"
-    var userName="鱼干"
-    var mobile="18888888878"
+    var id=""
+    var userName=""
+    var mobile=""
     var zipCode=""
     var provinceId=""
     var cityId=""
     var areaId=""
     var address=""
     var provinceCity=""
-    var detail="吼吼吼吼"
+    var detail=""
     fun isDefault():Boolean = state=="1"
 
 

@@ -103,11 +103,28 @@ object DialogUtils {
      */
     fun reason(context: Context, content: String) {
         dialog = CommonDialogFactory.createDialogByType(context, DialogUtil.DIALOG_TYPE_103)
-        dialog.setTitleText("拒绝原因")
-        dialog.setContentText(content)
+        dialog.setTitleText("啊哦")
+        dialog.setContentText("拒绝原因")
         dialog.setOkBtn("确定") { v ->
             dialog.dismiss()
         }
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.show()
+    }
+    /**
+     *
+     */
+    fun hint(context: Context, title: String,listener: () -> Unit) {
+        dialog = CommonDialogFactory.createDialogByType(context, DialogUtil.DIALOG_TYPE_103)
+        dialog.setTitleText("啊哦")
+        dialog.setContentText(title)
+        dialog.setOkBtn("确定") { v ->
+            dialog.dismiss()
+            listener.invoke()
+        }
+        dialog.setCancelBtn("取消",{v ->
+            dialog.dismiss()
+        })
         dialog.setCanceledOnTouchOutside(true)
         dialog.show()
     }

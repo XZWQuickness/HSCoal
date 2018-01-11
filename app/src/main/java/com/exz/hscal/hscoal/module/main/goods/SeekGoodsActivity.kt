@@ -79,17 +79,15 @@ class SeekGoodsActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Re
                 when (position) {
                     0 -> {
                         type = ""
-                        refreshLayout.autoRefresh()
                     }
                     1 -> {
                         type = "1"
-                        refreshLayout.autoRefresh()
                     }
                     2 -> {
                         type = "2"
-                        refreshLayout.autoRefresh()
                     }
                 }
+                onRefresh(refreshLayout)
             }
         })
     }

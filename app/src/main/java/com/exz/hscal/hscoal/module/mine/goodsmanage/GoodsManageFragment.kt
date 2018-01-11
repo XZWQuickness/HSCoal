@@ -56,6 +56,7 @@ class GoodsManageFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapte
         super.onResume()
         refreshLayout.autoRefresh()
     }
+
     private fun initToolbar() {
         classType = arguments.getInt(Fragment_Type)
         if (classType == 1) {
@@ -77,18 +78,15 @@ class GoodsManageFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapte
                 when (position) {
                     0 -> {
                         state = 1
-                        refreshLayout.autoRefresh()
                     }
                     1 -> {
                         state = 0
-                        refreshLayout.autoRefresh()
                     }
                     2 -> {
                         state = 2
-                        refreshLayout.autoRefresh()
                     }
                 }
-
+                onRefresh(refreshLayout)
             }
         })
     }

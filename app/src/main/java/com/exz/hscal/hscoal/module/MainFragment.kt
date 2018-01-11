@@ -134,7 +134,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
             val sb = StringBuilder().apply {
                 append("latitude=").append(location.getLatitude()).append(",")
                 append("longitude=").append(location.getLongitude()).append(",")
-                toast(append("address=").append(location.getAddress()).append(","))
+//                toast(append("address=").append(location.getAddress()).append(","))
             }
         } else {
             // 定位失败

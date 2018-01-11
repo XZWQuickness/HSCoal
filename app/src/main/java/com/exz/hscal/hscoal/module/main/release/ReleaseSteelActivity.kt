@@ -27,12 +27,14 @@ import com.exz.hscal.hscoal.bean.ReleaseBean
 import com.exz.hscal.hscoal.bean.CityBean
 import com.exz.hscal.hscoal.bean.PopStairListBean
 import com.exz.hscal.hscoal.bean.TextBean
+import com.exz.hscal.hscoal.module.mine.goodsmanage.GoodsManageSteelDetailActivity
 import com.exz.hscal.hscoal.utils.RecycleViewDivider
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.lzy.imagepicker.ImagePicker
 import com.lzy.imagepicker.bean.ImageItem
 import com.lzy.imagepicker.ui.ImageGridActivity
 import com.lzy.imagepicker.view.CropImageView
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.imageloder.GlideImageLoader
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -101,7 +103,8 @@ class ReleaseSteelActivity : BaseActivity() {
     private var inspectonBody = ""//检验机构
     private var inspectonBody_Img = ""//检验机构_报告图片
     private var image = ""//商品图
-
+    private var steelId = "" //有色金属id
+    private var requestCheck = "" //验证请求
     var url = Urls.ReleaseSteel
 
     private lateinit var mAdapter: ReleaseAdapter<ReleaseBean>
@@ -139,7 +142,87 @@ class ReleaseSteelActivity : BaseActivity() {
         getDeliveryWay()
         getPaymentMode()
         initCommint()
+        if (intent.hasExtra(Intent_Id) && !TextUtils.isEmpty(intent.getStringExtra(Intent_Id))) {
+            initDetaile()
+        }
     }
+
+    private fun initDetaile() {
+        steelId = intent.getStringExtra(Intent_Id)
+        url = Urls.EditSteel
+        DataCtrlClass.getSteelInfo(mContext, intent.getStringExtra(Intent_Id), {
+            if (it != null) {
+
+
+                for (bean in mAdapter.data) {
+                    when (bean.k) {
+                        "类别:" -> {
+                            bean.v = it.data?.className ?: ""
+                        }
+                        "品名:" -> {
+                            bean.v = it.data?.name ?: ""
+                        }
+                        "钢厂:" -> {
+                            bean.v = it.data?.steelworks ?: ""
+                        }
+                        "规格:" -> {
+                            bean.v = it.data?.specification ?: ""
+                        }
+                        "材质:" -> {
+                            bean.v = it.data?.materialQuality ?: ""
+                        }
+                        "仓库:" -> {
+                            bean.v = it.data?.warehouse ?: ""
+                        }
+                        "件重:" -> {
+                            bean.v = it.data?.weight ?: ""
+                        }
+                        "可供数(件):" -> {
+                            bean.v = it.data?.qty ?: ""
+                        }
+                        "可供数(件):" -> {
+                            bean.v = it.data?.qty ?: ""
+                        }
+                        "单价(元):" -> {
+                            bean.v = it.data?.price ?: ""
+                        }
+                        "付款方式:" -> {
+                            bean.v = it.data?.paymentModeName ?: ""
+                        }
+                        "交货时间:" -> {
+                            val deliveryTime = it.data?.deliveryTime?.split(",")
+                            if (deliveryTime?.size ?: 0 == 2) {
+                                bean.left = deliveryTime?.get(0) ?: ""
+                                bean.right = deliveryTime?.get(1) ?: ""
+                            }
+                        }
+                        "交货方式:" -> {
+                            bean.v = it.data?.deliveryWayName ?: ""
+                        }
+                        "交货地点:" -> {
+                            bean.v = it.data?.provinceCity ?: ""
+                        }
+                        "备注:" -> {
+                            bean.v = it.data?.remark ?: ""
+                        }
+                        "检测机构:" -> {
+                            bean.v = it.data?.inspectonBody ?: ""
+                        }
+                        "点击上传检测报告照片:" -> {
+                            bean.v = it.data?.inspectonBodyImg ?: ""//点击上传检测报告照片
+                        }
+                        "点击上传产品照片:" -> {
+                            bean.v = it.data?.image ?: ""//点击上传产品照片
+                        }
+                    }
+
+                    mAdapter.notifyDataSetChanged()
+                }
+            }
+        })
+
+    }
+
 
     private fun isReturn(content: String): Boolean {
         return content.equals("请输入值") || content.equals("请输入可供吨数") || content.equals("请输入单价")
@@ -151,80 +234,145 @@ class ReleaseSteelActivity : BaseActivity() {
             // 发布煤炭
 
             for (bean in mAdapter.data) {
+                if(TextUtils.isEmpty(steelId)) {
+                    requestCheck = MyApplication.loginUserId + steelClassId
+                    when (bean.lay) {
 
-                when (bean.lay) {
-                    1 -> {
-                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
-                            toast("请输入" + bean.k.replace(":", ""))
-                            return@setOnClickListener
+
+                        1 -> {
+                            if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
+                                toast("请输入" + bean.k.replace(":", ""))
+                                return@setOnClickListener
+                            }
+                        }
+                        2 -> {
+                            if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
+                                toast("请选择" + bean.k.replace(":", ""))
+                                return@setOnClickListener
+                            }
+                        }
+                        3 -> {
+                            if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.left) || TextUtils.isEmpty(bean.right) || bean.check.equals("0") && isReturn(bean.v)) {
+                                toast("请选择" + bean.k.replace(":", ""))
+                                return@setOnClickListener
+                            }
+                        }
+                        4 -> {
+                            if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.left) || TextUtils.isEmpty(bean.right) || bean.check.equals("0") && isReturn(bean.v)) {
+                                toast("请输入" + bean.k.replace(":", ""))
+                                return@setOnClickListener
+                            }
                         }
                     }
-                    2 -> {
-                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
-                            toast("请选择" + bean.k.replace(":", ""))
-                            return@setOnClickListener
-                        }
-                    }
-                    3 -> {
-                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.left) || TextUtils.isEmpty(bean.right) || bean.check.equals("0") && isReturn(bean.v)) {
-                            toast("请选择" + bean.k.replace(":", ""))
-                            return@setOnClickListener
-                        }
-                    }
-                    4 -> {
-                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.left) || TextUtils.isEmpty(bean.right) || bean.check.equals("0") && isReturn(bean.v)) {
-                            toast("请输入" + bean.k.replace(":", ""))
-                            return@setOnClickListener
-                        }
-                    }
+                }else{
+                    requestCheck = MyApplication.loginUserId + steelId
                 }
-
 
                 if (bean.k.equals("品名:")) {
-                    name = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        name = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        name = bean.v
+                    }
+
                 }
                 if (bean.k.equals("钢厂:")) {
-                    steelworks = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        steelworks = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        steelworks = bean.v
+                    }
                 }
                 if (bean.k.equals("规格:")) {
-                    specification = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        specification = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        specification = bean.v
+                    }
                 }
                 if (bean.k.equals("材质:")) {
-                    materialQuality = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        materialQuality = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        materialQuality = bean.v
+                    }
                 }
                 if (bean.k.equals("仓库:")) {
-                    warehouse = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        warehouse = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        warehouse = bean.v
+                    }
                 }
                 if (bean.k.equals("备注:")) {
-                    remark = bean.v
+
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        remark = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        remark = bean.v
+                    }
                 }
 
                 if (bean.k.equals("交货时间:")) {
-                    deliveryTime = bean.left + "," + bean.right
+
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        deliveryTime = bean.left + "," + bean.right
+                    }else if(TextUtils.isEmpty(steelId)){
+                        deliveryTime = bean.left + "," + bean.right
+                    }
                 }
                 if (bean.k.equals("件重:")) {
-                    weight = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        weight = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        weight = bean.v
+                    }
                 }
                 if (bean.k.equals("可供数(件):")) {
-                    QTY = bean.v
+
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        QTY = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        QTY = bean.v
+                    }
                 }
                 if (bean.k.equals("单价(元):")) {
-                    price = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        price = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        price = bean.v
+                    }
                 }
                 if (bean.k.equals("检测机构:")) {
-                    inspectonBody = bean.v
+
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        inspectonBody = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        inspectonBody = bean.v
+                    }
                 }
                 if (bean.k.equals("点击上传检测报告照片:")) {
-                    inspectonBody_Img = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+
+
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        inspectonBody_Img = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+                    }else if(TextUtils.isEmpty(steelId)){
+                        inspectonBody_Img = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+                    }
                 }
                 if (bean.k.equals("点击上传产品照片:")) {
-                    image = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        image = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+                    }else if(TextUtils.isEmpty(steelId)){
+                        image = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
+                    }
                 }
 
             }
-            DataCtrlClass.releaseSteel(mContext, steelClassId, name, steelworks, specification, materialQuality, warehouse, remark, provinceId, cityId, deliveryTime,
+            DataCtrlClass.releaseSteel(mContext, steelId,steelClassId, name, steelworks, specification, materialQuality, warehouse, remark, provinceId, cityId, deliveryTime,
                     deliveryWayId, weight, QTY, price, paymentModeId
-                    , inspectonBody, inspectonBody_Img, image, url, {
+                    , inspectonBody, inspectonBody_Img, image, url,requestCheck, {
                 if (it != null) {
                     finish()
                 }
@@ -331,7 +479,7 @@ class ReleaseSteelActivity : BaseActivity() {
 
         mTimePicker.setOnTimeSelectListener {
             if (it != null) {
-                val format = SimpleDateFormat("yyyy-MM-dd-HH")
+                val format = SimpleDateFormat("yyyy-MM-dd")
                 if (dateType.equals("1")) {
                     entity.left = format.format(it)
 
@@ -398,6 +546,9 @@ class ReleaseSteelActivity : BaseActivity() {
                         mCoclaOptionPicker.show()
                     }
                     "类别:" -> {
+                        if(!TextUtils.isEmpty(steelId)){
+                            return
+                        }
                         KeyboardUtils.hideSoftInput(mContext as ReleaseSteelActivity)
                         mOptionsSteelClass.show()
                     }
@@ -432,6 +583,7 @@ class ReleaseSteelActivity : BaseActivity() {
                 }
 
             }
+
             override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View, position: Int) {
                 super.onItemChildClick(adapter, view, position)
                 entity = mAdapter.data.get(position)
@@ -546,9 +698,14 @@ class ReleaseSteelActivity : BaseActivity() {
             if (resultCode == ImagePicker.RESULT_CODE_ITEMS && data != null) { //图片选择
                 val images = data?.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) as ArrayList<*>
                 entity.v = (images[0] as ImageItem).path
+                entity.check="3"
                 mAdapter.notifyItemChanged(mAdapter.data.indexOf(entity))
             }
         } catch (e: Exception) {
         }
+    }
+
+    companion object {
+        var Intent_Id = "steelId" //有色金属id
     }
 }

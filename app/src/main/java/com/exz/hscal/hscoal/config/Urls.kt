@@ -173,6 +173,12 @@ object Urls {
     var ReleaseSteel = url + "App/Supply/ReleaseSteel.aspx"
 
     /*
+     * 编辑有色金属（供应商权限,未通过时，可以调用接口）
+     */
+    var EditSteel = url + "App/Supply/EditSteel.aspx"
+
+
+    /*
      * 发布煤炭询价
      */
     var ReleaseCoalEnquiry = url + "App/Enquiry/ReleaseCoal.aspx"
@@ -278,7 +284,101 @@ object Urls {
     var DeleteGoods = url + "App/Supply/Delete.aspx"
 
 
+    /*
+     *  煤炭订单列表
+     */
+    var CoalOrder = url + "App/Account/Buyer/CoalOrder.aspx"
 
+
+    /*
+     *  有色金属订单列表
+     */
+    var SteelOrder = url + "App/Account/Buyer/SteelOrder.aspx"
+
+    /*
+     *  煤炭订单详情（与卖家共用）
+     */
+    var getCoalOrderInfo = url + "App/Account/Buyer/GetCoalOrderInfo.aspx"
+
+    /*
+     *  有色金属订单详情（与卖家共用）
+     */
+    var getSteelOrderInfo = url + "App/Account/Buyer/GetSteelOrderInfo.aspx"
+
+
+    /*
+     *  煤炭订单列表
+     */
+    var CoalOrderSeller = url + "App/Account/Seller/CoalOrder.aspx"
+
+    /*
+     *  有色金属订单列表
+     */
+    var SteelOrderSeller = url + "App/Account/Seller/SteelOrder.aspx"
+
+
+    /*
+     *  煤炭报价列表
+     */
+    var CoalQuote = url + "App/Account/Quote/Coal.aspx"
+
+    /*
+     *  有色金属报价列表
+     */
+    var SteelQuote = url + "App/Account/Quote/Steel.aspx"
+
+    /*
+     *  煤炭报价详情
+     */
+    var getCoalInfoQuote = url + "App/Account/Quote/GetCoalInfo.aspx"
+
+
+    /*
+     *  确认付款（未付款的订单，可以调用此接口）
+     */
+    var ConfirmPay = url + "App/Account/Seller/ConfirmPay.aspx"
+
+    /*
+     *  删除询价信息（未通过时，可以调用接口）
+     */
+    var DeleteEnquiry = url + "App/Enquiry/Delete.aspx"
+
+
+    /*
+     *  有色金属报价详情
+     */
+    var GetSteelInfoQuote = url + "App/Account/Quote/GetSteelInfo.aspx"
+
+
+    /*
+        * 询盘管理  煤炭报价列表
+        */
+    var CoalEnquiryManage= url + "App/Account/Enquiry/Coal.aspx"
+
+    /*
+     *  询盘管理 有色金属报价列表
+     */
+    var SteelEnquiryManage = url + "App/Account/Enquiry/Steel.aspx"
+
+    /*
+     *  询盘管理 煤炭询价详情
+     */
+    var GetCoalInfoyEnquiryManage = url + "App/Account/Enquiry/GetCoalInfo.aspx"
+
+    /*
+     *  询盘管理 有色金属询价详情
+     */
+    var GetSteelInfoManage = url + "App/Account/Enquiry/GetSteelInfo.aspx"
+
+    /*
+     *  报价列表
+     */
+    var QuoteEnquiry = url + "App/Account/Enquiry/Quote.aspx"
+
+    /*
+     *  接收/拒绝报价（待确认时，调用此接口）
+     */
+    var ConfirmEnquiry = url + "App/Account/Enquiry/Confirm.aspx"
 
 
 }

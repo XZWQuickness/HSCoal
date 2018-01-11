@@ -1,5 +1,7 @@
 package com.exz.hscal.hscoal.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -16,7 +18,9 @@ public class AreaBean {
 
     private String areaId="";
     private String areaName="";
+
     private boolean check;
+
 
     public boolean isCheck() {
         return check;
@@ -52,6 +56,7 @@ public class AreaBean {
         this.cities = cities;
     }
 
+
     public static class CitiesBean {
 
         /**
@@ -86,4 +91,7 @@ public class AreaBean {
             this.check = check;
         }
     }
+
+
+
 }

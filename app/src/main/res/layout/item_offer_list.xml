@@ -24,8 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/img"
-            android:text="11111"
-            android:id="@+id/tv_title"
+            android:id="@+id/companyName"
             android:maxLines="1"
             android:layout_marginStart="@dimen/dp_10"
             android:textSize="@dimen/sp_14"
@@ -39,7 +38,7 @@
             android:orientation="horizontal"
             android:gravity="bottom"
             android:layout_toEndOf="@id/img"
-            android:layout_below="@id/tv_title"
+            android:layout_below="@id/companyName"
             >
 
             <TextView
@@ -55,8 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/img"
-                android:text="11111"
                 android:layout_marginStart="@dimen/dp_10"
+                android:id="@+id/price"
                 android:textSize="@dimen/sp_14"
                 android:textColor="@color/Red"
                 />

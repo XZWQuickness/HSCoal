@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_10"
                     android:paddingStart="15dp"
-                    android:text="我的买家"
+                    android:text="我是买家"
                     android:background="@color/app_bg"
                     android:textColor="@color/MaterialGrey600"
                     android:textSize="16sp" />
@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:padding="@dimen/dp_10"
-                    android:text="我的卖家"
+                    android:text="我是卖家"
                     android:textColor="@color/MaterialGrey600"
                     android:textSize="16sp" />
 
