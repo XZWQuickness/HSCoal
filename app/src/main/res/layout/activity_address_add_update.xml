@@ -178,6 +178,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_0.5"
+                    android:gravity="center_vertical"
                     android:background="@color/White"
                     android:orientation="horizontal">
 
@@ -190,18 +191,18 @@
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
-                    <EditText
-                        android:id="@+id/ed_addressDetail"
+
+                    <TextView
+                        android:id="@+id/tv_addressDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_15"
                         android:background="@null"
-                        android:gravity="start"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:gravity="center_vertical|end"
                         android:hint="@string/address_hint_area_detail"
                         android:minHeight="@dimen/margin_45"
-                        android:paddingBottom="@dimen/margin_15"
-                        android:paddingEnd="@dimen/margin_15"
-                        android:paddingStart="0dp"
+                        android:singleLine="true"
                         android:text=""
                         android:textColor="@color/MaterialGrey600"
                         android:textColorHint="@color/MaterialGrey400"

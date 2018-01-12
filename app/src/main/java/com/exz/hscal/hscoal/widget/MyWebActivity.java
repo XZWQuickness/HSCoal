@@ -10,9 +10,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -28,10 +30,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.exz.hscal.hscoal.R;
+import com.exz.hscal.hscoal.utils.DialogUtils;
 import com.szw.framelibrary.base.BaseActivity;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 import im.delight.android.webview.AdvancedWebView;
 import im.delight.android.webview.AdvancedWebView.Listener;
+import kotlin.Function;
 
 public class MyWebActivity extends BaseActivity implements Listener {
     AdvancedWebView mWebView;
@@ -97,10 +104,21 @@ public class MyWebActivity extends BaseActivity implements Listener {
         this.mWebView.setWebViewClient(new WebViewClient() {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 if (url.contains("http://3gimg.qq.com/lightmap/components/locationPicker2/back.html?name=")) {
-                    Intent intent = getIntent();
-                    intent.putExtra("url",url);
-                    setResult(RESULT_OK, intent);
-                    finish();
+                    try {
+                        String decode = URLDecoder.decode(url, "UTF-8");
+                       Uri uri = Uri.parse(decode);
+                        String name=uri.getQueryParameter("name");
+//                        DialogUtils.INSTANCE.address(mContext,name, new View.OnClickListener()
+//                            var conten=view.ed_content.text.toString().trim()
+//                            if(!TextUtils.isEmpty(conten)){
+//                                dialog.dismiss()
+//                                listener.invoke(conten)
+//                            }
+                        finish();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
                     return;
                 }
                 MyWebActivity.this.mProgressBar.setVisibility(View.VISIBLE);
@@ -179,10 +197,7 @@ public class MyWebActivity extends BaseActivity implements Listener {
         super.onDestroy();
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        this.mWebView.onActivityResult(requestCode, resultCode, intent);
-    }
+
 
     public void onBackPressed() {
         if(this.mWebView.onBackPressed()) {
@@ -204,4 +219,6 @@ public class MyWebActivity extends BaseActivity implements Listener {
 
     public void onExternalPageRequest(String url) {
     }
+
+
 }

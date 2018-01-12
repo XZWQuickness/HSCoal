@@ -9,6 +9,7 @@ import com.common.controls.dialog.CommonDialogFactory
 import com.common.controls.dialog.DialogUtil
 import com.common.controls.dialog.ICommonDialog
 import com.exz.hscal.hscoal.R
+import kotlinx.android.synthetic.main.dialog_address.view.*
 import kotlinx.android.synthetic.main.dialog_change_num.view.*
 
 
@@ -128,6 +129,32 @@ object DialogUtils {
         dialog.setCanceledOnTouchOutside(true)
         dialog.show()
     }
+
+    /**
+     *
+     */
+    fun address(context: Context, content: String,listener: (c:String) -> Unit) {
+        dialog = CommonDialogFactory.createDialogByType(context, DialogUtil.DIALOG_TYPE_103)
+        val  view=View.inflate(context,R.layout.dialog_address,null)
+        dialog.setContentView(view)
+        view.ed_content.setText(content)
+        dialog.setTitleText("详细地址")
+        dialog.setOkBtn("确定") { v ->
+            var conten=view.ed_content.text.toString().trim()
+            if(!TextUtils.isEmpty(conten)){
+                dialog.dismiss()
+                listener.invoke(conten)
+            }
+
+        }
+        dialog.setCancelBtn("取消",{v ->
+            dialog.dismiss()
+        })
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.show()
+    }
+
+
 
 
     /**

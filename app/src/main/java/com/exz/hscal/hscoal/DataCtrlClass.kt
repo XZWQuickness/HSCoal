@@ -1224,14 +1224,15 @@ object DataCtrlClass {
     }
 
 
-    fun releaseCoalEnquiry(context: Context, coalVarietyId: String, name: String, purchaseQuantity: String, fixedCarbon: String, calorificValue: String,
+    fun releaseCoalEnquiry(context: Context,coalId:String, coalVarietyId: String, name: String, purchaseQuantity: String, fixedCarbon: String, calorificValue: String,
                            ashSpecification: String, volatiles: String, inherentMoisture: String, totalSulfurContent: String, bond: String, y_Value: String,
                            lithofacies: String, csr: String, lowerCalorificValue: String, airDrySulfur: String, airDryRadicalVolatiles: String, provinceId: String,
                            cityId: String, placeDelivery: String, deliveryTime: String, deliveryWayId: String, plannedDeliveryTime: String, contactName: String,
-                           contactMobile: String, remark: String, url: String, listener: (NetEntity<Void>?) -> Unit) {
+                           contactMobile: String, remark: String, url: String, requestCheck:String,listener: (NetEntity<Void>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
+        if (!TextUtils.isEmpty(coalId)) params.put("coalId", coalId)
         if (!TextUtils.isEmpty(coalVarietyId)) params.put("coalVarietyId", coalVarietyId)
         if (!TextUtils.isEmpty(name)) params.put("name", name)
         if (!TextUtils.isEmpty(purchaseQuantity)) params.put("purchaseQuantity", purchaseQuantity)
@@ -1257,7 +1258,7 @@ object DataCtrlClass {
         if (!TextUtils.isEmpty(contactName)) params.put("contactName", contactName)
         if (!TextUtils.isEmpty(contactMobile)) params.put("contactMobile", contactMobile)
         if (!TextUtils.isEmpty(remark)) params.put("remark", remark)
-        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + coalVarietyId, MyApplication.salt).toLowerCase())
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(requestCheck, MyApplication.salt).toLowerCase())
         OkGo.post<NetEntity<Void>>(url)
                 .params(params)
                 .tag(this)
@@ -1280,11 +1281,12 @@ object DataCtrlClass {
 
     }
 
-    fun releaseSteelEnquiry(context: Context, steelClassId: String, name: String, weight: String, purchaseQuantity: String, specification: String,
+    fun releaseSteelEnquiry(context: Context, steelId:String,steelClassId: String, name: String, weight: String, purchaseQuantity: String, specification: String,
                             materialQuality: String, provinceId: String, cityId: String, placeDelivery: String, deliveryWayId: String,
-                            plannedDeliveryTime: String, contactName: String, contactMobile: String, remark: String, url: String, listener: (NetEntity<Void>?) -> Unit) {
+                            plannedDeliveryTime: String, contactName: String, contactMobile: String, remark: String, url: String, requestCheck:String,listener: (NetEntity<Void>?) -> Unit) {
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
+        if (!TextUtils.isEmpty(steelId)) params.put("steelId", steelId)
         if (!TextUtils.isEmpty(steelClassId)) params.put("steelClassId", steelClassId)
         if (!TextUtils.isEmpty(name)) params.put("name", name)
         if (!TextUtils.isEmpty(weight)) params.put("weight", weight)
@@ -1299,7 +1301,7 @@ object DataCtrlClass {
         if (!TextUtils.isEmpty(contactName)) params.put("contactName", contactName)
         if (!TextUtils.isEmpty(contactMobile)) params.put("contactMobile", contactMobile)
         if (!TextUtils.isEmpty(remark)) params.put("remark", remark)
-        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + steelClassId, MyApplication.salt).toLowerCase())
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(requestCheck, MyApplication.salt).toLowerCase())
         OkGo.post<NetEntity<Void>>(url)
                 .params(params)
                 .tag(this)

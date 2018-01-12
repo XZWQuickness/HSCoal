@@ -1,6 +1,8 @@
 package com.exz.hscal.hscoal.module.mine.address;
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.text.TextUtils
 import android.view.View
 import android.widget.CompoundButton
@@ -15,6 +17,7 @@ import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.bean.AddressBean
 import com.exz.hscal.hscoal.bean.CityBean
 import com.exz.hscal.hscoal.utils.DialogUtils
+import com.exz.hscal.hscoal.widget.MyWebActivity
 import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -24,6 +27,7 @@ import org.jetbrains.anko.toast
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import java.net.URLDecoder
 import java.util.*
 
 /**
@@ -69,7 +73,7 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
             phone = ed_userPhone.text.toString().trim()
             zipCode = ed_postal_code.text.toString().trim()
             address = bt_address.text.toString().trim()
-            detail = ed_addressDetail.text.toString().trim()
+            detail = tv_addressDetail.text.toString().trim()
             if (TextUtils.isEmpty(intent.getStringExtra(Intent_AddressId))) {
 
                 if (TextUtils.isEmpty(name)) {
@@ -101,7 +105,7 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
             state = if (bt_setDefault.isChecked) "1" else "0"
 
             DataCtrlClass.AddAddressData(mContext, name, phone, zipCode, provinceId, cityId, districtId, detail, addressId, url, state, requestCheck, {
-                if(it!=null){
+                if (it != null) {
                     //执行保存操作
                     setResult(Activity.RESULT_OK)
                     onBackPressed()
@@ -185,45 +189,45 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
     }
 
     private fun initData() {
-        if(intent.hasExtra(Intent_AddressId)&&!TextUtils.isEmpty(Intent_AddressId)){
-            bt_delete.visibility=View.VISIBLE
-        addressId = intent.getStringExtra(Intent_AddressId)
-        if (!TextUtils.isEmpty(Intent_AddressId)) {
-            DataCtrlClass.AddressInfoData(mContext, addressId, {
-                if (it != null) {
-                    ed_userName.setText(it.userName)
-                    ed_userPhone.setText(it.mobile)
-                    ed_postal_code.setText(it.zipCode)
-                    ed_addressDetail.setText(it.address)
-                    bt_address.text = String.format(it.provinceCity)
-                    name=it.userName
-                    phone=it.mobile
-                    zipCode=it.zipCode
-                    provinceId=it.provinceId
-                    cityId=it.cityId
-                    districtId=it.areaId
-                    address=it.address
-                    state=it.state
-                    bt_setDefault.isChecked=it.isDefault()
-                }
+        if (intent.hasExtra(Intent_AddressId) && !TextUtils.isEmpty(Intent_AddressId)) {
+            bt_delete.visibility = View.VISIBLE
+            addressId = intent.getStringExtra(Intent_AddressId)
+            if (!TextUtils.isEmpty(Intent_AddressId)) {
+                DataCtrlClass.AddressInfoData(mContext, addressId, {
+                    if (it != null) {
+                        ed_userName.setText(it.userName)
+                        ed_userPhone.setText(it.mobile)
+                        ed_postal_code.setText(it.zipCode)
+                        tv_addressDetail.text = it.address
+                        bt_address.text = String.format(it.provinceCity)
+                        name = it.userName
+                        phone = it.mobile
+                        zipCode = it.zipCode
+                        provinceId = it.provinceId
+                        cityId = it.cityId
+                        districtId = it.areaId
+                        address = it.address
+                        state = it.state
+                        bt_setDefault.isChecked = it.isDefault()
+                    }
 
-            })
-        }
-        }else{
-            bt_delete.visibility=View.GONE
+                })
+            }
+        } else {
+            bt_delete.visibility = View.GONE
         }
     }
 
 
-
     private fun initEvent() {
-        if(intent.hasExtra(INTENT_IS_DELETE)){
-            bt_setDefault.visibility=if(intent.getBooleanExtra(INTENT_IS_DELETE,true)) View.VISIBLE else  View.GONE
+        if (intent.hasExtra(INTENT_IS_DELETE)) {
+            bt_setDefault.visibility = if (intent.getBooleanExtra(INTENT_IS_DELETE, true)) View.VISIBLE else View.GONE
         }
 
         toolbar.setNavigationOnClickListener { finish() }
         bt_address.setOnClickListener(this)
         bt_delete.setOnClickListener(this)
+        tv_addressDetail.setOnClickListener(this)
 
     }
 
@@ -236,7 +240,7 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
             bt_delete -> {
                 DialogUtils.delete(mContext) {
                     DataCtrlClass.deleteAddressData(mContext, addressId) {
-                        if(it!=null){
+                        if (it != null) {
                             setResult(Activity.RESULT_OK)
                             onBackPressed()
                         }
@@ -253,11 +257,29 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
                 pvOptionsAddress.setCyclic(false)
                 pvOptionsAddress.show()
             }
+            tv_addressDetail -> {
+                startActivityForResult(Intent(mContext, MyWebActivity::class.java)
+                        .putExtra(MyWebActivity.Intent_Title, "设置详细地址").
+                        putExtra(MyWebActivity.Intent_Url, "http://apis.map.qq.com/tools/locpicker?search=1&type=0&backurl=http://3gimg.qq.com/lightmap/components/locationPicker2/back.html&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp")
+                        , 100)
+            }
         }
     }
 
     companion object {
         var Intent_AddressId = "shippingAddressId"
         var INTENT_IS_DELETE = "is_delete"
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                if (data != null) {
+                    val content = data.getStringExtra("content")
+                    tv_addressDetail.text = content
+                }
+            }
+        }
     }
 }

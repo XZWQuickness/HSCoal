@@ -49,6 +49,34 @@ public class DemandSteelDetailEntity {
     @SerializedName("placeDelivery")
     private String placeDelivery;
 
+    private String deliveryWayName;
+    private String contactName;
+    private String contactMobile;
+
+    public String getDeliveryWayName() {
+        return deliveryWayName;
+    }
+
+    public void setDeliveryWayName(String deliveryWayName) {
+        this.deliveryWayName = deliveryWayName;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactMobile() {
+        return contactMobile;
+    }
+
+    public void setContactMobile(String contactMobile) {
+        this.contactMobile = contactMobile;
+    }
+
     public String getName() {
         return name;
     }

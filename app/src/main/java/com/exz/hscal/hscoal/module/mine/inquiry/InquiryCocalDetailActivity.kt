@@ -44,6 +44,7 @@ class InquiryCocalDetailActivity : BaseActivity(), View.OnClickListener {
             actionView.setOnClickListener {
                 startActivity(Intent(mContext, EnquiryCocalActivity::class.java)
                         .putExtra(EnquiryCocalActivity.Intent_Id, intent.getStringExtra(InquirySteelDetailActivity.Intent_Id)))
+                finish()
             }
         }
         return false

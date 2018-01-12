@@ -40,8 +40,8 @@ class InquirySteelDetailActivity : BaseActivity(), View.OnClickListener {
             (actionView as TextView).text = "修改"
             actionView.setOnClickListener {
                 startActivity(Intent(mContext,EnquirySteelActivity::class.java)
-                        .putExtra(EnquirySteelActivity.Intent_Id,intent.getStringExtra(Intent_Id))
-                )
+                        .putExtra(EnquirySteelActivity.Intent_Id,intent.getStringExtra(Intent_Id)))
+                finish()
             }
         }
         return false

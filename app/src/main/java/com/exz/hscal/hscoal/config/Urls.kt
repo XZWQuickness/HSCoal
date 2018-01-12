@@ -183,6 +183,17 @@ object Urls {
      */
     var ReleaseCoalEnquiry = url + "App/Enquiry/ReleaseCoal.aspx"
 
+
+    /*
+     * 编辑煤炭，不允许修改煤种（未通过时，可以调用接口）
+     */
+    var EditCoalEnquiry = url + "App/Enquiry/EditCoal.aspx"
+
+    /*
+     * 编辑有色金属（未通过时，可以调用接口）
+     */
+    var EditSteelEnquiry = url + "App/Enquiry/EditSteel.aspx"
+
     /*
      * 发布有色金属
      */

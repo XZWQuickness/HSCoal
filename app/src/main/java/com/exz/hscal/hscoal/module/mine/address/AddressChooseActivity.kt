@@ -2,6 +2,7 @@ package com.exz.hscal.hscoal.module.mine.address
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -22,6 +23,7 @@ import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_address_choose.*
+import java.net.URLDecoder
 
 /**
  * Created by pc on 2017/12/15.
@@ -110,6 +112,8 @@ class AddressChooseActivity: BaseActivity(), OnRefreshListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         onRefresh(refreshLayout)
+
+
     }
     companion object {
         var Intent_Result_Address="Intent_Result_Address"

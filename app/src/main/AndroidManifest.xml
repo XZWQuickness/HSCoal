@@ -225,7 +225,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"  />
 
-
+<activity android:name=".utils.MapWebViewActivity"
+    android:screenOrientation="portrait"
+     ></activity>
         <meta-data
             android:name="TencentMapSDK"
             android:value="SFLBZ-PSUWK-2FYJ3-AN6VI-ZJ6N6-TMBLT" />

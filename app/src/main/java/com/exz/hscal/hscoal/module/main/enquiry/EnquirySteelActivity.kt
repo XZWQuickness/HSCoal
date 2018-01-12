@@ -22,6 +22,7 @@ import com.exz.hscal.hscoal.bean.ReleaseBean
 import com.exz.hscal.hscoal.bean.TextBean
 import com.exz.hscal.hscoal.utils.RecycleViewDivider
 import com.exz.hscal.hscoal.utils.SZWUtils
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
@@ -81,7 +82,8 @@ class EnquirySteelActivity : BaseActivity() {
     var contactMobile = ""//联系电话
     var remark = ""//备注
 
-
+    private var steelId = "" //有色金属id
+    private var requestCheck = "" //验证请求
     var url = Urls.ReleaseSteelEnquiry
 
     private lateinit var mAdapter: ReleaseAdapter<ReleaseBean>
@@ -121,7 +123,71 @@ class EnquirySteelActivity : BaseActivity() {
         initSteelClass()
         getDeliveryWay()
         initCommint()
+
+        if (intent.hasExtra(Intent_Id) && !TextUtils.isEmpty(intent.getStringExtra(Intent_Id))) {
+            initDetaile()
+        }
     }
+
+    private fun initDetaile() {
+        steelId = intent.getStringExtra(Intent_Id)
+        url = Urls.EditSteelEnquiry
+        DataCtrlClass.getSteelInfoEnquiry(mContext, intent.getStringExtra(Intent_Id), {
+            if (it != null) {
+
+
+                for (bean in mAdapter.data) {
+                    when (bean.k) {
+                        "类别:" -> {
+                            bean.v = it.data?.className ?: ""
+                        }
+                        "品名:" -> {
+                            bean.v = it.data?.name ?: ""
+                        }
+                        "件重:" -> {
+                            bean.v = it.data?.weight ?: ""
+                        }
+                        "求购数(件):" -> {
+                            bean.v = it.data?.purchaseQuantity ?: ""
+                        }
+                        "规格:" -> {
+                            bean.v = it.data?.specification ?: ""
+                        }
+                        "材质:" -> {
+                            bean.v = it.data?.materialQuality ?: ""
+                        }
+                        "计划收货时间:" -> {
+                            bean.v = it.data?.plannedDeliveryTime ?: ""
+                        }
+
+                        "交货方式:" -> {
+                            bean.v = it.data?.deliveryWayName ?: ""
+                        }
+                        "详细地址:" -> {
+                            bean.v = it.data?.placeDelivery ?: ""
+                        }
+                        "交货地点:" -> {
+                            bean.v = it.data?.provinceCity ?: ""
+                        }
+                        "联系人:" -> {
+                            bean.v = it.data?.contactName ?: ""//联系人
+                        }
+                        "手机号:" -> {
+                            bean.v = it.data?.contactMobile ?: ""//联系电话
+                        }
+                        "备注:" -> {
+                            bean.v = it.data?.remark ?: ""//备注
+                        }
+
+                    }
+
+                    mAdapter.notifyDataSetChanged()
+                }
+            }
+        })
+
+    }
+
 
     private fun isReturn(content: String): Boolean {
         return content.equals("请输入值") || content.equals("请输入可供吨数") || content.equals("请输入单价")
@@ -133,69 +199,117 @@ class EnquirySteelActivity : BaseActivity() {
             // 发布煤炭
 
             for (bean in mAdapter.data) {
-
-                when (bean.lay) {
-                    1 -> {
-                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
-                            toast("请输入" + bean.k.replace(":", ""))
-                            return@setOnClickListener
+                if(TextUtils.isEmpty(steelId)) {
+                    requestCheck = MyApplication.loginUserId + steelClassId
+                    when (bean.lay) {
+                        1 -> {
+                            if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
+                                toast("请输入" + bean.k.replace(":", ""))
+                                return@setOnClickListener
+                            }
+                        }
+                        2 -> {
+                            if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
+                                toast("请选择" + bean.k.replace(":", ""))
+                                return@setOnClickListener
+                            }
+                        }
+                        3 -> {
+                            if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.left) || TextUtils.isEmpty(bean.right) || bean.check.equals("0") && isReturn(bean.v)) {
+                                toast("请选择" + bean.k.replace(":", ""))
+                                return@setOnClickListener
+                            }
+                        }
+                        4 -> {
+                            if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.left) || TextUtils.isEmpty(bean.right) || bean.check.equals("0") && isReturn(bean.v)) {
+                                toast("请输入" + bean.k.replace(":", ""))
+                                return@setOnClickListener
+                            }
                         }
                     }
-                    2 -> {
-                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.v) || bean.check.equals("0") && isReturn(bean.v)) {
-                            toast("请选择" + bean.k.replace(":", ""))
-                            return@setOnClickListener
-                        }
-                    }
-                    3 -> {
-                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.left) || TextUtils.isEmpty(bean.right) || bean.check.equals("0") && isReturn(bean.v)) {
-                            toast("请选择" + bean.k.replace(":", ""))
-                            return@setOnClickListener
-                        }
-                    }
-                    4 -> {
-                        if (!bean.k.contains("选填") && TextUtils.isEmpty(bean.left) || TextUtils.isEmpty(bean.right) || bean.check.equals("0") && isReturn(bean.v)) {
-                            toast("请输入" + bean.k.replace(":", ""))
-                            return@setOnClickListener
-                        }
-                    }
+                }else{
+                    requestCheck = MyApplication.loginUserId + steelId
                 }
 
 
                 if (bean.k.equals("品名:")) {
-                    name = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        name = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        name = bean.v
+                    }
+
                 }
                 if (bean.k.equals("件重:")) {
-                    weight = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        weight = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        weight = bean.v
+                    }
                 }
                 if (bean.k.equals("求购数(件):")) {
-                    purchaseQuantity = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        purchaseQuantity = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        purchaseQuantity = bean.v
+                    }
                 }
                 if (bean.k.equals("规格:")) {
-                    specification = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        specification = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        specification = bean.v
+                    }
                 }
                 if (bean.k.equals("材质:")) {
-                    materialQuality = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        materialQuality = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        materialQuality = bean.v
+                    }
                 }
                 if (bean.k.equals("计划收货时间:")) {
-                    plannedDeliveryTime = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        plannedDeliveryTime = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        plannedDeliveryTime = bean.v
+                    }
                 }
                 if (bean.k.equals("详细地址:")) {
-                    placeDelivery = bean.v
+
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        placeDelivery = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        placeDelivery = bean.v
+                    }
                 }
                 if (bean.k.equals("联系人:")) {
-                    contactName = bean.v
+
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        contactName = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        contactName = bean.v
+                    }
                 }
                 if (bean.k.equals("手机号:")) {
-                    contactMobile = bean.v
+
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        contactMobile = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        contactMobile = bean.v
+                    }
                 }
                 if (bean.k.equals("备注:")) {
-                    remark = bean.v
+                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                        remark = bean.v
+                    }else if(TextUtils.isEmpty(steelId)){
+                        remark = bean.v
+                    }
                 }
 
             }
-            DataCtrlClass.releaseSteelEnquiry(mContext, steelClassId, name, weight, purchaseQuantity, specification, materialQuality, provinceId,
-                    cityId, placeDelivery, deliveryWayId, plannedDeliveryTime, contactName, contactMobile, remark, url, {
+            DataCtrlClass.releaseSteelEnquiry(mContext, steelId,steelClassId, name, weight, purchaseQuantity, specification, materialQuality, provinceId,
+                    cityId, placeDelivery, deliveryWayId, plannedDeliveryTime, contactName, contactMobile, remark, url,requestCheck, {
                 if (it != null) {
                     finish()
                 }

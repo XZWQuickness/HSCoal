@@ -220,7 +220,7 @@ class ReleaseCocalActivity : BaseActivity() {
                             bean.v = it.data?.csr ?: ""
                         }
                         "低位热值(kcal/kg):" -> {
-                            val lowerCalorificValue = it.data?.lowerCalorificValue?.split(",")
+                            val lowerCalorificValue = it.data?.lowerCalorificValue?.split("-")
                             if (lowerCalorificValue?.size ?: 0 == 2) {
                                 bean.left = lowerCalorificValue?.get(0) ?: ""
                                 bean.right = lowerCalorificValue?.get(1) ?: ""
@@ -228,7 +228,7 @@ class ReleaseCocalActivity : BaseActivity() {
                         }
                         "空干基硫分(%):" -> {
 
-                            val airDrySulfur = it.data?.airDrySulfur?.split(",")
+                            val airDrySulfur = it.data?.airDrySulfur?.split("-")
                             if (airDrySulfur?.size ?: 0 == 2) {
                                 bean.left = airDrySulfur?.get(0) ?: ""
                                 bean.right = airDrySulfur?.get(1) ?: ""
@@ -236,7 +236,7 @@ class ReleaseCocalActivity : BaseActivity() {
                         }
                         "空干基挥发分(%):" -> {
 
-                            val airDryRadicalVolatiles = it.data?.airDryRadicalVolatiles?.split(",")
+                            val airDryRadicalVolatiles = it.data?.airDryRadicalVolatiles?.split("-")
                             if (airDryRadicalVolatiles?.size ?: 0 == 2) {
                                 bean.left = airDryRadicalVolatiles?.get(0) ?: ""
                                 bean.right = airDryRadicalVolatiles?.get(1) ?: ""
@@ -246,7 +246,7 @@ class ReleaseCocalActivity : BaseActivity() {
                             bean.v = it.data?.baseVolatiles ?: ""//收到基挥发分
                         }
                         "全水分(%):" -> {
-                            val totalMoisture = it.data?.totalMoisture?.split(",")
+                            val totalMoisture = it.data?.totalMoisture?.split("-")
                             if (totalMoisture?.size ?: 0 == 2) {
                                 bean.left = totalMoisture?.get(0) ?: ""
                                 bean.right = totalMoisture?.get(1) ?: ""
