@@ -15,7 +15,9 @@ android {
         multiDexEnabled true
         renderscriptTargetApi 25
         renderscriptSupportModeEnabled true    // Enable RS support
-
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
     }
     buildTypes {
         release {
