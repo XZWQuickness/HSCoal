@@ -15,6 +15,8 @@ import android.view.animation.DecelerateInterpolator
 import android.webkit.GeolocationPermissions
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.webkit.WebViewClient
+import com.exz.carprofitmuch.config.Urls
 import com.exz.hscal.hscoal.R
 import com.szw.framelibrary.base.MyBaseFragment
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -63,9 +65,10 @@ class NewsFragment : MyBaseFragment() {
 //最重要的方法，一定要设置，这就是出不来的主要原因
         webSettings.setDomStorageEnabled(true)
         this.mWebView.setBackgroundColor(ContextCompat.getColor(context, R.color.app_bg))
-        mWebView.loadUrl("http://www.baidu.com/")
-        mWebView.webChromeClient = object : WebChromeClient() {
-            override fun onProgressChanged(view: WebView, newProgress: Int) {
+        mWebView.loadUrl(Urls.NewsList)
+//        mWebView.loadUrl("http://www.baidu.com")
+        mWebView.setWebChromeClient(object : com.tencent.smtt.sdk.WebChromeClient() {
+            override fun onProgressChanged(view: com.tencent.smtt.sdk.WebView, newProgress: Int) {
                 currentProgress = mProgressBar.getProgress()
                 if (newProgress >= 100 && !isAnimStart) {
                     isAnimStart = true
@@ -78,12 +81,14 @@ class NewsFragment : MyBaseFragment() {
 
             }
 
-            //配置权限（同样在WebChromeClient中实现）
-            override fun onGeolocationPermissionsShowPrompt(origin: String, callback: GeolocationPermissions.Callback) {
-                callback.invoke(origin, true, false)
-                super.onGeolocationPermissionsShowPrompt(origin, callback)
+        })
+        mWebView.setWebViewClient(object : com.tencent.smtt.sdk.WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: com.tencent.smtt.sdk.WebView, url: String): Boolean {
+                view.loadUrl(url)
+                return true
             }
-        }
+
+        })
     }
 
     private fun startDismissAnimation(progress: Int) {
@@ -121,22 +126,6 @@ class NewsFragment : MyBaseFragment() {
         StatusBarUtil.setPaddingSmart(activity, toolbar)
         StatusBarUtil.setPaddingSmart(activity, blurView)
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        this.mWebView.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        this.mWebView.onPause()
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
-        super.onActivityResult(requestCode, resultCode, intent)
-        this.mWebView.onActivityResult(requestCode, resultCode, intent)
     }
 
 

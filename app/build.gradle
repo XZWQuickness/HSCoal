@@ -15,6 +15,7 @@ android {
         multiDexEnabled true
         renderscriptTargetApi 25
         renderscriptSupportModeEnabled true    // Enable RS support
+
     }
     buildTypes {
         release {
@@ -36,8 +37,7 @@ dependencies {
     compile "io.objectbox:objectbox-android:$objectboxVersion"
     compile "io.objectbox:objectbox-kotlin:$objectboxVersion"
     kapt "io.objectbox:objectbox-processor:$objectboxVersion"
-    implementation files('libs/TencentLocationSDK_v5.0.1.jar')
-
     //图片压缩
     compile 'top.zibin:Luban:+'
+    implementation files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar')
 }

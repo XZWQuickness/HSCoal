@@ -75,7 +75,7 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
             edTitle.setText("")
             tvTitle.text = ""
             keyword = edTitle.text.toString().trim { it <= ' ' }
-            refreshLayout.autoRefresh()
+            onRefresh(refreshLayout)
         }
         return false
     }
@@ -109,7 +109,7 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 // do something
                 keyword = edTitle.text.toString().trim { it <= ' ' }
-                refreshLayout.autoRefresh()
+                onRefresh(refreshLayout)
                 return@OnEditorActionListener true
             }
             false
@@ -152,7 +152,7 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
                     setGaryOrblue(rb1, true, it.name)
                 }
                 sortType = it.id
-                refreshLayout.autoRefresh()
+                onRefresh(refreshLayout)
             }
         })
         sortPop.data = sortData
@@ -170,7 +170,7 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
                     setGaryOrblue(rb2, true, it.name)
                 }
                 steelClassId = it.id
-                refreshLayout.autoRefresh()
+                onRefresh(refreshLayout)
             }
         })
         coalPop.data = coalData

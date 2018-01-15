@@ -1,5 +1,6 @@
 package com.exz.hscal.hscoal.adapter
 
+import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.exz.hscal.hscoal.R
@@ -14,6 +15,8 @@ class CargoListAdapter() : BaseQuickAdapter<CargoListBean, BaseViewHolder>(R.lay
 
     override fun convert(helper: BaseViewHolder, item: CargoListBean) {
         var v = helper.itemView
+        v.name.visibility=View.VISIBLE
+        v.name.text=item.name
         v.image.setImageURI(item.image)
         v.description.text = item.description
         v.provinceCity.text ="交货地:"+ item.provinceCity

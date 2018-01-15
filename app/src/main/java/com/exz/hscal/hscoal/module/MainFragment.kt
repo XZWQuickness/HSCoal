@@ -39,10 +39,6 @@ import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.MyBaseFragment
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
-import com.tencent.map.geolocation.TencentLocation
-import com.tencent.map.geolocation.TencentLocationListener
-import com.tencent.map.geolocation.TencentLocationManager
-import com.tencent.map.geolocation.TencentLocationRequest
 import com.youth.banner.BannerConfig
 import com.youth.banner.listener.OnBannerListener
 import kotlinx.android.synthetic.main.action_bar_custom.*
@@ -54,10 +50,9 @@ import org.jetbrains.anko.support.v4.toast
  * Created by pc on 2017/12/4.
  */
 
-class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View.OnClickListener, TencentLocationListener {
+class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View.OnClickListener{
 
 
-    private lateinit var mLocationManager: TencentLocationManager
 
     private lateinit var mAdapter: CargoListAdapter
     private lateinit var headerView: View
@@ -72,7 +67,6 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
 
     override fun initView() {
         initBar()
-        initLocation()
         initRecycler()
         initHeader()
         initBanner()
@@ -106,41 +100,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
         }
     }
 
-    private fun initLocation() {
 
-        mLocationManager = TencentLocationManager.getInstance(context)
-        // 设置坐标系为 gcj-02, 缺省坐标为 gcj-02, 所以通常不必进行如下调用
-        mLocationManager.setCoordinateType(TencentLocationManager.COORDINATE_TYPE_GCJ02)
-        // 创建定位请求
-        val request = TencentLocationRequest.create()
-                .setInterval((5 * 1000).toLong()) // 设置定位周期
-                .setAllowGPS(true)  //当为false时，设置不启动GPS。默认启动
-                .setQQ("10001")
-                .setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_NAME) // 设置定位level
-
-        // 开始定位
-        mLocationManager.requestLocationUpdates(request, this, getMainLooper())
-
-    }
-
-    override fun onStatusUpdate(p0: String?, p1: Int, p2: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onLocationChanged(location: TencentLocation, error: Int, reason: String) {
-        var msg: String? = null
-        if (error == TencentLocation.ERROR_OK) {
-            // 定位成功
-            val sb = StringBuilder().apply {
-                append("latitude=").append(location.getLatitude()).append(",")
-                append("longitude=").append(location.getLongitude()).append(",")
-//                toast(append("address=").append(location.getAddress()).append(","))
-            }
-        } else {
-            // 定位失败
-            msg = "定位失败: " + reason
-        }
-    }
 
     private fun initBar() {
         toolbar.navigationIcon = null
@@ -288,21 +248,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
                     startActivityForResult(Intent(context, LoginActivity::class.java), LoginActivity.RESULT_LOGIN_CANCELED)
                     return
                 }
-                //"供应商认证：-1未申请 0待审核，1已认证 2未通过",
-                when (MineFragment.businessAuthentication) {
-                    "-1" -> {
-                        startActivity(Intent(context, ApplyForDevelopersActivity::class.java))
-                    }
-                    "0" -> {
-                        toast("供应商认证审核中")
-                    }
-                    "1" -> {
-                        startActivity(Intent(context, ReleaseGoodsActivity::class.java).putExtra(ReleaseGoodsActivity.Intent_Class_Name, "发布询价"))
-                    }
-                    "2" -> {
-                        startActivity(Intent(context, ApplyForDevelopersActivity::class.java).putExtra(ApplyForDevelopersActivity.Intent_State, MineFragment.businessAuthentication))
-                    }
-                }
+                startActivity(Intent(context, ReleaseGoodsActivity::class.java).putExtra(ReleaseGoodsActivity.Intent_Class_Name, "发布询价"))
 
 
             }
@@ -342,10 +288,6 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
                 headerView.steel_count.text = String.format(context.getString(R.string.main_steel), it.steelCount) + "吨"
                 headerView.steel_price.text = it.steelPrice + "元"
 
-//                SZWUtils.matcherSearchTitle(  headerView.coal_count ,headerView.coal_count.text.toString().trim(),0,context.getString(R.string.main_coal).length,ContextCompat.getColor(context,R.color.MaterialGrey600))
-//                SZWUtils.matcherSearchTitle( headerView.coal_price,headerView.coal_price.text.toString().trim(),0,context.getString(R.string.main_coal).length,ContextCompat.getColor(context,R.color.MaterialGrey600))
-//                SZWUtils.matcherSearchTitle(headerView.steel_count,headerView.steel_count.text.toString().trim(),0,context.getString(R.string.main_steel).length,ContextCompat.getColor(context,R.color.MaterialGrey600))
-//                SZWUtils.matcherSearchTitle(headerView.steel_price,headerView.steel_price.text.toString().trim(),0,context.getString(R.string.main_steel).length,ContextCompat.getColor(context,R.color.MaterialGrey600))
             }
         }
         DataCtrlClass.HomeHotData(context, url, requestCheck) {

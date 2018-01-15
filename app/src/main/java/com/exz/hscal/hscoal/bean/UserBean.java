@@ -21,7 +21,7 @@ public class UserBean {
     @SerializedName("nickname")
     private String nickname;
     @SerializedName("headImg")
-    private String headImg;
+    private String headImg="http://hs.xzsem.cn/userImg/default.png";
     @SerializedName("tel")
     private String tel;
     @SerializedName("qq")

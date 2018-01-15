@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <im.delight.android.webview.AdvancedWebView
+        <com.tencent.smtt.sdk.WebView
             android:id="@+id/mWebView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </im.delight.android.webview.AdvancedWebView>
+        </com.tencent.smtt.sdk.WebView>
 
         <ProgressBar
             android:id="@+id/mProgressBar"

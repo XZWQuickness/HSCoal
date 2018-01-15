@@ -82,7 +82,7 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
             edTitle.setText("")
             tvTitle.text = ""
             keyword = edTitle.text.toString().trim { it <= ' ' }
-            refreshLayout.autoRefresh()
+            onRefresh(refreshLayout)
         }
 
         return false
@@ -106,7 +106,7 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 // do something
                 keyword = edTitle.text.toString().trim { it <= ' ' }
-                refreshLayout.autoRefresh()
+               onRefresh(refreshLayout)
                 return@OnEditorActionListener true
             }
             false
@@ -153,9 +153,9 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
                 }
 
                 sortType = it.id
-                refreshLayout.autoRefresh()
+                onRefresh(refreshLayout)
 
-            }
+        }
         })
         sortPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
@@ -171,7 +171,7 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
                     setGaryOrblue(rb2, true, it.name)
                 }
                 coalVarietyId = it.id
-                refreshLayout.autoRefresh()
+                onRefresh(refreshLayout)
 
             }
         })

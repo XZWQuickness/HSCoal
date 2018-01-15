@@ -17,6 +17,8 @@ open class AddressBean(var state: String = "1") : Serializable {
     var address=""
     var provinceCity=""
     var detail=""
+    var  latitude=""
+    var  longitude=""
     fun isDefault():Boolean = state=="1"
 
 

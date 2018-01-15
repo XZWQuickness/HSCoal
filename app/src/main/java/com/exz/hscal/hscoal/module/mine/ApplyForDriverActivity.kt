@@ -176,7 +176,7 @@ class ApplyForDriverActivity : BaseActivity(), View.OnClickListener {
                 PermissionCameraWithCheck(Intent(this, ImageGridActivity::class.java), false)
             }
             bt_commit -> {
-                if (driverAuthentication.equals("-1")) {
+                if (driverAuthentication.equals("-1")||TextUtils.isEmpty(driverAuthentication)) {
                     userName = tv_contact_name.text.toString().trim()
                     if (TextUtils.isEmpty(userName)) {
                         type = 1

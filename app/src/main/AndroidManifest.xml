@@ -17,9 +17,12 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!-- 访问手机当前状态, 需要某些信息用于网络定位 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
+    <!-- 硬件加速对X5视频播放非常重要，建议开启 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <!-- 拨号权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name="com.exz.carprofitmuch.app.ToolApplication"
         android:allowBackup="true"
@@ -223,11 +226,14 @@
         <activity
             android:name="com.szw.framelibrary.view.preview.PreviewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"  />
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
-<activity android:name=".utils.MapWebViewActivity"
-    android:screenOrientation="portrait"
-     ></activity>
+        <activity
+            android:name=".module.mine.address.MapWebViewActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"></activity>
+
         <meta-data
             android:name="TencentMapSDK"
             android:value="SFLBZ-PSUWK-2FYJ3-AN6VI-ZJ6N6-TMBLT" />

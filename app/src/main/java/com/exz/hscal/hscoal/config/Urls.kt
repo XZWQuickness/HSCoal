@@ -24,6 +24,11 @@ object Urls {
      */
     val help = url + "APP/BasicData/help.aspx"
 
+    /**
+     * 新闻资讯
+     */
+    val NewsList = url + "APP/News/List.aspx"
+
 
 
 

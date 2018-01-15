@@ -2,7 +2,6 @@ package com.exz.hscal.hscoal.module.mine.address;
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.text.TextUtils
 import android.view.View
 import android.widget.CompoundButton
@@ -14,10 +13,8 @@ import com.blankj.utilcode.util.KeyboardUtils
 import com.exz.carprofitmuch.config.Urls
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
-import com.exz.hscal.hscoal.bean.AddressBean
 import com.exz.hscal.hscoal.bean.CityBean
 import com.exz.hscal.hscoal.utils.DialogUtils
-import com.exz.hscal.hscoal.widget.MyWebActivity
 import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -27,7 +24,6 @@ import org.jetbrains.anko.toast
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import java.net.URLDecoder
 import java.util.*
 
 /**
@@ -55,6 +51,8 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
     private var addressId = ""
     private var state = "1"
     private var requestCheck = ""
+    var  latitude=""
+    var  longitude=""
     private var url = Urls.SubmitShippingAddress
 
     override fun initToolbar(): Boolean {
@@ -104,7 +102,7 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
 
             state = if (bt_setDefault.isChecked) "1" else "0"
 
-            DataCtrlClass.AddAddressData(mContext, name, phone, zipCode, provinceId, cityId, districtId, detail, addressId, url, state, requestCheck, {
+            DataCtrlClass.AddAddressData(mContext, name, phone, zipCode, provinceId, cityId, districtId, detail, addressId, url, state,latitude,longitude ,requestCheck, {
                 if (it != null) {
                     //执行保存操作
                     setResult(Activity.RESULT_OK)
@@ -208,6 +206,8 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
                         districtId = it.areaId
                         address = it.address
                         state = it.state
+                        latitude=it.latitude
+                        longitude=it.longitude
                         bt_setDefault.isChecked = it.isDefault()
                     }
 
@@ -258,10 +258,13 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
                 pvOptionsAddress.show()
             }
             tv_addressDetail -> {
-                startActivityForResult(Intent(mContext, MyWebActivity::class.java)
-                        .putExtra(MyWebActivity.Intent_Title, "设置详细地址").
-                        putExtra(MyWebActivity.Intent_Url, "http://apis.map.qq.com/tools/locpicker?search=1&type=0&backurl=http://3gimg.qq.com/lightmap/components/locationPicker2/back.html&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp")
+                startActivityForResult(Intent(mContext, MapWebViewActivity::class.java)
                         , 100)
+
+//                startActivityForResult(Intent(mContext,MyWebActivity::class.java)
+//                        .putExtra(MyWebActivity.Intent_Title,"设置详细地址").
+//                        putExtra(MyWebActivity.Intent_Url,"http://apis.map.qq.com/tools/locpicker?search=1&type=0&backurl=http://3gimg.qq.com/lightmap/components/locationPicker2/back.html&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp")
+//                        ,100)
             }
         }
     }
@@ -277,6 +280,8 @@ class AddressAddOrUpdateActivity : BaseActivity(), View.OnClickListener, Compoun
             Activity.RESULT_OK -> {
                 if (data != null) {
                     val content = data.getStringExtra("content")
+                    longitude= data.getStringExtra("longitude")
+                   latitude= data.getStringExtra("latitude")
                     tv_addressDetail.text = content
                 }
             }

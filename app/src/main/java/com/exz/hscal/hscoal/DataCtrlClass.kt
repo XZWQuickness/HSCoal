@@ -509,7 +509,8 @@ object DataCtrlClass {
     /**
      *  新增收货地址（当用户添加地址时，后台判断该用户是否有其他地址，若没有，将该地址设为默认地址）
      * */
-    fun AddAddressData(context: Context, name: String, phone: String, zipCode: String, provinceId: String, cityId: String, districtId: String, detail: String, addressId: String, url: String, state: String, requestCheck: String, listener: (addressBean: NetEntity<Void>?) -> Unit) {
+    fun AddAddressData(context: Context, name: String, phone: String, zipCode: String, provinceId: String, cityId: String, districtId: String, detail: String, addressId: String, url: String, state: String,
+                       latitude: String, longitude: String,    requestCheck: String, listener: (addressBean: NetEntity<Void>?) -> Unit) {
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
         if (!TextUtils.isEmpty(addressId)) params.put("shippingAddressId", addressId)
@@ -521,6 +522,8 @@ object DataCtrlClass {
         if (!TextUtils.isEmpty(districtId)) params.put("areaId", districtId)
         if (!TextUtils.isEmpty(detail)) params.put("address", detail)
         if (!TextUtils.isEmpty(state)) params.put("state", state)
+        if (!TextUtils.isEmpty(latitude)) params.put("latitude", latitude)
+        if (!TextUtils.isEmpty(longitude)) params.put("longitude", longitude)
         params.put("requestCheck", requestCheck)
         OkGo.post<NetEntity<Void>>(url)
                 .params(params)

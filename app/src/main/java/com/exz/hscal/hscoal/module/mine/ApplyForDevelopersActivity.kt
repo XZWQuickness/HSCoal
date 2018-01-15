@@ -343,7 +343,7 @@ class ApplyForDevelopersActivity : BaseActivity(), View.OnClickListener {
             }
             bt_commit -> {
 
-                if (businessAuthentication.equals("-1")) {
+                if (businessAuthentication.equals("-1")||TextUtils.isEmpty(businessAuthentication)) {
                     userName = tv_contact_name.text.toString().trim()
                     mobile = tv_contact_phone.text.toString().trim()
                     IDNumber = tv_cardid_num.text.toString().trim()
