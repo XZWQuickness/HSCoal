@@ -96,8 +96,9 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
     private fun initSteelClass() {
         DataCtrlClass.steelClassData(mContext, {
             if (it != null) {
-                var list = it  as ArrayList < PopStairListBean >
-                list.add(0, PopStairListBean("全部类别",false,""))
+                coalData = it  as ArrayList < PopStairListBean >
+                coalData.add(0, PopStairListBean("全部类别",false,""))
+                coalPop.data = coalData
             }
         })
 
@@ -164,8 +165,7 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
         coalPop = StairPop(mContext, {
             if (it != null) {
                 if (it.name.equals("全部类别")) {
-                    setGaryOrblue(rb2, false, ".." +
-                            "类别")
+                    setGaryOrblue(rb2, false, "类别")
                 } else {
                     setGaryOrblue(rb2, true, it.name)
                 }
@@ -173,7 +173,7 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
                 onRefresh(refreshLayout)
             }
         })
-        coalPop.data = coalData
+
         coalPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
                 radioGroup.clearCheck()
@@ -305,7 +305,7 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
                 if (data != null) {
                     tvTitle.text = data.getStringExtra(SerachActivity.Intent_Search_Content)
                     keyword = data.getStringExtra(SerachActivity.Intent_Search_Content)
-                    refreshLayout.autoRefresh()
+                    onRefresh(refreshLayout)
                 }
             }
             else -> {

@@ -20,7 +20,7 @@ class CargoListAdapter() : BaseQuickAdapter<CargoListBean, BaseViewHolder>(R.lay
         v.image.setImageURI(item.image)
         v.description.text = item.description
         v.provinceCity.text ="交货地:"+ item.provinceCity
-        v.price.text = item.price
+        v.price.text = "￥"+item.price
 
     }
 }

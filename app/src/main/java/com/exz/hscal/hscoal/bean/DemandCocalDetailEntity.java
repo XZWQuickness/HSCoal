@@ -80,6 +80,42 @@ public class DemandCocalDetailEntity {
     private String deliveryWayName;
     private String contactName;
     private String contactMobile;
+    private String baseVolatiles;
+    private String totalMoisture;
+    private String ashFusionPoint;
+    private String gValue;
+
+    public String getBaseVolatiles() {
+        return baseVolatiles;
+    }
+
+    public void setBaseVolatiles(String baseVolatiles) {
+        this.baseVolatiles = baseVolatiles;
+    }
+
+    public String getTotalMoisture() {
+        return totalMoisture;
+    }
+
+    public void setTotalMoisture(String totalMoisture) {
+        this.totalMoisture = totalMoisture;
+    }
+
+    public String getAshFusionPoint() {
+        return ashFusionPoint;
+    }
+
+    public void setAshFusionPoint(String ashFusionPoint) {
+        this.ashFusionPoint = ashFusionPoint;
+    }
+
+    public String getgValue() {
+        return gValue;
+    }
+
+    public void setgValue(String gValue) {
+        this.gValue = gValue;
+    }
 
     public String getContactName() {
         return contactName;

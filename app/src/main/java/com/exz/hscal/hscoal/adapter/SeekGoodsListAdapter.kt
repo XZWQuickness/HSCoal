@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.item_seek_goods_list.view.*
 
 class SeekGoodsListAdapter() : BaseQuickAdapter<SeekGoodsEntity, BaseViewHolder>(R.layout.item_seek_goods_list, null) {
 
-    @SuppressLint("StringFormatInvalid")
     override fun convert(helper: BaseViewHolder, item: SeekGoodsEntity) {
         val v = helper.itemView
         v.img.setImageURI(item.image)
@@ -24,7 +23,7 @@ class SeekGoodsListAdapter() : BaseQuickAdapter<SeekGoodsEntity, BaseViewHolder>
         v.fromAddress.text = item.fromAddress
         v.name.text=item.name
         v.sendTime.text="发货时间: "+item.sendTime
-        v.count.text=String.format(mContext.getString(R.string.quantity,item.count))
+        v.count.text=mContext.getString(R.string.quantity)+item.count
 
         if(!TextUtils.isEmpty(item.toAddress)&&!TextUtils.isEmpty(item.fromAddress)){
 

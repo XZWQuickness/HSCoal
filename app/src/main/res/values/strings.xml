@@ -9,6 +9,7 @@
     <string name="main_tab_4">发布询价</string>
     <string name="main_tab_5">发布卖品</string>
     <string name="vol">成交量</string>
+    <string name="Turnover">成交金额</string>
     <string name="main_coal">煤炭 %s</string>
     <string name="main_steel">钢材 %s</string>
     <string name="main_hot_resource">热门资源</string>
@@ -119,7 +120,7 @@
 
 
     <string name="main_cocal_detail_supply">供应量:</string>
-    <string name="main_cocal_detail_unit_price">单价: %s</string>
+    <string name="main_cocal_detail_unit_price">单价</string>
     <string name="CNY">￥ %s</string>
     <string name="main_cocal_detail_text7">付款方式</string>
     <string name="main_cocal_detail_text8">检验机构</string>

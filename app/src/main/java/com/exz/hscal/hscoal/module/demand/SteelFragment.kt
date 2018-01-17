@@ -60,9 +60,13 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
         initRecycler()
         initPop()
         initSteelClass()
-        refreshLayout.autoRefresh()
     }
-
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden){
+            refreshLayout.autoRefresh()
+        }
+    }
 
     private fun initSteelClass() {
         DataCtrlClass.steelClassData(context, {
@@ -103,9 +107,10 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
     var sortData = ArrayList<PopStairListBean>()
     private fun initPop() {
         sortData.add(PopStairListBean("综合排序", true, "0"))
-        sortData.add(PopStairListBean("价格由低到高", false, "1"))
-        sortData.add(PopStairListBean("价格由高到低", false, "2"))
-        sortData.add(PopStairListBean("最新上架", false, "3"))
+        sortData.add(PopStairListBean("求购数由低到高", false, "1"))
+        sortData.add(PopStairListBean("求购数由高到低", false, "2"))
+        sortData.add(PopStairListBean("收货时间最近", false, "3"))
+        sortData.add(PopStairListBean("收货时间最远", false, "4"))
         sortPop = StairPop(activity, {
             if (it != null) {
                 if (it.name.equals("综合排序")) {
@@ -113,7 +118,8 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
                 } else {
                     setGaryOrblue(rb1, true, it.name)
                 }
-
+                sortType = it.id
+                onRefresh(refreshLayout)
             }
         })
         sortPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
@@ -130,7 +136,7 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
                     setGaryOrblue(rb2, true, it.name)
                 }
                 steelClassId = it.id
-                refreshLayout.autoRefresh()
+                onRefresh(refreshLayout)
             }
         })
         coalPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
@@ -144,7 +150,7 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
 
             this.provinceId = provinceId
             this.cityId = cityId
-            refreshLayout.autoRefresh()
+            onRefresh(refreshLayout)
         })
         arePop.data = (JSON.parseArray(getJson(), AreaBean::class.java) as ArrayList<AreaBean>)
         arePop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
@@ -171,7 +177,7 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
                     b = false
                 }
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 

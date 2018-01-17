@@ -60,9 +60,17 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
     override fun initView() {
         initRecycler()
         initPop()
-        refreshLayout.autoRefresh()
+
 
     }
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden){
+
+            onRefresh(refreshLayout)
+        }
+    }
+
 
     private fun initRecycler() {
         mAdapter = DemandAdapter()
@@ -89,9 +97,10 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
     var coalData = ArrayList<PopStairListBean>()
     private fun initPop() {
         sortData.add(PopStairListBean("综合排序", true, "0"))
-        sortData.add(PopStairListBean("价格由低到高", false, "1"))
-        sortData.add(PopStairListBean("价格由高到低", false, "2"))
-        sortData.add(PopStairListBean("最新上架", false, "3"))
+        sortData.add(PopStairListBean("求购数由低到高", false, "1"))
+        sortData.add(PopStairListBean("求购数由高到低", false, "2"))
+        sortData.add(PopStairListBean("收货时间最近", false, "3"))
+        sortData.add(PopStairListBean("收货时间最远", false, "4"))
         coalData.add(PopStairListBean("全部煤种", true, ""))
         coalData.add(PopStairListBean("焦炭/焦粉/焦粒", false, "1"))
         coalData.add(PopStairListBean("炼焦煤", false, "2"))
@@ -104,7 +113,7 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                     setGaryOrblue(rb1, true, it.name)
                 }
                 sortType = it.id
-                refreshLayout.autoRefresh()
+              onRefresh(refreshLayout)
 
 
             }
@@ -124,7 +133,7 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                 }
 
                 coalVarietyId=it.id
-                refreshLayout.autoRefresh()
+                onRefresh(refreshLayout)
             }
         })
         coalPop.data = coalData
@@ -139,7 +148,7 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
 
             this.provinceId = provinceId
             this.cityId = cityId
-            refreshLayout.autoRefresh()
+            onRefresh(refreshLayout)
         })
         arePop.data = (JSON.parseArray(getJson(), AreaBean::class.java) as ArrayList<AreaBean>)
         arePop.onDismissListener = object : BasePopupWindow.OnDismissListener() {

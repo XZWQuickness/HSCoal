@@ -3,6 +3,7 @@ package com.exz.hscal.hscoal.module
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -67,7 +68,7 @@ class NewsFragment : MyBaseFragment() {
         this.mWebView.setBackgroundColor(ContextCompat.getColor(context, R.color.app_bg))
         mWebView.loadUrl(Urls.NewsList)
 //        mWebView.loadUrl("http://www.baidu.com")
-        mWebView.setWebChromeClient(object : com.tencent.smtt.sdk.WebChromeClient() {
+        mWebView.webChromeClient = object : com.tencent.smtt.sdk.WebChromeClient() {
             override fun onProgressChanged(view: com.tencent.smtt.sdk.WebView, newProgress: Int) {
                 currentProgress = mProgressBar.getProgress()
                 if (newProgress >= 100 && !isAnimStart) {
@@ -81,14 +82,19 @@ class NewsFragment : MyBaseFragment() {
 
             }
 
-        })
-        mWebView.setWebViewClient(object : com.tencent.smtt.sdk.WebViewClient() {
+        }
+        mWebView.webViewClient = object : com.tencent.smtt.sdk.WebViewClient() {
             override fun shouldOverrideUrlLoading(view: com.tencent.smtt.sdk.WebView, url: String): Boolean {
                 view.loadUrl(url)
                 return true
             }
 
-        })
+        }
+    }
+
+
+    public fun OnKeyListener(){
+        mWebView.goBack()  //后退
     }
 
     private fun startDismissAnimation(progress: Int) {
@@ -109,6 +115,7 @@ class NewsFragment : MyBaseFragment() {
         })
         anim.start()
     }
+
 
     private fun startProgressAnimation(newProgress: Int) {
         val animator = ObjectAnimator.ofInt(this.mProgressBar, "progress", this.currentProgress, newProgress)

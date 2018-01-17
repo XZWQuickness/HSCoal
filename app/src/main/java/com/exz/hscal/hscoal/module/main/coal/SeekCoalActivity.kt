@@ -302,6 +302,8 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
             RESULTCODE_SEARCH -> {
                 if (data != null) {
                     tvTitle.text = data.getStringExtra(Intent_Search_Content)
+                    keyword=data.getStringExtra(Intent_Search_Content)
+                    onRefresh(refreshLayout)
                 }
             }
             else -> {

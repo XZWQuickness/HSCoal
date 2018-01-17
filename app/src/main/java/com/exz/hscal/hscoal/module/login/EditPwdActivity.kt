@@ -59,7 +59,7 @@ class EditPwdActivity : BaseActivity() {
 
             DataCtrlClass.editPwd(mContext, oldPwd, password, {
                 if (it != null) {
-                    PreferencesService.saveAccount(this, PreferencesService.getAccountValue(this) ?: "", "")
+                    PreferencesService.saveAccount(mContext, PreferencesService.getAccountKey(mContext)?:"", "")
                     startActivity(Intent(mContext, LoginActivity::class.java))
                 }
             })

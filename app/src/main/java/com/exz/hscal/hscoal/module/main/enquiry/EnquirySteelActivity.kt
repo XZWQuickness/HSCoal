@@ -20,6 +20,7 @@ import com.exz.hscal.hscoal.bean.CityBean
 import com.exz.hscal.hscoal.bean.PopStairListBean
 import com.exz.hscal.hscoal.bean.ReleaseBean
 import com.exz.hscal.hscoal.bean.TextBean
+import com.exz.hscal.hscoal.utils.AndroidBug5497Workaround
 import com.exz.hscal.hscoal.utils.RecycleViewDivider
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.szw.framelibrary.app.MyApplication
@@ -404,12 +405,16 @@ class EnquirySteelActivity : BaseActivity() {
     }
 
     private fun initView() {
+        AndroidBug5497Workaround.assistActivity(this)
         mAdapter = ReleaseAdapter()
         mAdapter.setNewData(data1)
         mFooterView = View.inflate(mContext, R.layout.footer_release_button, null)
         mAdapter.addFooterView(mFooterView)
         mAdapter.bindToRecyclerView(mRecyclerView)
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        var mLinearLayoutManager = LinearLayoutManager(this)
+        mRecyclerView.layoutManager = mLinearLayoutManager
+        //这是重点
+        mLinearLayoutManager.stackFromEnd = true
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
 
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {

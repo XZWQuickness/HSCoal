@@ -510,7 +510,7 @@ object DataCtrlClass {
      *  新增收货地址（当用户添加地址时，后台判断该用户是否有其他地址，若没有，将该地址设为默认地址）
      * */
     fun AddAddressData(context: Context, name: String, phone: String, zipCode: String, provinceId: String, cityId: String, districtId: String, detail: String, addressId: String, url: String, state: String,
-                       latitude: String, longitude: String,    requestCheck: String, listener: (addressBean: NetEntity<Void>?) -> Unit) {
+                       latitude: String, longitude: String, requestCheck: String, listener: (addressBean: NetEntity<Void>?) -> Unit) {
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
         if (!TextUtils.isEmpty(addressId)) params.put("shippingAddressId", addressId)
@@ -579,7 +579,7 @@ object DataCtrlClass {
     /**
      * 报价列表
      * */
-    fun OfferListData(context: Context, currentPage: Int,type : String,  objectId: String, listener: (addressBean: List<OfferBean>?) -> Unit) {
+    fun OfferListData(context: Context, currentPage: Int, type: String, objectId: String, listener: (addressBean: List<OfferBean>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
@@ -1227,11 +1227,11 @@ object DataCtrlClass {
     }
 
 
-    fun releaseCoalEnquiry(context: Context,coalId:String, coalVarietyId: String, name: String, purchaseQuantity: String, fixedCarbon: String, calorificValue: String,
+    fun releaseCoalEnquiry(context: Context, coalId: String, coalVarietyId: String, name: String, purchaseQuantity: String, fixedCarbon: String, calorificValue: String,
                            ashSpecification: String, volatiles: String, inherentMoisture: String, totalSulfurContent: String, bond: String, y_Value: String,
                            lithofacies: String, csr: String, lowerCalorificValue: String, airDrySulfur: String, airDryRadicalVolatiles: String, provinceId: String,
                            cityId: String, placeDelivery: String, deliveryTime: String, deliveryWayId: String, plannedDeliveryTime: String, contactName: String,
-                           contactMobile: String, remark: String, url: String, requestCheck:String,listener: (NetEntity<Void>?) -> Unit) {
+                           contactMobile: String, remark: String, url: String, requestCheck: String, listener: (NetEntity<Void>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
@@ -1284,9 +1284,9 @@ object DataCtrlClass {
 
     }
 
-    fun releaseSteelEnquiry(context: Context, steelId:String,steelClassId: String, name: String, weight: String, purchaseQuantity: String, specification: String,
+    fun releaseSteelEnquiry(context: Context, steelId: String, steelClassId: String, name: String, weight: String, purchaseQuantity: String, specification: String,
                             materialQuality: String, provinceId: String, cityId: String, placeDelivery: String, deliveryWayId: String,
-                            plannedDeliveryTime: String, contactName: String, contactMobile: String, remark: String, url: String, requestCheck:String,listener: (NetEntity<Void>?) -> Unit) {
+                            plannedDeliveryTime: String, contactName: String, contactMobile: String, remark: String, url: String, requestCheck: String, listener: (NetEntity<Void>?) -> Unit) {
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)
         if (!TextUtils.isEmpty(steelId)) params.put("steelId", steelId)
@@ -1862,7 +1862,7 @@ object DataCtrlClass {
     /**
      * 接收/拒绝报价（待确认时，调用此接口）
      * */
-    fun ConfirmEnquiry(context: Context, type: String, objectId: String,quoteId: String,state: String,listener: (s: NetEntity<Void>?) -> Unit) {
+    fun ConfirmEnquiry(context: Context, type: String, objectId: String, quoteId: String, state: String, listener: (s: NetEntity<Void>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("userId", MyApplication.loginUserId)

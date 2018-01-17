@@ -1,6 +1,7 @@
 package com.exz.hscal.hscoal.module.mine.sellorder
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
 import com.bigkoo.pickerview.TimePickerView
@@ -89,7 +90,7 @@ class SellOrderSteelDetailActivity : BaseActivity(), View.OnClickListener {
                 provinceCity.text=it.data?.provinceCity //交货地点
                 remark.text=it.data?.remark//备注
 
-                if(!it.data?.mobile.equals("")&&!it.data?.consignee.equals("")&&!it.data?.address.equals("")){
+                if(!TextUtils.isEmpty(it.data?.mobile)&&!TextUtils.isEmpty(it.data?.consignee)&& !TextUtils.isEmpty(it.data?.address)){
                     rlConsignee.visibility= View.VISIBLE
                     consignee.text=String.format(mContext.getString(R.string.contact),it.data?.consignee)//联系人
                     mobile.text="电话"+it.data?.mobile

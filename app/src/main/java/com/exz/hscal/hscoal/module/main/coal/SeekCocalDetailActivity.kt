@@ -123,7 +123,7 @@ class SeekCocalDetailActivity : BaseActivity(), View.OnClickListener, OnRefreshL
                 }
                 place.text = String.format(mContext.getString(R.string.origin), it.data?.place ?: "")//产地
                 QTY.text = it.data?.qty + "吨" ?: ""//供应量
-                price.text=it.data?.price
+                price.text="￥"+it.data?.price
                 paymentModeName.text=it.data?.paymentModeName //付款方式
                 inspectonBody.text=it.data?.inspectonBody // 检验机构
                 deliveryTime.text=it.data?.deliveryTime?.replace(",", "至") ?: "" //交货时间

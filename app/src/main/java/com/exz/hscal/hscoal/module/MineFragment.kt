@@ -102,7 +102,7 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
             img_head.setImageURI("http://hs.xzsem.cn/userImg/default.png")
             return
         }
-        refreshLayout.autoRefresh()
+        onRefresh(refreshLayout)
     }
 
     override fun initEvent() {

@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.activity_inquiry_order_cocal_detail.view.*
 
 class InquiryOrderCocalDetailActivity : BaseActivity(), View.OnClickListener {
 
-
     override fun initToolbar(): Boolean {
         mTitle.text = "询盘信息详情"
         //状态栏透明和间距处理
@@ -59,10 +58,12 @@ class InquiryOrderCocalDetailActivity : BaseActivity(), View.OnClickListener {
                 tv_state.text = String.format(mContext.getString(R.string.inquriy_cocal_detail_state), "已确认")
                 auditStateTime.visibility = View.VISIBLE
                 llcontact.visibility = View.VISIBLE
+
             }
             "2" -> {//已拒绝
                 tv_state.text = String.format(mContext.getString(R.string.inquriy_cocal_detail_state), "已拒绝")
                 llcontact.visibility = View.VISIBLE
+                auditStateTime.visibility=View.VISIBLE
             }
             "3" -> {//已过期
                 tv_state.text = String.format(mContext.getString(R.string.inquriy_cocal_detail_state), "已过期")
@@ -122,13 +123,18 @@ class InquiryOrderCocalDetailActivity : BaseActivity(), View.OnClickListener {
                 provinceCity.text = it.data?.provinceCity  //省市区
                 placeDelivery.text = it.data?.placeDelivery  //详细地址
                 createDate.text = String.format(mContext.getString(R.string.Offer_time), it.data?.createDate)//报价时间
-                auditStateTime.text = String.format(mContext.getString(R.string.ConfirmTime), it.data?.auditStateTime)//确认时间
 
-
-                if(!it.data?.auditStateTime.equals("")){
-                    auditStateTime.text="拒绝时间:"+it.data?.auditStateTime
-                    auditStateTime.visibility=View.VISIBLE
+                when (intent.getStringExtra(Intent_State)) {
+                    "1"->{
+                        auditStateTime.text = String.format(mContext.getString(R.string.ConfirmTime), it.data?.auditStateTime)//确认时间
+                    }
+                    "2"->{
+                        auditStateTime.text="拒绝时间:"+it.data?.auditStateTime
+                    }
                 }
+
+
+
                 if(!it.data?.contactName.equals("")){
                     contactName.text=it.data?.contactName
                 }else{

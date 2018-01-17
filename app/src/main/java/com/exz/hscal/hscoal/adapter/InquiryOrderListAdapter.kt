@@ -50,9 +50,9 @@ class InquiryOrderListAdapter() : BaseQuickAdapter<InquiryOrderBean, BaseViewHol
             }
         }
 
-        if (item.coalVarietyName == null) {
+        if (item.coalVarietyName == null|| item.coalVarietyName == "") {
             v.name.text = item.name
-            v.tvSubTitle.text = "材质: " + item.description
+            v.tvSubTitle.text =  item.description
             v.purchaseQuantity.text = item.purchaseQuantity + "件"
         }
         v.createDate.text = String.format(mContext.getString(R.string.Offer_time), item.createDate)

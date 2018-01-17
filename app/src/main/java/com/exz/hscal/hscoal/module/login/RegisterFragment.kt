@@ -114,6 +114,7 @@ class RegisterFragment : MyBaseFragment(), View.OnFocusChangeListener, TextWatch
     }
 
     private fun resetTimer(b: Boolean, millisUntilFinished: Long) {
+        try{
         if (b) {
             countDownTimer.cancel()
             bt_code.text = getString(R.string.login_hint_get_code)
@@ -127,7 +128,7 @@ class RegisterFragment : MyBaseFragment(), View.OnFocusChangeListener, TextWatch
             bt_code.delegate.strokeColor = ContextCompat.getColor(context, R.color.MaterialGrey400)
             bt_code.text = String.format(getString(R.string.login_hint_get_reGetCode), millisUntilFinished / 1000)
         }
-
+        }catch (e:Exception){}
     }
 
 

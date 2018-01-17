@@ -29,6 +29,7 @@ import com.exz.hscal.hscoal.bean.TextBean
 import com.exz.hscal.hscoal.module.main.coal.SeekCocalDetailActivity
 import com.exz.hscal.hscoal.module.mine.UserInfoActivity
 import com.exz.hscal.hscoal.module.mine.UserInfoTextActivity
+import com.exz.hscal.hscoal.utils.AndroidBug5497Workaround
 import com.exz.hscal.hscoal.utils.RecycleViewDivider
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.lzy.imagepicker.ImagePicker
@@ -335,6 +336,13 @@ class ReleaseCocalActivity : BaseActivity() {
                             return@setOnClickListener
                         }
                     }
+
+                    5->{
+                        if (TextUtils.isEmpty(bean.v) ) {
+                            toast("请输入" + bean.k.replace(":", ""))
+                            return@setOnClickListener
+                        }
+                    }
                 }
                 }else{
                     requestCheck=MyApplication.loginUserId + coalId
@@ -521,7 +529,6 @@ class ReleaseCocalActivity : BaseActivity() {
                     }
                 }
                 if (bean.k.equals("点击上传检测报告照片:")) {
-
                     if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
                         inspectonBody_Img = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
 
@@ -746,13 +753,17 @@ class ReleaseCocalActivity : BaseActivity() {
 
 
     private fun initView() {
-
+        //沉浸式状态栏与界面adjustResize之间的bug解决方案
+        AndroidBug5497Workaround.assistActivity(this)
         mAdapter = ReleaseAdapter()
         mAdapter.setNewData(data1)
         mFooterView = View.inflate(mContext, R.layout.footer_release_button, null)
         mAdapter.addFooterView(mFooterView)
         mAdapter.bindToRecyclerView(mRecyclerView)
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        var mLinearLayoutManager = LinearLayoutManager(this)
+        mRecyclerView.layoutManager = mLinearLayoutManager
+        //这是重点
+        mLinearLayoutManager.stackFromEnd = true
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
 
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {

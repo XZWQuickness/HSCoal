@@ -2,6 +2,7 @@ package com.exz.carprofitmuch.app
 
 import android.app.Application
 import android.util.Log
+import cn.jpush.android.api.JPushInterface
 import com.exz.hscal.hscoal.bean.MyObjectBox
 import com.szw.framelibrary.app.MyApplication
 import io.objectbox.BoxStore
@@ -23,7 +24,8 @@ class ToolApplication : MyApplication() {
         init()
         //数据库初始化
         boxStore = MyObjectBox.builder().androidContext(this).build()
-
+        JPushInterface.setDebugMode(true)
+        JPushInterface.init(this)
 
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
         val cb = object : QbSdk.PreInitCallback {

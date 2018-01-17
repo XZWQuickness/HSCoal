@@ -31,6 +31,8 @@ class DemandFragment : MyBaseFragment() {
         initTab()
     }
 
+
+
     private fun initTab() {
         mFragments.add(CoalFragment.newInstance())
         mFragments.add(SteelFragment.newInstance())

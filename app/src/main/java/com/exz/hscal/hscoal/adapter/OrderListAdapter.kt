@@ -43,7 +43,7 @@ class OrderListAdapter() : BaseQuickAdapter<OrderBean, BaseViewHolder>(R.layout.
         }
 
         if(item.coalVarietyName==null){
-            v.tvSubTitle.text = "材质: " + item.description
+            v.tvSubTitle.text =  item.description
             v.name.text=item.name
         }else{
             v.name.text=item.name+"("+item.coalVarietyName+")"

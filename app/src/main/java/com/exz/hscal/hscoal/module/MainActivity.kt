@@ -1,6 +1,8 @@
 package com.exz.hscal.hscoal.module
 
+import android.content.Intent
 import android.support.v4.app.Fragment
+import android.view.KeyEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
@@ -14,6 +16,7 @@ import com.flyco.tablayout.listener.OnTabSelectListener
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_news.*
 import java.util.*
 
 class MainActivity : BaseActivity() {
@@ -78,5 +81,24 @@ class MainActivity : BaseActivity() {
             mainTabBar.getIconView(position).startAnimation(iconAnimate)
         }
     }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+
+        if ((keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN)
+                && mFragments.get(mainTabBar.currentTab) is NewsFragment
+                && (mFragments.get(mainTabBar.currentTab) as NewsFragment).mWebView.canGoBack()) {
+            (mFragments.get(mainTabBar.currentTab) as NewsFragment).mWebView.goBack()
+            return true
+        } else
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                val intent = Intent(Intent.ACTION_MAIN)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.addCategory(Intent.CATEGORY_HOME)
+                startActivity(intent)
+                return true
+            }
+        return super.onKeyDown(keyCode, event)
+    }
+
 
 }

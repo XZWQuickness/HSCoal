@@ -209,7 +209,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dp_4"
                         android:maxLines="1"
-                        android:text="@string/total"
+                        android:text="合计"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="14sp" />
 

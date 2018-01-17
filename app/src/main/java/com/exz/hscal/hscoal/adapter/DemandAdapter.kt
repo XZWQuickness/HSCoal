@@ -34,7 +34,7 @@ class DemandAdapter() : BaseQuickAdapter<DemandBean, BaseViewHolder>(R.layout.it
 
         if(item.coalVarietyName==null){
             v.coalVarietyName.text = item.name
-            v.tvSubTitle.text = "材质: " + item.description
+            v.tvSubTitle.text = item.description
             v.purchaseQuantity.text = item.purchaseQuantity + "件"
         }
         v.provinceCity.text = String.format(mContext.getString(R.string.ship_to), item.provinceCity)//收货地

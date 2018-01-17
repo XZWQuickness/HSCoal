@@ -25,6 +25,7 @@ import com.exz.hscal.hscoal.adapter.ReleaseAdapter
 import com.exz.hscal.hscoal.bean.CityBean
 import com.exz.hscal.hscoal.bean.ReleaseBean
 import com.exz.hscal.hscoal.bean.TextBean
+import com.exz.hscal.hscoal.utils.AndroidBug5497Workaround
 import com.exz.hscal.hscoal.utils.RecycleViewDivider
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.lzy.imagepicker.ImagePicker
@@ -314,7 +315,7 @@ class EnquiryCocalActivity : BaseActivity() {
                         purchaseQuantity = bean.v
                     }
                 }
-                if (bean.k.equals("固定碳:")) {
+                if (bean.k.equals("固定碳(%):")) {
 
                     if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
                         fixedCarbon = bean.v
@@ -626,13 +627,16 @@ class EnquiryCocalActivity : BaseActivity() {
 
 
     private fun initView() {
-
+        AndroidBug5497Workaround.assistActivity(this)
         mAdapter = ReleaseAdapter()
         mAdapter.setNewData(data1)
         mFooterView = View.inflate(mContext, R.layout.footer_release_button, null)
         mAdapter.addFooterView(mFooterView)
         mAdapter.bindToRecyclerView(mRecyclerView)
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        var mLinearLayoutManager = LinearLayoutManager(this)
+        mRecyclerView.layoutManager = mLinearLayoutManager
+        //这是重点
+        mLinearLayoutManager.stackFromEnd = true
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
 
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
@@ -740,8 +744,7 @@ class EnquiryCocalActivity : BaseActivity() {
         data3.add(ReleaseBean(4, "低位热值(kcal/kg):", "", "0", InputType.TYPE_CLASS_NUMBER, 0))
         data3.add(ReleaseBean(4, "空干基硫分(%):", "", "0", InputType.TYPE_CLASS_NUMBER, 0))
         data3.add(ReleaseBean(4, "空干基挥发分(%):", "", "0", InputType.TYPE_CLASS_NUMBER, 0))
-        data3.add(ReleaseBean(1, "内水(%):", "", "0", InputType.TYPE_CLASS_TEXT, 0))
-        data3.add(ReleaseBean(1, "固定碳(%):", "", "0", InputType.TYPE_CLASS_TEXT, 15))
+        data3.add(ReleaseBean(1, "内水(%):", "", "0", InputType.TYPE_CLASS_TEXT, 15))
         data3.add(ReleaseBean(2, "计划收货时间:", "", "0", InputType.TYPE_NUMBER_FLAG_DECIMAL, 0))
 //        data3.add(ReleaseBean(3, "交货时间:", "", "0", EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_DECIMAL, 0))
         data3.add(ReleaseBean(2, "交货地点:", "", "0", InputType.TYPE_CLASS_TEXT, 0))

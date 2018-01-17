@@ -28,6 +28,7 @@ import com.exz.hscal.hscoal.module.main.release.ReleaseGoodsActivity
 import com.exz.hscal.hscoal.module.main.steel.SeekSteelActivity
 import com.exz.hscal.hscoal.module.main.steel.SeekSteelDetailActivity
 import com.exz.hscal.hscoal.module.mine.ApplyForDevelopersActivity
+import com.exz.hscal.hscoal.module.mine.ApplyForDriverActivity
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.exz.hscal.hscoal.widget.MyWebActivity
 import com.flyco.tablayout.listener.CustomTabEntity
@@ -206,7 +207,9 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
     }
 
     override fun OnBannerClick(position: Int) {
-        startActivity(Intent(context, MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title, "Banner详情").putExtra(MyWebActivity.Intent_Url, banners.get(position).url))
+        startActivity(Intent(context, MyWebActivity::class.java).
+                putExtra(MyWebActivity.Intent_Title, "Banner详情")
+                .putExtra(MyWebActivity.Intent_Url, banners.get(position).url))
     }
 
     override fun onClick(view: View) {
@@ -226,7 +229,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
                 //"供应商认证：-1未申请 0待审核，1已认证 2未通过",
                 when (MineFragment.driverAuthentication) {
                     "-1" -> {
-                        startActivity(Intent(context, ApplyForDevelopersActivity::class.java))
+                        startActivity(Intent(context, ApplyForDriverActivity::class.java))
                     }
                     "0" -> {
                         toast("司机证审核中")
@@ -236,7 +239,8 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
                         startActivity(Intent(context, SeekGoodsActivity::class.java))
                     }
                     "2" -> {
-                        startActivity(Intent(context, ApplyForDevelopersActivity::class.java).putExtra(ApplyForDevelopersActivity.Intent_State, MineFragment.driverAuthentication))
+                        startActivity(Intent(context, ApplyForDriverActivity::class.java).
+                                putExtra(ApplyForDriverActivity.Intent_State, MineFragment.driverAuthentication))
                     }
                 }
 
@@ -294,8 +298,16 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
             refreshLayout?.finishRefresh()
             if (it != null) {
                 mAdapter.setNewData(it)
-                mAdapter.loadMoreEnd()
             }
+        }
+
+        if(banners.size<1){
+            initBanner()
+        }
+
+        if(news.size<1){
+           initNews()
+
         }
     }
 

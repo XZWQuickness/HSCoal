@@ -28,6 +28,7 @@ import com.exz.hscal.hscoal.bean.CityBean
 import com.exz.hscal.hscoal.bean.PopStairListBean
 import com.exz.hscal.hscoal.bean.TextBean
 import com.exz.hscal.hscoal.module.mine.goodsmanage.GoodsManageSteelDetailActivity
+import com.exz.hscal.hscoal.utils.AndroidBug5497Workaround
 import com.exz.hscal.hscoal.utils.RecycleViewDivider
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.lzy.imagepicker.ImagePicker
@@ -234,7 +235,7 @@ class ReleaseSteelActivity : BaseActivity() {
             // 发布煤炭
 
             for (bean in mAdapter.data) {
-                if(TextUtils.isEmpty(steelId)) {
+                if (TextUtils.isEmpty(steelId)) {
                     requestCheck = MyApplication.loginUserId + steelClassId
                     when (bean.lay) {
 
@@ -263,116 +264,123 @@ class ReleaseSteelActivity : BaseActivity() {
                                 return@setOnClickListener
                             }
                         }
+
+                        5 -> {
+                            if (TextUtils.isEmpty(bean.v)) {
+                                toast("请输入" + bean.k.replace(":", ""))
+                                return@setOnClickListener
+                            }
+                        }
                     }
-                }else{
+                } else {
                     requestCheck = MyApplication.loginUserId + steelId
                 }
 
                 if (bean.k.equals("品名:")) {
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         name = bean.v
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         name = bean.v
                     }
 
                 }
                 if (bean.k.equals("钢厂:")) {
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         steelworks = bean.v
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         steelworks = bean.v
                     }
                 }
                 if (bean.k.equals("规格:")) {
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         specification = bean.v
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         specification = bean.v
                     }
                 }
                 if (bean.k.equals("材质:")) {
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         materialQuality = bean.v
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         materialQuality = bean.v
                     }
                 }
                 if (bean.k.equals("仓库:")) {
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         warehouse = bean.v
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         warehouse = bean.v
                     }
                 }
                 if (bean.k.equals("备注:")) {
 
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         remark = bean.v
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         remark = bean.v
                     }
                 }
 
                 if (bean.k.equals("交货时间:")) {
 
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         deliveryTime = bean.left + "," + bean.right
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         deliveryTime = bean.left + "," + bean.right
                     }
                 }
                 if (bean.k.equals("件重:")) {
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         weight = bean.v
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         weight = bean.v
                     }
                 }
                 if (bean.k.equals("可供数(件):")) {
 
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         QTY = bean.v
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         QTY = bean.v
                     }
                 }
                 if (bean.k.equals("单价(元):")) {
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         price = bean.v
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         price = bean.v
                     }
                 }
                 if (bean.k.equals("检测机构:")) {
 
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         inspectonBody = bean.v
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         inspectonBody = bean.v
                     }
                 }
                 if (bean.k.equals("点击上传检测报告照片:")) {
 
 
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         inspectonBody_Img = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         inspectonBody_Img = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
                     }
                 }
                 if (bean.k.equals("点击上传产品照片:")) {
 
-                    if(!TextUtils.isEmpty(steelId)&&bean.check.equals("3")){
+                    if (!TextUtils.isEmpty(steelId) && bean.check.equals("3")) {
                         image = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
-                    }else if(TextUtils.isEmpty(steelId)){
+                    } else if (TextUtils.isEmpty(steelId)) {
                         image = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(Luban.with(mContext).load(bean.v).get(bean.v)))
                     }
                 }
 
             }
-            DataCtrlClass.releaseSteel(mContext, steelId,steelClassId, name, steelworks, specification, materialQuality, warehouse, remark, provinceId, cityId, deliveryTime,
+            DataCtrlClass.releaseSteel(mContext, steelId, steelClassId, name, steelworks, specification, materialQuality, warehouse, remark, provinceId, cityId, deliveryTime,
                     deliveryWayId, weight, QTY, price, paymentModeId
-                    , inspectonBody, inspectonBody_Img, image, url,requestCheck, {
+                    , inspectonBody, inspectonBody_Img, image, url, requestCheck, {
                 if (it != null) {
                     finish()
                 }
@@ -530,12 +538,16 @@ class ReleaseSteelActivity : BaseActivity() {
     }
 
     private fun initView() {
+        AndroidBug5497Workaround.assistActivity(this)
         mAdapter = ReleaseAdapter()
         mAdapter.setNewData(data1)
         mFooterView = View.inflate(mContext, R.layout.footer_release_button, null)
         mAdapter.addFooterView(mFooterView)
         mAdapter.bindToRecyclerView(mRecyclerView)
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        var mLinearLayoutManager = LinearLayoutManager(this)
+        mRecyclerView.layoutManager = mLinearLayoutManager
+        //这是重点
+        mLinearLayoutManager.stackFromEnd = true
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
 
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
@@ -546,7 +558,7 @@ class ReleaseSteelActivity : BaseActivity() {
                         mCoclaOptionPicker.show()
                     }
                     "类别:" -> {
-                        if(!TextUtils.isEmpty(steelId)){
+                        if (!TextUtils.isEmpty(steelId)) {
                             return
                         }
                         KeyboardUtils.hideSoftInput(mContext as ReleaseSteelActivity)
@@ -698,7 +710,7 @@ class ReleaseSteelActivity : BaseActivity() {
             if (resultCode == ImagePicker.RESULT_CODE_ITEMS && data != null) { //图片选择
                 val images = data?.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) as ArrayList<*>
                 entity.v = (images[0] as ImageItem).path
-                entity.check="3"
+                entity.check = "3"
                 mAdapter.notifyItemChanged(mAdapter.data.indexOf(entity))
             }
         } catch (e: Exception) {
