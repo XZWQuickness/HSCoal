@@ -171,35 +171,71 @@
                     android:textColor="@color/MaterialGrey800"
                     android:textSize="14sp" />
 
+                <LinearLayout
+                    android:id="@+id/ll_applyfor_developers"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp"
+                    android:padding="15dp"
+                    android:background="@color/White"
+                    android:layout_height="wrap_content">
+
+
                 <TextView
                     android:id="@+id/tv_applyfor_developers"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/White"
-                    android:drawableEnd="@mipmap/icon_main_gray_next"
+
                     android:drawablePadding="@dimen/dp_10"
                     android:drawableStart="@mipmap/icon_mine_text6"
                     android:gravity="center_vertical"
-                    android:padding="15dp"
                     android:text="@string/mine_application_supplier"
                     android:textColor="@color/MaterialGrey800"
                     android:textSize="14sp" />
-
                 <TextView
-                    android:id="@+id/tv_applyfor_driver"
+                    android:id="@+id/tv_applyfor_developers_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/White"
+                    android:layout_gravity="right|center_vertical"
                     android:drawableEnd="@mipmap/icon_main_gray_next"
                     android:drawablePadding="@dimen/dp_10"
-                    android:drawableStart="@mipmap/icon_mine_text7"
-                    android:gravity="center_vertical"
-                    android:padding="15dp"
-                    android:text="@string/mine_applyfor_chauffeur"
-                    android:textColor="@color/MaterialGrey800"
+                    android:gravity="center_vertical|right"
+                    android:textColor="@color/MaterialGrey600"
                     android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_applyfor_driver"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="1dp"
+                    android:padding="15dp"
+                    android:background="@color/White"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/tv_applyfor_driver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:drawableStart="@mipmap/icon_mine_text7"
+                        android:gravity="center_vertical"
+                        android:text="@string/mine_applyfor_chauffeur"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tv_applyfor_driver_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/bt_manage_address"

@@ -30,25 +30,31 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/toAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawablePadding="4dp"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:textColor="@color/MaterialGrey800"
-                android:textSize="16sp" />
+
 
             <TextView
                 android:id="@+id/fromAddress"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/dp_4"
                 android:gravity="center_vertical"
+                android:layout_weight="1"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/MaterialGrey800"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/toAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/MaterialGrey800"
+                android:textSize="14sp" />
         </LinearLayout>
 
 

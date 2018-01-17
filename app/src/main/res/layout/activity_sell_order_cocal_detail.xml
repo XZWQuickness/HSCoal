@@ -1033,47 +1033,48 @@
                         </LinearLayout>
                     </RelativeLayout>
 
-                    <RelativeLayout
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/White"
+                    android:id="@+id/llConsignee"
+                    android:padding="@dimen/margin_15">
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/White"
-                        android:id="@+id/rlConsignee"
-                        android:padding="@dimen/margin_15">
-
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/contact"
-                                android:id="@+id/consignee"
-                                android:textColor="@color/MaterialGrey600"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:id="@+id/mobile"
-                                android:textColor="@color/MaterialGrey600"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:id="@+id/address"
+                            android:text="@string/contact"
+                            android:id="@+id/consignee"
                             android:textColor="@color/MaterialGrey600"
                             android:textSize="14sp" />
-                    </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/mobile"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/address"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

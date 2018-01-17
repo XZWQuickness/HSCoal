@@ -162,7 +162,7 @@
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:id="@+id/toAddress"
+                        android:id="@+id/fromAddress"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
@@ -252,7 +252,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
-                        android:id="@+id/fromAddress"
+                        android:id="@+id/toAddress"
                         android:gravity="right"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />

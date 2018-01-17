@@ -200,7 +200,7 @@ class ApplyForDevelopersActivity : BaseActivity(), View.OnClickListener {
 
                 //营业执照
                 iv_business_img.setImageURI(mEntity.businessLicence.value)
-                setCheckTextColor(tvbusiness, mEntity.shopLogo.check)
+                setCheckTextColor(tvbusiness, mEntity.businessLicence.check)
 
             }
         })

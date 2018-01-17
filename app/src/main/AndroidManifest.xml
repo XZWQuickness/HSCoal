@@ -240,6 +240,10 @@
         <activity
             android:name=".module.mine.sellorder.ConfirmPaymentActivity"
             android:screenOrientation="portrait" />
+        <!--ta用户资料-->
+        <activity
+            android:name=".module.mine.TAUserInfoActivity"
+            android:screenOrientation="portrait" />
         <!--显示图片-->
         <activity
             android:name="com.szw.framelibrary.view.preview.PreviewActivity"

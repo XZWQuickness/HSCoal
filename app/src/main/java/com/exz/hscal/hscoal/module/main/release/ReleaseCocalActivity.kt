@@ -467,7 +467,7 @@ class ReleaseCocalActivity : BaseActivity() {
                         airDryRadicalVolatiles =if ((bean.left + "-" + bean.right).equals("-")) "" else bean.left + "-" + bean.right
                     }
                 }
-                if (bean.k.equals("收到基挥发份(%):")) {
+                if (bean.k.equals("收到基挥发分(%):")) {
 
                     if(!TextUtils.isEmpty(coalId)&&bean.check.equals("3")){
                         baseVolatiles = bean.v
@@ -762,8 +762,6 @@ class ReleaseCocalActivity : BaseActivity() {
         mAdapter.bindToRecyclerView(mRecyclerView)
         var mLinearLayoutManager = LinearLayoutManager(this)
         mRecyclerView.layoutManager = mLinearLayoutManager
-        //这是重点
-        mLinearLayoutManager.stackFromEnd = true
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
 
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {

@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.KeyboardUtils
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.module.main.release.ReleaseCocalActivity
+import com.exz.hscal.hscoal.module.mine.TAUserInfoActivity
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.DialogUtils
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -25,7 +26,7 @@ import java.util.*
 
 class SellOrderCocalDetailActivity : BaseActivity(), View.OnClickListener {
     var phone = ""
-
+    var hisUserId=""
     lateinit var mTimePicker: TimePickerView
     var sendTime = ""
     override fun initToolbar(): Boolean {
@@ -39,7 +40,17 @@ class SellOrderCocalDetailActivity : BaseActivity(), View.OnClickListener {
         toolbar.setNavigationOnClickListener {
             finish()
         }
+        toolbar.inflateMenu(R.menu.menu_seek_cocal_detail_text)
+        var actionView = toolbar.menu.getItem(0).actionView
+        (actionView as TextView).text = "买家信息"
+        actionView.setOnClickListener {
+            if (!TextUtils.isEmpty(hisUserId)) {
+                startActivity(Intent(mContext, TAUserInfoActivity::class.java).
+                        putExtra(TAUserInfoActivity.Intent_TA_Id, hisUserId)
+                        .putExtra(TAUserInfoActivity.Intent_ClassName,"卖家信息"))
+            }
 
+        }
         return false
     }
 
@@ -101,7 +112,7 @@ class SellOrderCocalDetailActivity : BaseActivity(), View.OnClickListener {
                     }
                 }
                 place.text = String.format(mContext.getString(R.string.origin), it.data?.place ?: "")//产地
-                price.text = String.format(mContext.getString(R.string.main_cocal_detail_unit_price), "￥" + it.data?.price)//单价
+                price.text= mContext.getString(R.string.main_cocal_detail_unit_price)+": ￥"+it.data?.price//单价
                 count.text = String.format(mContext.getString(R.string.my_order_buy_num), it.data?.count)//购买数量
                 orderId.text = String.format(mContext.getString(R.string.my_order_num), intent.getStringExtra(Intent_Order_Detaile_Id))//订单编号
                 createDate.text = String.format(mContext.getString(R.string.my_order_create_time), it.data?.createDate)//创建时间
@@ -112,17 +123,17 @@ class SellOrderCocalDetailActivity : BaseActivity(), View.OnClickListener {
                 deliveryWayName.text = it.data?.deliveryWayName //交货方式
                 provinceCity.text = it.data?.provinceCity //交货地点
                 remark.text = it.data?.remark//备注
-
+                hisUserId= it.data?.hisUserId.toString()
                 if(!TextUtils.isEmpty(it.data?.mobile)&&!TextUtils.isEmpty(it.data?.consignee)&& !TextUtils.isEmpty(it.data?.address)){
-                    rlConsignee.visibility = View.VISIBLE
+                    llConsignee.visibility = View.VISIBLE
                     consignee.text = String.format(mContext.getString(R.string.contact), it.data?.consignee)//联系人
-                    mobile.text = "电话" + it.data?.mobile
+                    mobile.text = "电话: " + it.data?.mobile
                     phone = it.data?.mobile ?: ""
                     address.text = it.data?.address//地址
 
                     tv_right.visibility = View.VISIBLE
                 } else {
-                    rlConsignee.visibility = View.GONE
+                    llConsignee.visibility = View.GONE
                     tv_right.visibility = View.GONE
                 }
                 if (tv_right.visibility == View.GONE && tv_left.visibility == View.GONE) {

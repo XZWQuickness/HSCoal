@@ -74,6 +74,15 @@ public class SteelOrderInfoBean {
     private String address;
     @SerializedName("createDate")
     private String createDate;
+    private String hisUserId;
+
+    public String getHisUserId() {
+        return hisUserId;
+    }
+
+    public void setHisUserId(String hisUserId) {
+        this.hisUserId = hisUserId;
+    }
 
     public String getName() {
         return name;

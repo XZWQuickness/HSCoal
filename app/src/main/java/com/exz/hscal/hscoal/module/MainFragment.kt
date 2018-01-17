@@ -6,6 +6,7 @@ import android.os.Looper.getMainLooper
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -207,6 +208,9 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
     }
 
     override fun OnBannerClick(position: Int) {
+        if(TextUtils.isEmpty(banners.get(position).url)){
+            return
+        }
         startActivity(Intent(context, MyWebActivity::class.java).
                 putExtra(MyWebActivity.Intent_Title, "Banner详情")
                 .putExtra(MyWebActivity.Intent_Url, banners.get(position).url))

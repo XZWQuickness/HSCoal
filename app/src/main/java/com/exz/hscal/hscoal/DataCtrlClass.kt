@@ -2,6 +2,7 @@ package com.exz.hscal.hscoal
 
 import android.content.Context
 import android.text.TextUtils
+import cn.jpush.android.api.JPushInterface
 import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.EncryptUtils
 import com.blankj.utilcode.util.FileIOUtils
@@ -149,7 +150,7 @@ object DataCtrlClass {
         params.put("mobile", mobile)
         params.put("password", pwd)
         params.put("deviceType", "1")
-//      params.put("jpushToken", JPushInterface.getRegistrationID(this))
+      params.put("jpushToken", JPushInterface.getRegistrationID(context))
         params.put("requestCheck", EncryptUtils.encryptMD5ToString(mobile + pwd, MyApplication.salt).toLowerCase())
         OkGo.post<NetEntity<LoginEntity>>(Urls.Login)
                 .params(params)
@@ -175,13 +176,13 @@ object DataCtrlClass {
     /**
      * 登录
      * */
-    fun loginNoDialog(mobile: String, pwd: String, listener: (s: LoginEntity?) -> Unit) {
+    fun loginNoDialog(context:Context,mobile: String, pwd: String, listener: (s: LoginEntity?) -> Unit) {
 
         val params = HashMap<String, String>()
         params.put("mobile", mobile)
         params.put("password", pwd)
         params.put("deviceType", "1")
-//      params.put("jpushToken", JPushInterface.getRegistrationID(this))
+      params.put("jpushToken", JPushInterface.getRegistrationID(context))
         params.put("requestCheck", EncryptUtils.encryptMD5ToString(mobile + pwd, MyApplication.salt).toLowerCase())
         OkGo.post<NetEntity<LoginEntity>>(Urls.Login)
                 .params(params)
@@ -262,7 +263,7 @@ object DataCtrlClass {
         params.put("password", password)
         params.put("jpushToken", jpushToken)
         params.put("deviceType", "1")
-//        params.put("jpushToken", JPushInterface.getRegistrationID(this))
+        params.put("jpushToken", JPushInterface.getRegistrationID(context))
         params.put("requestCheck", EncryptUtils.encryptMD5ToString(phone + code, MyApplication.salt).toLowerCase())
         OkGo.post<NetEntity<LoginEntity>>(Urls.Register)
                 .params(params)
@@ -384,6 +385,38 @@ object DataCtrlClass {
 
                 })
     }
+
+    /**
+     * 获取用户信息
+     * */
+    fun getUserInfoTA(context: Context,hisUserId:String, listener: (s: UserBean?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("hisUserId", hisUserId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+hisUserId, MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<UserBean>>(Urls.getUserInfoTA)
+                .params(params)
+                .tag(this)
+                .execute(object : JsonCallback<NetEntity<UserBean>>() {
+
+                    override fun onSuccess(response: Response<NetEntity<UserBean>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body().data)
+                        } else {
+                            listener.invoke(null)
+                            context.toast(response.body().message)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<UserBean>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+
 
     /**
      * 编辑个人信息
@@ -1914,6 +1947,34 @@ object DataCtrlClass {
                     }
 
                     override fun onError(response: Response<NetEntity<SteelInfoMamageBean>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+    /**
+     * 退出
+     */
+    fun exitAccount(context: Context,  listener: (NetEntity<Void>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("userId", MyApplication.loginUserId)
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId , MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<Void>>(Urls.ExitAccount)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            context.toast(response.body().message)
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<Void>>) {
                         super.onError(response)
                         listener.invoke(null)
                     }

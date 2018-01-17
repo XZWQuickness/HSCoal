@@ -27,7 +27,7 @@ class SeekGoodsListAdapter() : BaseQuickAdapter<SeekGoodsEntity, BaseViewHolder>
 
         if(!TextUtils.isEmpty(item.toAddress)&&!TextUtils.isEmpty(item.fromAddress)){
 
-            v.toAddress.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,ContextCompat.getDrawable(mContext,R.mipmap. icon_arrow_seek_goods),null)
+            v.toAddress.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext,R.mipmap. icon_arrow_seek_goods),null,null,null)
         }else{
             v.toAddress.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,null,null)
         }

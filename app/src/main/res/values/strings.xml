@@ -151,7 +151,7 @@
     <string name="start_location">始发地</string>
     <string name="end_location">目的地</string>
     <string name="goods_confirm_no_address">您还没有收货地址，点击这里创建</string>
-    <string name="contact">联系人</string>
+    <string name="contact">联系人: </string>
     <string name="contact_type">联系方式</string>
     <string name="total">合计:%s</string>
     <string name="my_order_create_time">创建时间:%s</string>

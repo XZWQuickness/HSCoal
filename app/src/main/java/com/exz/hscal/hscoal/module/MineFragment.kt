@@ -100,6 +100,9 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
         if (!MyApplication.checkUserLogin()) {
            nickname.text="未登录"
             img_head.setImageURI("http://hs.xzsem.cn/userImg/default.png")
+            tv_applyfor_driver_state.text=""
+            tv_applyfor_developers_state.text=""
+
             return
         }
         onRefresh(refreshLayout)
@@ -113,8 +116,8 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
         tv_inquiry_order.setOnClickListener(this)
         tv_goods_manage.setOnClickListener(this)
         tv_sell_order.setOnClickListener(this)
-        tv_applyfor_developers.setOnClickListener(this)
-        tv_applyfor_driver.setOnClickListener(this)
+        ll_applyfor_developers.setOnClickListener(this)
+        ll_applyfor_driver.setOnClickListener(this)
         bt_setting.setOnClickListener(this)
 
     }
@@ -164,7 +167,7 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
                 }
                 startActivity(Intent(context, SellOrderActivity::class.java))
             }
-            R.id.tv_applyfor_developers -> {//申请开发商
+            R.id.ll_applyfor_developers -> {//申请开发商
                 if (!MyApplication.checkUserLogin()) {
                     startActivityForResult(Intent(context, LoginActivity::class.java), RESULT_LOGIN_CANCELED)
                     return
@@ -175,7 +178,7 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
                 }
                 startActivity(Intent(context, ApplyForDevelopersActivity::class.java).putExtra(ApplyForDevelopersActivity.Intent_State,businessAuthentication))
             }
-            R.id.tv_applyfor_driver -> {//申请司机
+            R.id.ll_applyfor_driver -> {//申请司机
                 if (!MyApplication.checkUserLogin()) {
                     startActivityForResult(Intent(context, LoginActivity::class.java), RESULT_LOGIN_CANCELED)
                     return
@@ -218,6 +221,35 @@ class MineFragment : MyBaseFragment(), View.OnClickListener, OnRefreshListener {
                 nickname.text=it.nickname
                 businessAuthentication=it.businessAuthentication
                 driverAuthentication=it.driverAuthentication
+
+                when (businessAuthentication) {
+                    "-1" -> {
+                        tv_applyfor_developers_state.text="未认证"
+                    }
+                    "0" -> {
+                        tv_applyfor_developers_state.text="审核中"
+                    }
+                    "1" -> {
+                        tv_applyfor_developers_state.text="已认证"
+                    }
+                    "2" -> {
+                        tv_applyfor_developers_state.text="未通过"
+                    }
+                }
+                when (driverAuthentication) {
+                    "-1" -> {
+                        tv_applyfor_driver_state.text="未认证"
+                    }
+                    "0" -> {
+                        tv_applyfor_driver_state.text="审核中"
+                    }
+                    "1" -> {
+                        tv_applyfor_driver_state.text="已认证"
+                    }
+                    "2" -> {
+                        tv_applyfor_driver_state.text="未通过"
+                    }
+                }
             }
 
         }

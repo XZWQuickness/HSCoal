@@ -4,6 +4,7 @@ import android.content.Intent
 import android.text.TextUtils
 import android.view.View
 import com.exz.carprofitmuch.config.Urls
+import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.module.login.EditPwdActivity
 import com.exz.hscal.hscoal.module.login.LoginActivity
@@ -18,7 +19,6 @@ import com.szw.framelibrary.config.PreferencesService
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_setting.*
-
 
 
 /**
@@ -52,7 +52,7 @@ class SettingActivity : BaseActivity(), View.OnClickListener {
 
     private fun initView() {
         val data = DataCleanManager.getTotalCacheSize(mContext)
-        tv_clear_cache.setText(if(TextUtils.isEmpty(data)) "" else data)
+        tv_clear_cache.setText(if (TextUtils.isEmpty(data)) "" else data)
         bt_editPwd.setOnClickListener(this)
         bt_user_agreement.setOnClickListener(this)
         bt_about_us.setOnClickListener(this)
@@ -60,31 +60,38 @@ class SettingActivity : BaseActivity(), View.OnClickListener {
         bt_usinghelp.setOnClickListener(this)
         bt_finish.setOnClickListener(this)
     }
+
     override fun onClick(p0: View) {
         when (p0) {
             bt_editPwd -> {
-                startActivity(Intent(mContext,EditPwdActivity::class.java))
+                startActivity(Intent(mContext, EditPwdActivity::class.java))
             }
             bt_user_agreement -> {//用户协议
-                startActivity(Intent(mContext,MyWebActivity::class.java).putExtra(Intent_Url,Urls.Information).putExtra(Intent_Title,"用户协议"))
+                startActivity(Intent(mContext, MyWebActivity::class.java).putExtra(Intent_Url, Urls.Information).putExtra(Intent_Title, "用户协议"))
             }
             bt_about_us -> {//关于我们
-                startActivity(Intent(mContext,MyWebActivity::class.java).putExtra(Intent_Url,Urls.Information2).putExtra(Intent_Title,"关于我们"))
+                startActivity(Intent(mContext, MyWebActivity::class.java).putExtra(Intent_Url, Urls.Information2).putExtra(Intent_Title, "关于我们"))
             }
-            bt_clear_cache->{//清除缓存
-                DialogUtils.clearCache(mContext,{
+            bt_clear_cache -> {//清除缓存
+                DialogUtils.clearCache(mContext, {
                     DataCleanManager.clearAllCache(mContext)
                     tv_clear_cache.setText("0.0K");
                 })
             }
             bt_usinghelp -> {//使用帮助
-                startActivity(Intent(mContext,MyWebActivity::class.java).putExtra(Intent_Url,Urls.help).putExtra(Intent_Title,"使用帮助"))
+                startActivity(Intent(mContext, MyWebActivity::class.java).putExtra(Intent_Url, Urls.help).putExtra(Intent_Title, "使用帮助"))
             }
-            bt_finish->{//退出当前账号
-                PreferencesService.saveAccount(mContext, "", "")
-                MyApplication.user = null
-                setResult(LoginActivity.RESULT_LOGIN_CANCELED)
-                onBackPressed()
+            bt_finish -> {//退出当前账号
+
+                DataCtrlClass.exitAccount(mContext, {
+                    if (it != null) {
+                        PreferencesService.saveAccount(mContext, "", "")
+                        MyApplication.user = null
+                        setResult(LoginActivity.RESULT_LOGIN_CANCELED)
+                        onBackPressed()
+                    }
+                })
+
             }
         }
     }

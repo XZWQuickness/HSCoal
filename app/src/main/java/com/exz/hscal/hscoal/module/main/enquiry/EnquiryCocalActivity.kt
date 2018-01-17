@@ -636,7 +636,6 @@ class EnquiryCocalActivity : BaseActivity() {
         var mLinearLayoutManager = LinearLayoutManager(this)
         mRecyclerView.layoutManager = mLinearLayoutManager
         //这是重点
-        mLinearLayoutManager.stackFromEnd = true
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
 
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {

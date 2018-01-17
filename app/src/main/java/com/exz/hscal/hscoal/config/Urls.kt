@@ -85,6 +85,12 @@ object Urls {
     val getUserInfo = url + "App/Account/GetUserInfo.aspx"
 
 
+    /**
+     * 获取用户信息
+     */
+    val getUserInfoTA = url + "App/Account/Buyer/GetUserInfo.aspx"
+
+
 
     /*
        * 设置-修改个人信息
@@ -395,6 +401,11 @@ object Urls {
      *  接收/拒绝报价（待确认时，调用此接口）
      */
     var ConfirmEnquiry = url + "App/Account/Enquiry/Confirm.aspx"
+
+    /*
+     * 退出
+     */
+    var ExitAccount = url + "App/Account/Exit.aspx"
 
 
 }
