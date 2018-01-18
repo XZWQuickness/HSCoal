@@ -149,7 +149,8 @@
                                         android:textColor="@color/MaterialOrange400"
                                         android:id="@+id/fixedCarbon"
                                         android:maxLines="1"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
 
@@ -174,7 +175,8 @@
                                         android:layout_marginStart="4dp"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12"/>
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -207,7 +209,8 @@
                                         android:id="@+id/ashSpecification"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
 
@@ -232,7 +235,8 @@
                                         android:layout_marginStart="4dp"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12"/>
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -264,7 +268,8 @@
                                         android:id="@+id/inherentMoisture"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
 
@@ -289,7 +294,8 @@
                                         android:layout_marginStart="4dp"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12"/>
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -334,7 +340,8 @@
                                         android:textColor="@color/MaterialOrange400"
                                         android:maxLines="1"
                                         android:id="@+id/ashSpecification2"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
 
@@ -359,7 +366,8 @@
                                         android:maxLines="1"
                                         android:layout_marginStart="4dp"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -392,7 +400,8 @@
                                         android:maxLines="1"
                                         android:id="@+id/bond"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
 
@@ -417,7 +426,8 @@
                                         android:layout_marginStart="4dp"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -450,7 +460,8 @@
                                         android:id="@+id/Y_Value"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12"/>
 
                                 </LinearLayout>
 
@@ -475,7 +486,8 @@
                                         android:maxLines="1"
                                         android:layout_marginStart="4dp"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -501,7 +513,8 @@
                                     android:id="@+id/scr"
                                     android:maxLines="1"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:singleLine="true"
+                                    android:textSize="@dimen/sp_12" />
 
 
 
@@ -538,7 +551,8 @@
                                     android:layout_marginStart="4dp"
                                     android:id="@+id/lowerCalorificValue"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:singleLine="true"
+                                    android:textSize="@dimen/sp_12"/>
 
 
 
@@ -572,7 +586,8 @@
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
                                         android:id="@+id/airDrySulfur"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12"/>
 
                                 </LinearLayout>
 
@@ -597,7 +612,8 @@
                                         android:maxLines="1"
                                         android:layout_marginStart="4dp"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -630,7 +646,8 @@
                                         android:id="@+id/inherentMoisture3"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12"/>
 
                                 </LinearLayout>
 
@@ -655,7 +672,8 @@
                                         android:maxLines="1"
                                         android:layout_marginStart="4dp"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12"/>
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -687,7 +705,8 @@
                                         android:id="@+id/baseVolatiles"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12"/>
 
                                 </LinearLayout>
 
@@ -712,7 +731,8 @@
                                         android:layout_marginStart="4dp"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12"/>
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -744,7 +764,8 @@
                                         android:maxLines="1"
                                         android:id="@+id/ashSpecification3"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12"/>
 
                                 </LinearLayout>
 
@@ -769,7 +790,8 @@
                                         android:maxLines="1"
                                         android:layout_marginStart="4dp"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -800,7 +822,8 @@
                                         android:id="@+id/G_Value"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
 
@@ -825,7 +848,8 @@
                                         android:layout_marginStart="4dp"
                                         android:maxLines="1"
                                         android:textColor="@color/MaterialOrange400"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:singleLine="true"
+                                        android:textSize="@dimen/sp_12" />
 
                                 </LinearLayout>
                             </LinearLayout>

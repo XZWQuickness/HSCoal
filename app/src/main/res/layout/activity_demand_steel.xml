@@ -242,7 +242,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
-                        android:id="@+id/placeDelivery"
+                        android:id="@+id/provinceCity"
                         android:gravity="right"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />

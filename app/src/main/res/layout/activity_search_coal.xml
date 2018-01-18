@@ -56,7 +56,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="@dimen/margin_15"
                 >
 
                 <com.szw.framelibrary.view.DrawableCenterButton
@@ -69,9 +68,8 @@
                     android:drawablePadding="4dp"
                     android:gravity="center"
                     android:text="@string/sort"
-                    android:maxLength="4"
                     android:textColor="@color/MaterialGrey600"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <com.szw.framelibrary.view.DrawableCenterButton
                     android:id="@+id/rb2"
@@ -83,9 +81,8 @@
                     android:drawablePadding="4dp"
                     android:gravity="center"
                     android:text="@string/steel_type"
-                    android:maxLength="4"
                     android:textColor="@color/MaterialGrey600"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
 
                 <com.szw.framelibrary.view.DrawableCenterButton
@@ -97,10 +94,9 @@
                     android:drawableEnd="@drawable/gray_arrow"
                     android:drawablePadding="4dp"
                     android:gravity="center"
-                    android:maxLength="4"
                     android:text="@string/area"
                     android:textColor="@color/MaterialGrey600"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </RadioGroup>
 

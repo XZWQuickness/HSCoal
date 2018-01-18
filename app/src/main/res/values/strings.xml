@@ -30,7 +30,7 @@
     <string name="login_text_protocol">《大宗贸易用户协议》</string>
     <string name="login_text_protocol_agree">已阅读并同意</string>
     <string name="mine_my_order">我的订单</string>
-    <string name="mine_inquiry_my_order">询盘订单</string>
+    <string name="mine_inquiry_my_order">报价订单</string>
     <string name="mine_inquiry_info_manage">询盘信息管理</string>
     <string name="mine_goods_manage">商品管理</string>
     <string name="mine_my_sold_order">已售订单</string>

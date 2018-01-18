@@ -94,7 +94,7 @@ class DemandCocalDetailAtivity : BaseActivity(), View.OnClickListener {
                 }
                 purchaseQuantity.text = it.data?.purchaseQuantity + "吨" ?: ""//求购数
                 plannedDeliveryTime.text = it.data?.plannedDeliveryTime//计划收货时间
-                placeDelivery.text = it.data?.placeDelivery//交货地点
+                provinceCity.text = it.data?.provinceCity//交货地点
                 remark.text = it.data?.remark//备注
 
             }

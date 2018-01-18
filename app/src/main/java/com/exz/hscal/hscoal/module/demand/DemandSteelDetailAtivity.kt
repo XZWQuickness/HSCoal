@@ -106,7 +106,7 @@ class DemandSteelDetailAtivity : BaseActivity(), View.OnClickListener, OnRefresh
                 specification.text = it.data?.specification ?: "" //规格
                 materialQuality.text = it.data?.materialQuality ?: "" //材质
                 plannedDeliveryTime.text = it.data?.plannedDeliveryTime?.replace(",", "至") ?: ""//交货时间
-                placeDelivery.text = it.data?.placeDelivery ?: ""//交货地点
+                provinceCity.text = it.data?.provinceCity ?: ""//交货地点
                 remark.text = it.data?.remark ?: ""//备注
             }
         })

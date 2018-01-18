@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,12 +26,13 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.szw.framelibrary.base.MyBaseFragment
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.view.DrawableCenterButton
-import kotlinx.android.synthetic.main.fragment_steel.*
 import org.jetbrains.anko.textColor
 import razerdp.basepopup.BasePopupWindow
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import kotlinx.android.synthetic.main.fragment_coal.*
+
 
 /**
  * Created by pc on 2017/12/5.
@@ -42,10 +44,10 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
     private var refreshState = com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH
     private var currentPage = 1
 
-   private var coalVarietyId=""//煤种id
-   private var provinceId=""//省份
-   private var cityId=""//城市
-   private var sortType="0"//排序方式（0综合排序 1求购数递增 2求购数递减 3收货时间最近 4收货时间最远）
+    private var coalVarietyId = ""//煤种id
+    private var provinceId = ""//省份
+    private var cityId = ""//城市
+    private var sortType = "0"//排序方式（0综合排序 1求购数递增 2求购数递减 3收货时间最近 4收货时间最远）
 
     private lateinit var sortPop: StairPop
     private lateinit var coalPop: StairPop
@@ -63,9 +65,10 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
 
 
     }
+
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        if(!hidden){
+        if (!hidden) {
 
             onRefresh(refreshLayout)
         }
@@ -78,9 +81,9 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
         mRecyclerView.layoutManager = LinearLayoutManager(context)
         mRecyclerView.addItemDecoration(RecycleViewDivider(context, LinearLayoutManager.VERTICAL, 2, ContextCompat.getColor(context, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
-        rb1.setOnClickListener(this)
-        rb2.setOnClickListener(this)
-        rb3.setOnClickListener(this)
+        cocalRb1.setOnClickListener(this)
+        cocalRb2.setOnClickListener(this)
+        cocalRb3.setOnClickListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
                 var entity = mAdapter.data.get(position)
@@ -108,52 +111,72 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
         sortPop = StairPop(activity, {
             if (it != null) {
                 if (it.name.equals("综合排序")) {
-                    setGaryOrblue(rb1, false, "综合排序")
+                    setGaryOrblue(cocalRb1, false, "综合排序")
                 } else {
-                    setGaryOrblue(rb1, true, it.name)
+                    setGaryOrblue(cocalRb1, true, it.name)
                 }
-                sortType = it.id
-              onRefresh(refreshLayout)
+                if(!sortType.equals( it.id)){
+                    sortType = it.id
+                    onRefresh(refreshLayout)
 
+                }
 
+                sortPop. dismiss()
+                Log.i("coalPop","{sortPop}")
             }
         })
         sortPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
-                radioGroup.clearCheck()
+                radioGroup1.clearCheck()
+
+                Log.i("coalPop","sortPop onDismiss")
             }
         }
         sortPop.data = sortData
         coalPop = StairPop(activity, {
+
+            Log.i("coalPop","{coalPop}")
             if (it != null) {
                 if (it.name.equals("全部煤种")) {
-                    setGaryOrblue(rb2, false, "全部煤种")
+                    setGaryOrblue(cocalRb2, false, "全部煤种")
                 } else {
-                    setGaryOrblue(rb2, true, it.name)
+                    setGaryOrblue(cocalRb2, true, it.name)
                 }
+                if(!coalVarietyId.equals( it.id)){
+                    coalVarietyId = it.id
+                    onRefresh(refreshLayout)
 
-                coalVarietyId=it.id
-                onRefresh(refreshLayout)
+                }
+                coalPop. dismiss()
             }
         })
         coalPop.data = coalData
         coalPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
-                radioGroup.clearCheck()
+                radioGroup1.clearCheck()
+                Log.i("coalPop","coalPop onDismiss")
             }
         }
         arePop = AreaPop(context, { name, provinceId, cityId, check ->
 
-            setGaryOrblue(rb3, check, name)
+            setGaryOrblue(cocalRb3, check, name)
+            if(this.provinceId != provinceId){
+                this.provinceId = provinceId
+                onRefresh(refreshLayout)
+            }
+            if(this.cityId != cityId){
+                this.cityId = cityId
+                onRefresh(refreshLayout)
 
-            this.provinceId = provinceId
-            this.cityId = cityId
-            onRefresh(refreshLayout)
+            }
+            arePop.dismiss()
+
         })
         arePop.data = (JSON.parseArray(getJson(), AreaBean::class.java) as ArrayList<AreaBean>)
         arePop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
-                radioGroup.clearCheck()
+
+                radioGroup1.clearCheck()
             }
         }
 
@@ -196,27 +219,31 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
 
     override fun onClick(v: View) {
         when (v) {
-            rb1 -> {
+            cocalRb1 -> {
+                Log.i("coalPop","rb1 前")
                 if (!sortPop.isShowing) {
 
-                    sortPop.showPopupWindow(radioGroup)
+                    sortPop.showPopupWindow(radioGroup1)
                 } else {
-                    radioGroup.clearCheck()
+                    radioGroup1.clearCheck()
                 }
+                Log.i("coalPop","rb1 后")
             }
-            rb2 -> {
+            cocalRb2 -> {
                 if (!coalPop.isShowing) {
-                    coalPop.showPopupWindow(radioGroup)
+                    coalPop.showPopupWindow(radioGroup1)
                 } else {
-                    radioGroup.clearCheck()
+                    radioGroup1.clearCheck()
                 }
             }
-            rb3 -> {
+            cocalRb3 -> {
                 if (!arePop.isShowing) {
-                    arePop.showPopupWindow(radioGroup)
+                    arePop.showPopupWindow(radioGroup1)
                 } else {
-                    radioGroup.clearCheck()
+                    radioGroup1.clearCheck()
                 }
+
+
             }
         }
     }
@@ -235,7 +262,7 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
     }
 
     private fun iniData() {
-        DataCtrlClass.coalEnquiryData(context, currentPage,  coalVarietyId, provinceId, cityId, sortType) {
+        DataCtrlClass.coalEnquiryData(context, currentPage, coalVarietyId, provinceId, cityId, sortType) {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH) {

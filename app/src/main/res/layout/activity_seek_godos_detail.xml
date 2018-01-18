@@ -266,6 +266,7 @@
                     android:layout_marginTop="1dp"
                     android:background="@color/White"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:padding="15dp">
 
                     <TextView

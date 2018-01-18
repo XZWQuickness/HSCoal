@@ -31,16 +31,15 @@
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/radioGroup1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:padding="@dimen/margin_15"
         android:background="@color/White"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <com.szw.framelibrary.view.DrawableCenterButton
-            android:id="@+id/rb1"
+            android:id="@+id/cocalRb1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -49,12 +48,11 @@
             android:drawablePadding="4dp"
             android:gravity="center"
             android:text="@string/sort"
-            android:maxLength="4"
             android:textColor="@color/MaterialGrey600"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <com.szw.framelibrary.view.DrawableCenterButton
-            android:id="@+id/rb2"
+            android:id="@+id/cocalRb2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -63,13 +61,12 @@
             android:drawablePadding="4dp"
             android:gravity="center"
             android:text="@string/steel_type"
-            android:maxLength="4"
             android:textColor="@color/MaterialGrey600"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
 
         <com.szw.framelibrary.view.DrawableCenterButton
-            android:id="@+id/rb3"
+            android:id="@+id/cocalRb3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -77,10 +74,9 @@
             android:drawableEnd="@drawable/gray_arrow"
             android:drawablePadding="4dp"
             android:gravity="center"
-            android:maxLength="4"
             android:text="@string/area"
             android:textColor="@color/MaterialGrey600"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </RadioGroup>
 

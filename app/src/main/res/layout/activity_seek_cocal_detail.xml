@@ -82,6 +82,7 @@
                             android:textSize="@dimen/sp_12" />
 
                         <TextView
+                            android:id="@+id/place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -91,7 +92,6 @@
                             android:drawableStart="@mipmap/icon_main_cocal_origin"
                             android:gravity="right"
                             android:text="@string/origin"
-                            android:id="@+id/place"
                             android:textColor="@color/MaterialGrey400"
                             android:textSize="@dimen/sp_12" />
 
@@ -131,13 +131,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/fixedCarbon"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
-                                    android:textColor="@color/MaterialOrange400"
-                                    android:id="@+id/fixedCarbon"
                                     android:maxLines="1"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:singleLine="true"
+                                    android:textColor="@color/MaterialOrange400"
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
 
@@ -156,13 +157,15 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/calorificValue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/calorificValue"
                                     android:layout_marginStart="4dp"
                                     android:maxLines="1"
+                                    android:singleLine="true"
+
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -189,13 +192,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/ashSpecification"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
-                                    android:id="@+id/ashSpecification"
                                     android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
 
@@ -214,13 +218,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/volatiles"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/volatiles"
                                     android:layout_marginStart="4dp"
                                     android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -246,13 +251,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/inherentMoisture"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
-                                    android:id="@+id/inherentMoisture"
                                     android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
 
@@ -271,18 +277,20 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/totalSulfurContent"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/totalSulfurContent"
                                     android:layout_marginStart="4dp"
                                     android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/llLayCocal2"
                         android:layout_width="match_parent"
@@ -316,13 +324,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/ashSpecification2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
-                                    android:textColor="@color/MaterialOrange400"
                                     android:maxLines="1"
-                                    android:id="@+id/ashSpecification2"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:singleLine="true"
+                                    android:textColor="@color/MaterialOrange400"
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
 
@@ -341,13 +350,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/totalSulfurContent2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/totalSulfurContent2"
-                                    android:maxLines="1"
                                     android:layout_marginStart="4dp"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -374,13 +384,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/bond"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
                                     android:maxLines="1"
-                                    android:id="@+id/bond"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
 
@@ -399,13 +410,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/volatiles2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/volatiles2"
                                     android:layout_marginStart="4dp"
                                     android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -426,19 +438,20 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/main_cocal_detail2_text5"
                                     android:maxLines="1"
+                                    android:text="@string/main_cocal_detail2_text5"
                                     android:textColor="@color/MaterialGrey600"
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/Y_Value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
-                                    android:id="@+id/Y_Value"
                                     android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
 
@@ -457,45 +470,47 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/lithofacies"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/lithofacies"
-                                    android:maxLines="1"
                                     android:layout_marginStart="4dp"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
                         </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_marginTop="6dp"
-                                android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="6dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:orientation="horizontal">
+                                android:text="@string/main_cocal_detail2_text7"
+                                android:textColor="@color/MaterialGrey600"
+                                android:textSize="@dimen/sp_14" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/main_cocal_detail2_text7"
-                                    android:textColor="@color/MaterialGrey600"
-                                    android:textSize="@dimen/sp_14" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="4dp"
-                                    android:id="@+id/scr"
-                                    android:maxLines="1"
-                                    android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
-
+                            <TextView
+                                android:id="@+id/scr"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                android:textColor="@color/MaterialOrange400"
+                                android:textSize="@dimen/sp_12" />
 
 
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/llLayCocal3"
                         android:layout_width="match_parent"
@@ -506,6 +521,7 @@
                         android:background="@drawable/shape_cocal_app_bg"
                         android:orientation="vertical"
                         android:padding="15dp">
+
                         <LinearLayout
 
                             android:layout_width="match_parent"
@@ -521,13 +537,13 @@
                                 android:textSize="@dimen/sp_14" />
 
                             <TextView
+                                android:id="@+id/lowerCalorificValue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:id="@+id/lowerCalorificValue"
+                                android:singleLine="true"
                                 android:textColor="@color/MaterialOrange400"
-                                android:textSize="@dimen/sp_14" />
-
+                                android:textSize="@dimen/sp_12" />
 
 
                         </LinearLayout>
@@ -535,8 +551,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginTop="6dp"
                             android:orientation="horizontal">
 
                             <LinearLayout
@@ -554,13 +570,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/airDrySulfur"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
                                     android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:id="@+id/airDrySulfur"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
 
@@ -579,13 +596,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/airDryRadicalVolatiles"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/airDryRadicalVolatiles"
-                                    android:maxLines="1"
                                     android:layout_marginStart="4dp"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -612,13 +630,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/inherentMoisture3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
-                                    android:id="@+id/inherentMoisture3"
                                     android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
 
@@ -637,13 +656,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/fixedCarbon3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/fixedCarbon3"
-                                    android:maxLines="1"
                                     android:layout_marginStart="4dp"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -669,13 +689,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/baseVolatiles"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
-                                    android:id="@+id/baseVolatiles"
                                     android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
 
@@ -694,13 +715,14 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/totalMoisture"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/totalMoisture"
                                     android:layout_marginStart="4dp"
                                     android:maxLines="1"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -726,13 +748,15 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/ashSpecification3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
                                     android:maxLines="1"
-                                    android:id="@+id/ashSpecification3"
+                                    android:singleLine="true"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/sp_12"
+                                    />
 
                             </LinearLayout>
 
@@ -751,16 +775,19 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/ashFusionPoint"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/ashFusionPoint"
-                                    android:maxLines="1"
                                     android:layout_marginStart="4dp"
+                                    android:maxLines="1"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:singleLine="true"
+                                    android:textSize="@dimen/sp_12"
+                                    />
 
                             </LinearLayout>
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -782,13 +809,15 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/G_Value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
-                                    android:id="@+id/G_Value"
                                     android:maxLines="1"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:singleLine="true"
+                                    android:textSize="@dimen/sp_12"
+                                    />
 
                             </LinearLayout>
 
@@ -807,13 +836,15 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/Y_Value3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/Y_Value3"
                                     android:layout_marginStart="4dp"
                                     android:maxLines="1"
                                     android:textColor="@color/MaterialOrange400"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:singleLine="true"
+                                    android:textSize="@dimen/sp_12"
+                                    />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -838,10 +869,10 @@
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/QTY"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:id="@+id/QTY"
                         android:textColor="@color/MaterialGrey800"
                         android:textSize="@dimen/sp_12" />
 
@@ -862,12 +893,12 @@
                             android:textSize="@dimen/sp_12" />
 
                         <TextView
+                            android:id="@+id/price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:drawablePadding="@dimen/dp_4"
                             android:text="@string/CNY"
-                            android:id="@+id/price"
                             android:textColor="@color/Red"
                             android:textSize="@dimen/sp_12" />
                     </LinearLayout>
@@ -893,12 +924,12 @@
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/paymentModeName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:id="@+id/paymentModeName"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
@@ -923,11 +954,11 @@
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/inspectonBody"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
-                        android:id="@+id/inspectonBody"
                         android:gravity="right"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
@@ -953,11 +984,11 @@
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/deliveryTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
-                        android:id="@+id/deliveryTime"
                         android:gravity="right"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
@@ -1013,12 +1044,12 @@
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/provinceCity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:id="@+id/provinceCity"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 
@@ -1043,12 +1074,12 @@
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/remark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:drawablePadding="@dimen/dp_4"
                         android:gravity="right"
-                        android:id="@+id/remark"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_12" />
 

@@ -61,9 +61,10 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
         initPop()
         initSteelClass()
     }
+
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        if(!hidden){
+        if (!hidden) {
             refreshLayout.autoRefresh()
         }
     }
@@ -71,8 +72,8 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
     private fun initSteelClass() {
         DataCtrlClass.steelClassData(context, {
             if (it != null) {
-                var list = it  as ArrayList < PopStairListBean >
-                list.add(0, PopStairListBean("全部类别",false,""))
+                var list = it as ArrayList<PopStairListBean>
+                list.add(0, PopStairListBean("全部类别", false, ""))
                 coalPop.data = list
 
             }
@@ -87,15 +88,15 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
         mAdapter.loadMoreEnd()
         mRecyclerView.addItemDecoration(RecycleViewDivider(context, LinearLayoutManager.VERTICAL, 2, ContextCompat.getColor(context, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
-        rb1.setOnClickListener(this)
-        rb2.setOnClickListener(this)
-        rb3.setOnClickListener(this)
+        steelRb1.setOnClickListener(this)
+        steelRb2.setOnClickListener(this)
+        steelRb3.setOnClickListener(this)
 
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
                 var entity = mAdapter.data.get(position)
                 startActivity(Intent(activity, DemandSteelDetailAtivity::class.java)
-                        .putExtra(DemandSteelDetailAtivity.Intent_Detaile_Id,entity.id))
+                        .putExtra(DemandSteelDetailAtivity.Intent_Detaile_Id, entity.id))
             }
         })
 
@@ -114,48 +115,62 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
         sortPop = StairPop(activity, {
             if (it != null) {
                 if (it.name.equals("综合排序")) {
-                    setGaryOrblue(rb1, false, "综合排序")
+                    setGaryOrblue(steelRb1, false, "综合排序")
                 } else {
-                    setGaryOrblue(rb1, true, it.name)
+                    setGaryOrblue(steelRb1, true, it.name)
                 }
-                sortType = it.id
-                onRefresh(refreshLayout)
+                if(!sortType.equals( it.id)){
+                    sortType = it.id
+                    onRefresh(refreshLayout)
+
+                }
+                sortPop. dismiss()
             }
         })
         sortPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
-                radioGroup.clearCheck()
+                radioGroup2.clearCheck()
             }
         }
         sortPop.data = sortData
         coalPop = StairPop(activity, {
             if (it != null) {
                 if (it.name.equals("全部类别")) {
-                    setGaryOrblue(rb2, false, "类别")
+                    setGaryOrblue(steelRb2, false, "类别")
                 } else {
-                    setGaryOrblue(rb2, true, it.name)
+                    setGaryOrblue(steelRb2, true, it.name)
                 }
-                steelClassId = it.id
-                onRefresh(refreshLayout)
+                if(!steelClassId.equals( it.id)){
+                    steelClassId = it.id
+                    onRefresh(refreshLayout)
+
+                }
+                coalPop. dismiss()
             }
         })
         coalPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
-                radioGroup.clearCheck()
+                radioGroup2.clearCheck()
             }
         }
         arePop = AreaPop(activity, { name, provinceId, cityId, check ->
 
-            setGaryOrblue(rb3, check, name)
+            setGaryOrblue(steelRb3, check, name)
+            if(this.provinceId != provinceId){
+                this.provinceId = provinceId
+                onRefresh(refreshLayout)
+            }
+            if(this.cityId != cityId){
+                this.cityId = cityId
+                onRefresh(refreshLayout)
 
-            this.provinceId = provinceId
-            this.cityId = cityId
-            onRefresh(refreshLayout)
+            }
+            arePop.dismiss()
         })
         arePop.data = (JSON.parseArray(getJson(), AreaBean::class.java) as ArrayList<AreaBean>)
         arePop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
-                radioGroup.clearCheck()
+                radioGroup2.clearCheck()
             }
         }
 
@@ -198,25 +213,34 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
 
     override fun onClick(v: View) {
         when (v) {
-            rb1 -> {
-                if (!sortPop.isShowing) {
-                    sortPop.showPopupWindow(radioGroup)
-                } else {
-                    radioGroup.clearCheck()
+            steelRb1 -> {
+                try {
+                    if (!sortPop.isShowing) {
+                        sortPop.showPopupWindow(radioGroup2)
+                    } else {
+                        radioGroup2.clearCheck()
+                    }
+                } catch (e: Exception) {
                 }
             }
-            rb2 -> {
-                if (!coalPop.isShowing) {
-                    coalPop.showPopupWindow(radioGroup)
-                } else {
-                    radioGroup.clearCheck()
+            steelRb2 -> {
+                try {
+                    if (!coalPop.isShowing) {
+                        coalPop.showPopupWindow(radioGroup2)
+                    } else {
+                        radioGroup2.clearCheck()
+                    }
+                } catch (e: Exception) {
                 }
             }
-            rb3 -> {
-                if (!arePop.isShowing) {
-                    arePop.showPopupWindow(radioGroup)
-                } else {
-                    radioGroup.clearCheck()
+            steelRb3 -> {
+                try {
+                    if (!arePop.isShowing) {
+                        arePop.showPopupWindow(radioGroup2)
+                    } else {
+                        radioGroup2.clearCheck()
+                    }
+                } catch (e: Exception) {
                 }
             }
         }

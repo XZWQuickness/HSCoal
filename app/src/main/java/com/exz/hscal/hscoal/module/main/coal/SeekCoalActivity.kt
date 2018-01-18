@@ -152,9 +152,13 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
                     setGaryOrblue(rb1, true, it.name)
                 }
 
-                sortType = it.id
-                onRefresh(refreshLayout)
+                if(!sortType.equals( it.id)){
+                    sortType = it.id
+                    rb1.isEnabled=false
+                    onRefresh(refreshLayout)
 
+                }
+                sortPop. dismiss()
         }
         })
         sortPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
@@ -170,9 +174,13 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
                 } else {
                     setGaryOrblue(rb2, true, it.name)
                 }
-                coalVarietyId = it.id
-                onRefresh(refreshLayout)
+                if(!coalVarietyId.equals( it.id)){
+                    coalVarietyId = it.id
+                    rb2.isEnabled=false
+                    onRefresh(refreshLayout)
 
+                }
+                coalPop. dismiss()
             }
         })
         coalPop.data = coalData
@@ -183,9 +191,17 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
         }
         arePop = AreaPop(mContext, { name, provinceId, cityId, check ->
             setGaryOrblue(rb3, check, name)
-            this.provinceId = provinceId
-            this.cityId = cityId
-            refreshLayout.autoRefresh()
+            if(this.provinceId != provinceId){
+                this.provinceId = provinceId
+                onRefresh(refreshLayout)
+            }
+            if(this.cityId != cityId){
+                this.cityId = cityId
+                rb3.isEnabled=false
+                onRefresh(refreshLayout)
+
+            }
+            arePop.dismiss()
         })
         arePop.data = (JSON.parseArray(getJson(), AreaBean::class.java) as ArrayList<AreaBean>)
         arePop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
@@ -277,6 +293,9 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
     private fun iniData() {
         DataCtrlClass.CoalListData(mContext, currentPage, keyword, coalVarietyId, provinceId, cityId, sortType) {
             refreshLayout?.finishRefresh()
+            rb1.isEnabled=true
+            rb2.isEnabled=true
+            rb3.isEnabled=true
             if (it != null) {
                 if (refreshState == com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH) {
                     mAdapter.setNewData(it)

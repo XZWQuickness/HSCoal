@@ -85,7 +85,7 @@ class OrderSteelDetailActivity : BaseActivity() {
                 hisUserId= it.data?.hisUserId.toString()
                 if(!TextUtils.isEmpty(it.data?.mobile)&&!TextUtils.isEmpty(it.data?.consignee)&& !TextUtils.isEmpty(it.data?.address)){
                     llConsignee.visibility=View.VISIBLE
-                    consignee.text=String.format(mContext.getString(R.string.contact),it.data?.consignee)//联系人
+                    consignee.text=mContext.getString(R.string.contact)+it.data?.consignee//联系人
                     mobile.text="电话: "+it.data?.mobile
                     address.text=it.data?.address//地址
                 }else{

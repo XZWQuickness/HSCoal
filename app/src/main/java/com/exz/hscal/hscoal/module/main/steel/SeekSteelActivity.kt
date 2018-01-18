@@ -46,7 +46,7 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
 
     private var keyword = ""//关键词
     private var steelClassId = ""//有色金属分类id
-    private var povinceId = ""//省份id
+    private var provinceId = ""//省份id
     private var cityId = ""//城市id
     private var sortType = "0"//排序方式（0综合排序 1价格递增 2价格递减 3最新上架）
     private lateinit var sortPop: StairPop
@@ -152,8 +152,12 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
                 } else {
                     setGaryOrblue(rb1, true, it.name)
                 }
-                sortType = it.id
-                onRefresh(refreshLayout)
+                if(!sortType.equals( it.id)){
+                    sortType = it.id
+                    rb1.isEnabled=false
+                    onRefresh(refreshLayout)
+                }
+                sortPop. dismiss()
             }
         })
         sortPop.data = sortData
@@ -169,8 +173,13 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
                 } else {
                     setGaryOrblue(rb2, true, it.name)
                 }
-                steelClassId = it.id
-                onRefresh(refreshLayout)
+                if(!steelClassId.equals( it.id)){
+                    steelClassId = it.id
+                    rb2.isEnabled=false
+                    onRefresh(refreshLayout)
+
+                }
+                coalPop. dismiss()
             }
         })
 
@@ -183,9 +192,17 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
 
             setGaryOrblue(rb3, check, name)
 
-            this.povinceId = povinceId
-            this.cityId = cityId
-            refreshLayout.autoRefresh()
+            if(this.provinceId != provinceId){
+                this.provinceId = provinceId
+                onRefresh(refreshLayout)
+            }
+            if(this.cityId != cityId){
+                this.cityId = cityId
+                rb3.isEnabled=false
+                onRefresh(refreshLayout)
+
+            }
+            arePop.dismiss()
         })
         arePop.data = (JSON.parseArray(getJson(), AreaBean::class.java) as ArrayList<AreaBean>)
         arePop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
@@ -277,8 +294,11 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
     }
 
     private fun iniData() {
-        DataCtrlClass.SteelListtData(mContext, currentPage, keyword, steelClassId, povinceId, cityId, sortType) {
+        DataCtrlClass.SteelListtData(mContext, currentPage, keyword, steelClassId, provinceId, cityId, sortType) {
             refreshLayout?.finishRefresh()
+            rb1.isEnabled=true
+            rb2.isEnabled=true
+            rb3.isEnabled=true
             if (it != null) {
                 if (refreshState == com.szw.framelibrary.config.Constants.RefreshState.STATE_REFRESH) {
                     mAdapter.setNewData(it)

@@ -45,7 +45,7 @@ class OfferListAdapter<T : OfferBean> : BaseQuickAdapter<T, BaseViewHolder>(R.la
         helper.addOnClickListener(R.id.tv_mind)
         itemView.companyName.text = item.companyName
         itemView.price.text = "￥"+item.price
-
+        itemView.tv_remark.text="备注: "+item.remark
     }
 
 }

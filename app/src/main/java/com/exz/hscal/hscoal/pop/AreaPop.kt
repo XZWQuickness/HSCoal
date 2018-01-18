@@ -75,7 +75,6 @@ class AreaPop(context: Context, listener: (name: String, povinceId: String,cityI
                     }
 
                     listener.invoke("区域","","",false)
-                    dismiss()
                 }
                 mOneAdapter.data.get(position).isCheck = true
                 mOneAdapter.notifyDataSetChanged()
@@ -105,7 +104,6 @@ class AreaPop(context: Context, listener: (name: String, povinceId: String,cityI
                 }else{
                     listener.invoke(if(entity.areaName.equals("不限")) "区域" else  entity.areaName,entity.areaId,cityEntity.areaId,true)
                 }
-                dismiss()
             }
         })
     }

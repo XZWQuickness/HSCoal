@@ -1,5 +1,6 @@
 package com.exz.hscal.hscoal.adapter
 
+import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.exz.hscal.hscoal.R
@@ -18,6 +19,8 @@ class GoodsManageAdapter(var classType: Int) : BaseQuickAdapter<GoodsManagEntity
         v.image.setImageURI(item.image)
         v.price.text = "￥" + item.price
         v.description.text = item.description
+        v.name.visibility=View.VISIBLE
+        v.name.text=item.name
         if (classType == 1) {
             v.provinceCity.text = "产地:" + item.place
         } else {

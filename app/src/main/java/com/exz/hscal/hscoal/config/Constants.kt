@@ -17,4 +17,6 @@ object Constants{
 //     * 定位 接收
 //     */
 //    const  val Receiver_Location = "Receiver_Location"
+
+    var demandClicke=true
 }

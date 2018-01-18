@@ -40,7 +40,7 @@ class StairPop(context: Context, listener: (entity: PopStairListBean) -> Unit) :
                 mAdapter.data[position].check = true
                 adapter.notifyDataSetChanged()
                 listener.invoke(mAdapter.data.get(position))
-                dismiss()
+
             }
 
         })
