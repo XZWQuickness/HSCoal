@@ -1439,7 +1439,7 @@ object DataCtrlClass {
         OkGo.post<NetEntity<ArrayList<DemandBean>>>(Urls.coalEnquiry)
                 .params(params)
                 .tag(this)
-                .execute(object : DialogCallback<NetEntity<ArrayList<DemandBean>>>(context) {
+                .execute(object : JsonCallback<NetEntity<ArrayList<DemandBean>>>() {
                     override fun onSuccess(response: Response<NetEntity<ArrayList<DemandBean>>>) {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
                             listener.invoke(response.body().data)
@@ -1472,7 +1472,7 @@ object DataCtrlClass {
         OkGo.post<NetEntity<ArrayList<DemandBean>>>(Urls.steelEnquiry)
                 .params(params)
                 .tag(this)
-                .execute(object : DialogCallback<NetEntity<ArrayList<DemandBean>>>(context) {
+                .execute(object : JsonCallback<NetEntity<ArrayList<DemandBean>>>() {
                     override fun onSuccess(response: Response<NetEntity<ArrayList<DemandBean>>>) {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
                             listener.invoke(response.body().data)

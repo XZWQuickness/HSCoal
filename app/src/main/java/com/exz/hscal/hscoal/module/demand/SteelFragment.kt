@@ -60,14 +60,9 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
         initRecycler()
         initPop()
         initSteelClass()
+        refreshLayout.autoRefresh()
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if (!hidden) {
-            refreshLayout.autoRefresh()
-        }
-    }
 
     private fun initSteelClass() {
         DataCtrlClass.steelClassData(context, {
@@ -119,12 +114,12 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
                 } else {
                     setGaryOrblue(steelRb1, true, it.name)
                 }
-                if(!sortType.equals( it.id)){
+                if (!sortType.equals(it.id)) {
                     sortType = it.id
                     onRefresh(refreshLayout)
 
                 }
-                sortPop. dismiss()
+                sortPop.dismiss()
             }
         })
         sortPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
@@ -140,12 +135,12 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
                 } else {
                     setGaryOrblue(steelRb2, true, it.name)
                 }
-                if(!steelClassId.equals( it.id)){
+                if (!steelClassId.equals(it.id)) {
                     steelClassId = it.id
                     onRefresh(refreshLayout)
 
                 }
-                coalPop. dismiss()
+                coalPop.dismiss()
             }
         })
         coalPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
@@ -156,11 +151,11 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
         arePop = AreaPop(activity, { name, provinceId, cityId, check ->
 
             setGaryOrblue(steelRb3, check, name)
-            if(this.provinceId != provinceId){
+            if (this.provinceId != provinceId) {
                 this.provinceId = provinceId
                 onRefresh(refreshLayout)
             }
-            if(this.cityId != cityId){
+            if (this.cityId != cityId) {
                 this.cityId = cityId
                 onRefresh(refreshLayout)
 

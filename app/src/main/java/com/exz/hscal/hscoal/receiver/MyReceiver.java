@@ -55,7 +55,7 @@ public class MyReceiver extends BroadcastReceiver {
             // 第二步：实例化通知栏构造器NotificationCompat.Builder：
             Intent msgIntent = new Intent("com.yunmo.mypushdemo.permission.JPUSH_MESSAGE");
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-                    context).setSmallIcon(R.mipmap.ic_launcher);
+                    context).setSmallIcon(R.mipmap.ic_logo);
 
             // 向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
             mBuilder.setDefaults(Notification.DEFAULT_SOUND
@@ -63,12 +63,12 @@ public class MyReceiver extends BroadcastReceiver {
             RemoteViews rv = new RemoteViews(context.getPackageName(),
                     R.layout.customer_notitfication_layout);
             mBuilder.setContent(rv);// 设置自定义notification布局
-            rv.setImageViewResource(R.id.icon, R.mipmap.ic_launcher);
+            rv.setImageViewResource(R.id.icon, R.mipmap.ic_logo);
             rv.setTextViewText(R.id.title, context.getString(R.string.app_name));
             rv.setTextViewText(R.id.text, bundle.getString(JPushInterface.EXTRA_MESSAGE));
 
             mBuilder.setLargeIcon(BitmapFactory.decodeResource(
-                    context.getResources(), R.mipmap.ic_launcher));// 设置下拉图标
+                    context.getResources(), R.mipmap.ic_logo));// 设置下拉图标
             mBuilder.setAutoCancel(false);
             mBuilder.setTicker(bundle.getString(JPushInterface.EXTRA_MESSAGE));
             Notification notify = mBuilder.build();// API

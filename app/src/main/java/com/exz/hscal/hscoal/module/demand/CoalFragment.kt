@@ -62,17 +62,9 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
     override fun initView() {
         initRecycler()
         initPop()
-
-
+        onRefresh(refreshLayout)
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if (!hidden) {
-
-            onRefresh(refreshLayout)
-        }
-    }
 
 
     private fun initRecycler() {

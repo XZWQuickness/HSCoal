@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import com.blankj.utilcode.util.SizeUtils
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.bean.TabEntity
+import com.exz.hscal.hscoal.module.demand.CoalFragment
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.szw.framelibrary.base.BaseActivity

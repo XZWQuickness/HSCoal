@@ -44,9 +44,9 @@
     <application
         android:name="com.exz.carprofitmuch.app.ToolApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".module.StartPageActivity">
@@ -56,6 +56,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="BDAPPID"
+            android:value="10235504" />
+        <meta-data
+            android:name="BDAPPKEY"
+            android:value="z8GAKHUe6fG2UyiwkIS9uHDlErbcrzss" />
+        <!--百度-->
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.baidu.autoupdatesdk.demo.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/bdp_update_filepaths" />
+        </provider>
+
+
         <!--主-->
         <activity
             android:name=".module.MainActivity"
@@ -259,6 +279,7 @@
         <meta-data
             android:name="TencentMapSDK"
             android:value="SFLBZ-PSUWK-2FYJ3-AN6VI-ZJ6N6-TMBLT" />
+
 
 
         <!-- User defined. 用户自定义的广播接收器-->
