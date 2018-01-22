@@ -98,7 +98,7 @@ class ApplyForDriverActivity : BaseActivity(), View.OnClickListener {
     private fun initView() {
         if (intent.hasExtra(Intent_State)) {
             driverAuthentication = intent.getStringExtra(Intent_State)
-            mPop = SchemePop(mContext)
+            mPop = SchemePop(this)
             if(driverAuthentication.equals("2")){
 
                 checkData()

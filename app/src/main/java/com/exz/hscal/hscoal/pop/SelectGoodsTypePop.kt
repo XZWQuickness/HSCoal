@@ -1,5 +1,6 @@
 package com.exz.hscal.hscoal.pop
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.animation.Animation
@@ -12,7 +13,7 @@ import razerdp.basepopup.BasePopupWindow
  * Created by pc on 2017/12/6.
  */
 
-class SelectGoodsTypePop(context: Context, listener: (type: String) -> Unit) : BasePopupWindow(context) {
+class SelectGoodsTypePop(context: Activity, listener: (type: String) -> Unit) : BasePopupWindow(context) {
     private lateinit var inflate: View
 
 

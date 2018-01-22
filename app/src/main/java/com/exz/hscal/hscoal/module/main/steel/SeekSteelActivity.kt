@@ -145,7 +145,7 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
         sortData.add(PopStairListBean("价格由高到低", false, "2"))
         sortData.add(PopStairListBean("最新上架", false, "3"))
 
-        sortPop = StairPop(mContext, {
+        sortPop = StairPop(this, {
             if (it != null) {
                 if (it.name.equals("综合排序")) {
                     setGaryOrblue(rb1, false, "综合排序")
@@ -166,7 +166,7 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
                 radioGroup.clearCheck()
             }
         }
-        coalPop = StairPop(mContext, {
+        coalPop = StairPop(this, {
             if (it != null) {
                 if (it.name.equals("全部类别")) {
                     setGaryOrblue(rb2, false, "类别")
@@ -188,7 +188,7 @@ class SeekSteelActivity : BaseActivity(), OnRefreshListener, View.OnClickListene
                 radioGroup.clearCheck()
             }
         }
-        arePop = AreaPop(mContext, { name, povinceId, cityId, check ->
+        arePop = AreaPop(this, { name, povinceId, cityId, check ->
 
             setGaryOrblue(rb3, check, name)
 

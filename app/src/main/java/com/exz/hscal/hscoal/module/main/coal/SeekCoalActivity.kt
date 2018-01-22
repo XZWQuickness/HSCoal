@@ -144,7 +144,7 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
         coalData.add(PopStairListBean("焦炭/焦粉/焦粒", false, "1"))
         coalData.add(PopStairListBean("炼焦煤", false, "2"))
         coalData.add(PopStairListBean("动力煤", false, "3"))
-        sortPop = StairPop(mContext, {
+        sortPop = StairPop(this, {
             if (it != null) {
                 if (it.name.equals("综合排序")) {
                     setGaryOrblue(rb1, false, "综合排序")
@@ -167,7 +167,7 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
             }
         }
         sortPop.data = sortData
-        coalPop = StairPop(mContext, {
+        coalPop = StairPop(this, {
             if (it != null) {
                 if (it.name.equals("全部煤种")) {
                     setGaryOrblue(rb2, false, "全部煤种")
@@ -189,7 +189,7 @@ class SeekCoalActivity : BaseActivity(), OnRefreshListener, View.OnClickListener
                 radioGroup.clearCheck()
             }
         }
-        arePop = AreaPop(mContext, { name, provinceId, cityId, check ->
+        arePop = AreaPop(this, { name, provinceId, cityId, check ->
             setGaryOrblue(rb3, check, name)
             if(this.provinceId != provinceId){
                 this.provinceId = provinceId

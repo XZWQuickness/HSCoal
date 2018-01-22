@@ -167,7 +167,7 @@ class SeekCocalDetailActivity : BaseActivity(), View.OnClickListener, OnRefreshL
         })
         buttonBarLayout.alpha = 0f
         blurView.alpha = 0f
-        pop = SelectGoodsTypePop(mContext, {
+        pop = SelectGoodsTypePop(this, {
             if (!TextUtils.isEmpty(it)) {
                 var intent = Intent(mContext, ConfirmOrderActivity::class.java)
                         .putExtra(ConfirmOrderActivity.Intent_Type_Address, it) //交货方式 1 物流配送 2 到场自提

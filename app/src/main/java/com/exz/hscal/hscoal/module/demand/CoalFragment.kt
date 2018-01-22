@@ -66,7 +66,6 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
     }
 
 
-
     private fun initRecycler() {
         mAdapter = DemandAdapter()
         mAdapter.bindToRecyclerView(mRecyclerView)
@@ -107,56 +106,56 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                 } else {
                     setGaryOrblue(cocalRb1, true, it.name)
                 }
-                if(!sortType.equals( it.id)){
+                if (!sortType.equals(it.id)) {
                     sortType = it.id
                     onRefresh(refreshLayout)
 
                 }
 
-                sortPop. dismiss()
-                Log.i("coalPop","{sortPop}")
+                sortPop.dismiss()
+                Log.i("coalPop", "{sortPop}")
             }
         })
         sortPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
                 radioGroup1.clearCheck()
 
-                Log.i("coalPop","sortPop onDismiss")
+                Log.i("coalPop", "sortPop onDismiss")
             }
         }
         sortPop.data = sortData
         coalPop = StairPop(activity, {
 
-            Log.i("coalPop","{coalPop}")
+            Log.i("coalPop", "{coalPop}")
             if (it != null) {
                 if (it.name.equals("全部煤种")) {
                     setGaryOrblue(cocalRb2, false, "全部煤种")
                 } else {
                     setGaryOrblue(cocalRb2, true, it.name)
                 }
-                if(!coalVarietyId.equals( it.id)){
+                if (!coalVarietyId.equals(it.id)) {
                     coalVarietyId = it.id
                     onRefresh(refreshLayout)
 
                 }
-                coalPop. dismiss()
+                coalPop.dismiss()
             }
         })
         coalPop.data = coalData
         coalPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
                 radioGroup1.clearCheck()
-                Log.i("coalPop","coalPop onDismiss")
+                Log.i("coalPop", "coalPop onDismiss")
             }
         }
-        arePop = AreaPop(context, { name, provinceId, cityId, check ->
+        arePop = AreaPop(activity, { name, provinceId, cityId, check ->
 
             setGaryOrblue(cocalRb3, check, name)
-            if(this.provinceId != provinceId){
+            if (this.provinceId != provinceId) {
                 this.provinceId = provinceId
                 onRefresh(refreshLayout)
             }
-            if(this.cityId != cityId){
+            if (this.cityId != cityId) {
                 this.cityId = cityId
                 onRefresh(refreshLayout)
 
@@ -212,14 +211,14 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
     override fun onClick(v: View) {
         when (v) {
             cocalRb1 -> {
-                Log.i("coalPop","rb1 前")
+                Log.i("coalPop", "rb1 前")
                 if (!sortPop.isShowing) {
 
                     sortPop.showPopupWindow(radioGroup1)
                 } else {
                     radioGroup1.clearCheck()
                 }
-                Log.i("coalPop","rb1 后")
+                Log.i("coalPop", "rb1 后")
             }
             cocalRb2 -> {
                 if (!coalPop.isShowing) {
@@ -267,14 +266,16 @@ class CoalFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                     mAdapter.loadMoreComplete()
                     currentPage++
                 } else {
+
                     mAdapter.loadMoreEnd()
+
                 }
             } else {
+
                 mAdapter.loadMoreFail()
             }
         }
     }
-
 
     companion object {
         fun newInstance(): CoalFragment {

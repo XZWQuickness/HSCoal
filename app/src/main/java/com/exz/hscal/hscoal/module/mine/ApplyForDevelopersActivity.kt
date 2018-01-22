@@ -128,7 +128,7 @@ class ApplyForDevelopersActivity : BaseActivity(), View.OnClickListener {
         if (intent.hasExtra(Intent_State)) {
             businessAuthentication = intent.getStringExtra(Intent_State)
            if(businessAuthentication.equals("2")) checkData()
-            mPop = SchemePop(mContext)
+            mPop = SchemePop(this)
         }
         bt_contact_name.setOnClickListener(this)
         bt_contact_phone.setOnClickListener(this)

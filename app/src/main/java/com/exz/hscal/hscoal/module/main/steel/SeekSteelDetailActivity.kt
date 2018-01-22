@@ -133,7 +133,7 @@ class SeekSteelDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
         })
         buttonBarLayout.alpha = 0f
         blurView.alpha = 0f
-        pop = SelectGoodsTypePop(mContext, {
+        pop = SelectGoodsTypePop(this, {
             if (!TextUtils.isEmpty(it)) {
                 var intent = Intent(mContext, ConfirmOrderActivity::class.java)
                         .putExtra(ConfirmOrderActivity.Intent_Type_Address, it)

@@ -268,10 +268,10 @@ class SteelFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener,
                     mAdapter.loadMoreComplete()
                     currentPage++
                 } else {
-                    mAdapter.loadMoreEnd()
+                        mAdapter.loadMoreEnd()
                 }
             } else {
-                mAdapter.loadMoreFail()
+                    mAdapter.loadMoreFail()
             }
         }
     }

@@ -2,11 +2,13 @@ package com.exz.hscal.hscoal.module
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.module.login.LoginActivity
+import com.qihoo.appstore.common.updatesdk.lib.UpdateHelper
 import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.config.PreferencesService
@@ -42,6 +44,18 @@ class StartPageActivity : BaseActivity() {
             finish()
             return
         }
+        UpdateHelper.getInstance().init(applicationContext, Color.parseColor("#0A93DB"));
+        UpdateHelper.getInstance().autoUpdate(packageName, false, 120000);
+
+//        BDAutoUpdateSDK.uiUpdateAction(applicationContext, object : UICheckUpdateCallback {
+//            override fun onNoUpdateFound() {
+//
+//            }
+//
+//            override fun onCheckComplete() {
+//
+//            }
+//        })
 
 //        PermissionLocationWithCheck(Intent(this, LocationService::class.java),true)
         val anim = AnimationUtils.loadAnimation(this, R.anim.logo_fade_in)
@@ -75,7 +89,7 @@ class StartPageActivity : BaseActivity() {
      * 登录
      * */
     fun login() {
-        DataCtrlClass.loginNoDialog(mContext,PreferencesService.getAccountKey(this) ?: "", PreferencesService.getAccountValue(this) ?: "") {
+        DataCtrlClass.loginNoDialog(mContext, PreferencesService.getAccountKey(this) ?: "", PreferencesService.getAccountValue(this) ?: "") {
             if (it != null) {
                 LoginActivity.loginSuccess(this, PreferencesService.getAccountKey(this) ?: "", PreferencesService.getAccountValue(this) ?: "", it)
             } else {

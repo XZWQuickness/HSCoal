@@ -57,24 +57,46 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="BDAPPID"
-            android:value="10235504" />
-        <meta-data
-            android:name="BDAPPKEY"
-            android:value="z8GAKHUe6fG2UyiwkIS9uHDlErbcrzss" />
-        <!--百度-->
+        <!--<meta-data-->
+        <!--android:name="BDAPPID"-->
+        <!--android:value="10235504" />-->
+        <!--<meta-data-->
+        <!--android:name="BDAPPKEY"-->
+        <!--android:value="z8GAKHUe6fG2UyiwkIS9uHDlErbcrzss" />-->
+        <!--&lt;!&ndash;百度&ndash;&gt;-->
+
+        <!--<provider-->
+        <!--android:name="android.support.v4.content.FileProvider"-->
+        <!--android:authorities="com.baidu.autoupdatesdk.demo.fileprovider"-->
+        <!--android:exported="false"-->
+        <!--android:grantUriPermissions="true">-->
+        <!--<meta-data-->
+        <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+        <!--android:resource="@xml/bdp_update_filepaths" />-->
+        <!--</provider>-->
+
+
+        <activity
+            android:name="com.qihoo.appstore.common.updatesdk.lib.UpdateTipDialogActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <service
+            android:name="com.qihoo.appstore.updatelib.CheckUpdateService"
+            android:exported="false" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.baidu.autoupdatesdk.demo.fileprovider"
+            android:name="com.qihoo.appstore.updatelib.UpdateProvider"
+            android:authorities="com.exz.hscal.hscoal"
             android:exported="false"
+
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/bdp_update_filepaths" />
+                android:resource="@xml/update_apk_path" />
         </provider>
-
 
         <!--主-->
         <activity
@@ -279,7 +301,6 @@
         <meta-data
             android:name="TencentMapSDK"
             android:value="SFLBZ-PSUWK-2FYJ3-AN6VI-ZJ6N6-TMBLT" />
-
 
 
         <!-- User defined. 用户自定义的广播接收器-->

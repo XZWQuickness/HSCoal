@@ -1,5 +1,6 @@
 package com.exz.hscal.hscoal.pop
 
+import android.app.Activity
 import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -19,7 +20,7 @@ import razerdp.basepopup.BasePopupWindow
  * Created by pc on 2017/12/6.
  */
 
-class StairPop(context: Context, listener: (entity: PopStairListBean) -> Unit) : BasePopupWindow(context) {
+class StairPop(context: Activity, listener: (entity: PopStairListBean) -> Unit) : BasePopupWindow(context) {
 
     private lateinit var inflate: View
     var mAdapter: StairLisAdapter = StairLisAdapter()

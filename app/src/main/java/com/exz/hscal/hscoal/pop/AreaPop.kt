@@ -1,5 +1,6 @@
 package com.exz.hscal.hscoal.pop
 
+import android.app.Activity
 import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -21,7 +22,7 @@ import razerdp.basepopup.BasePopupWindow
  * Created by pc on 2017/12/6.
  */
 
-class AreaPop(context: Context, listener: (name: String, povinceId: String,cityId:String, check: Boolean) -> Unit) : BasePopupWindow(context) {
+class AreaPop(context: Activity, listener: (name: String, povinceId: String,cityId:String, check: Boolean) -> Unit) : BasePopupWindow(context) {
     private lateinit var inflate: View
     private var mOneAdapter: AreaOneAdapter
     private lateinit var mTwoAdapter: AreaTwoAdapter
