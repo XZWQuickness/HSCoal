@@ -1981,4 +1981,34 @@ object DataCtrlClass {
 
                 })
     }
+
+    /**
+     * 登录
+     * */
+    fun
+            updateApk(context:Context,version: String,  listener: (s: NetEntity<UpgradeBean>?) -> Unit) {
+
+        val params = HashMap<String, String>()
+        params.put("version", version)
+        params.put("deviceType", "1")
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(version + "1", MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<UpgradeBean>>(Urls.UpgradeApk)
+                .params(params)
+                .tag(this)
+                .execute(object : JsonCallback<NetEntity<UpgradeBean>>() {
+                    override fun onSuccess(response: Response<NetEntity<UpgradeBean>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<UpgradeBean>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
 }

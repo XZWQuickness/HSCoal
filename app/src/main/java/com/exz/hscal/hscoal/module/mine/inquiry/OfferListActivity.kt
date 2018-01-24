@@ -70,10 +70,10 @@ class OfferListActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Re
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 10, ContextCompat.getColor(mContext, R.color.app_bg)))
         mRecyclerView.addOnItemTouchListener(object : OnItemChildClickListener(){
-            override fun onSimpleItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+            override fun onSimpleItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View, position: Int) {
                 var mEntity=mAdapter.data.get(position)
-                when (view) {
-                    tv_left -> {
+                when (view.id) {
+                    R.id.tv_left -> {
                         DialogUtils.hint(mContext,"接受报价", {
                             DataCtrlClass.ConfirmEnquiry(mContext,type,objectId,mEntity.id,"1",{
                                 if(it!=null){
@@ -83,7 +83,7 @@ class OfferListActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Re
                         })
 
                     }
-                    tv_mind -> {
+                    R.id. tv_mind -> {
                         DialogUtils.hint(mContext,"拒绝报价", {
                             DataCtrlClass.ConfirmEnquiry(mContext,type,objectId,mEntity.id,"2",{
                                 if(it!=null){

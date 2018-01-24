@@ -77,7 +77,7 @@ class InquiryOrderSteelDetailActivity : BaseActivity() {
                 provinceCity.text = it.data?.provinceCity ?: ""//交货地点
                 remark.text = it.data?.remark ?: ""//备注
 
-                price.text= String.format(mContext.getString(R.string.main_cocal_detail_unit_price),"￥"+it.data?.price )//单价
+                price.text= "金额: ￥"+it.data?.price//单价
                 createDate.text = String.format(mContext.getString(R.string.Offer_time), it.data?.createDate)//报价时间
                 auditStateTime.text = String.format(mContext.getString(R.string.ConfirmTime), it.data?.auditStateTime)//确认时间
 

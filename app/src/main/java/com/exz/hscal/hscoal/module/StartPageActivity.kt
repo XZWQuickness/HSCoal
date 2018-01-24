@@ -3,11 +3,14 @@ package com.exz.hscal.hscoal.module
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import com.blankj.utilcode.util.AppUtils
 import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.module.login.LoginActivity
+import com.exz.hscal.hscoal.utils.DialogUtils
 import com.qihoo.appstore.common.updatesdk.lib.UpdateHelper
 import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
@@ -35,6 +38,7 @@ class StartPageActivity : BaseActivity() {
     override fun init() {
         super.init()
         initView()
+
     }
 
 
@@ -44,8 +48,9 @@ class StartPageActivity : BaseActivity() {
             finish()
             return
         }
-        UpdateHelper.getInstance().init(applicationContext, Color.parseColor("#0A93DB"));
-        UpdateHelper.getInstance().autoUpdate(packageName, false, 120000);
+
+//        UpdateHelper.getInstance().init(applicationContext, Color.parseColor("#0A93DB"));
+//        UpdateHelper.getInstance().autoUpdate(packageName, false, 120000);
 
 //        BDAutoUpdateSDK.uiUpdateAction(applicationContext, object : UICheckUpdateCallback {
 //            override fun onNoUpdateFound() {

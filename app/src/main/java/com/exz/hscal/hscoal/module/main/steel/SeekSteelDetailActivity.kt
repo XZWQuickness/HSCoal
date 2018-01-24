@@ -82,7 +82,7 @@ class SeekSteelDetailActivity : BaseActivity(), OnRefreshListener, View.OnClickL
                 name.text = it.data?.name ?: ""
                 className.text = "(" + it.data?.className + ")" ?: ""
                 weight.text = String.format(mContext.getString(R.string.heavy), it.data?.weight ?: "")//件重
-                QTY.text = it.data?.qty + "吨" ?: ""//供应量
+                QTY.text = it.data?.qty + "件" ?: ""//供应量
                 price.text = it.data?.price + "元/件" ?: ""//价格
                 specification.text = it.data?.specification ?: "" //规格
                 materialQuality.text = it.data?.materialQuality ?: "" //材质

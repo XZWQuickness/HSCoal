@@ -1,6 +1,7 @@
 package com.exz.hscal.hscoal.module
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Looper.getMainLooper
 import android.support.v4.content.ContextCompat
@@ -10,6 +11,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.blankj.utilcode.util.AppUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.carprofitmuch.config.Urls
@@ -30,6 +32,7 @@ import com.exz.hscal.hscoal.module.main.steel.SeekSteelActivity
 import com.exz.hscal.hscoal.module.main.steel.SeekSteelDetailActivity
 import com.exz.hscal.hscoal.module.mine.ApplyForDevelopersActivity
 import com.exz.hscal.hscoal.module.mine.ApplyForDriverActivity
+import com.exz.hscal.hscoal.utils.DialogUtils
 import com.exz.hscal.hscoal.utils.SZWUtils
 import com.exz.hscal.hscoal.widget.MyWebActivity
 import com.flyco.tablayout.listener.CustomTabEntity
@@ -219,6 +222,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
     override fun onClick(view: View) {
         when (view) {
             headerView.bt_tab_1 -> {//找煤炭
+
                 startActivity(Intent(context, SeekCoalActivity::class.java))
             }
             headerView.bt_tab_2 -> {//找钢材
@@ -293,7 +297,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, OnBannerListener, View
             if (it != null) {
                 headerView.coal_count.text = String.format(context.getString(R.string.main_coal), it.coalCount) + "吨"
                 headerView.coal_price.text = it.coalPrice + "元"
-                headerView.steel_count.text = String.format(context.getString(R.string.main_steel), it.steelCount) + "吨"
+                headerView.steel_count.text = String.format(context.getString(R.string.main_steel), it.steelCount) + "件"
                 headerView.steel_price.text = it.steelPrice + "元"
 
             }

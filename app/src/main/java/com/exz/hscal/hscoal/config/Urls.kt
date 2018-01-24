@@ -407,5 +407,10 @@ object Urls {
      */
     var ExitAccount = url + "App/Account/Exit.aspx"
 
+    /*
+     * 更新接口
+     */
+    var UpgradeApk = url + "App/Upgrade.aspx"
+
 
 }

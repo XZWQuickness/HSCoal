@@ -116,7 +116,7 @@ class InquiryOrderCocalDetailActivity : BaseActivity(), View.OnClickListener {
                     }
                 }
                 QTY.text = it.data?.purchaseQuantity + "吨" ?: ""//供应量
-                price.text ="单价 ￥"+ it.data?.price + "元"
+                price.text ="￥"+ it.data?.price + "元"
                 remark.text = it.data?.remark//备注
                 tv_price.text = "金额 ￥" + it.data?.price
                 plannedDeliveryTime.text = it.data?.plannedDeliveryTime//计划收货时间

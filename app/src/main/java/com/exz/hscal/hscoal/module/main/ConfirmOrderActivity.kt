@@ -80,6 +80,12 @@ class ConfirmOrderActivity : BaseActivity(), View.OnClickListener {
         } else {//到场自提
             llAddress.visibility = View.GONE
         }
+
+        if(type == "1"){//类型：1煤炭 2有色金属
+            unit.text="需求数(吨):"
+        }else{
+            unit.text="需求数(件):"
+        }
         getConfirmOrder()
 
         tvCount.addTextChangedListener(object :TextWatcher{

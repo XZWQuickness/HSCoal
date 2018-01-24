@@ -153,6 +153,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:maxLines="1"
+                                android:id="@+id/unit"
                                 android:text="需求数(吨):"
                                 android:textColor="@color/MaterialGrey600"
                                 android:textSize="14sp" />

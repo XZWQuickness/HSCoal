@@ -129,6 +129,31 @@ object DialogUtils {
         dialog.setCanceledOnTouchOutside(true)
         dialog.show()
     }
+    /**
+     *
+     */
+    fun updateApk(context: Context, title: String,isMust:String,listener: () -> Unit) {
+        if(isMust == "0"){//可以忽略升级
+            dialog = CommonDialogFactory.createDialogByType(context, DialogUtil.DIALOG_TYPE_103)
+            dialog.setTitleText("发现新版本")
+            dialog.setCancelBtn("取消",{v ->
+                dialog.dismiss()
+            })
+
+        }else{ //必须升级
+            dialog = CommonDialogFactory.createDialogByType(context, 4)
+            dialog.setTitleText("发现新版本\n\n"+title)
+            dialog.setCancelable(false)
+        }
+
+        dialog.setContentText(title)
+        dialog.setOkBtn("更新") { v ->
+            dialog.dismiss()
+            listener.invoke()
+        }
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
+    }
 
     /**
      *
@@ -188,8 +213,6 @@ object DialogUtils {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (!TextUtils.isEmpty(p0.toString().trim()) && p0.toString().trim().toFloat() > max) {
                     view.count.setText(max.toString())
-                } else if (TextUtils.isEmpty(p0.toString().trim())) {
-                    view.count.setText("1")
                 }
 
             }
@@ -201,6 +224,8 @@ object DialogUtils {
             val trim = view.count.text.toString().trim()
             if (!TextUtils.isEmpty(trim)) {
                 listener.invoke(trim.toFloat())
+            }else{
+                listener.invoke(1f)
             }
             dialog.dismiss()
             countIndex = 1f

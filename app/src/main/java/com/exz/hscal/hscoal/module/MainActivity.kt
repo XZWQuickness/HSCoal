@@ -1,6 +1,7 @@
 package com.exz.hscal.hscoal.module
 
 import android.content.Intent
+import android.net.Uri
 import android.support.v4.app.Fragment
 import android.view.KeyEvent
 import android.view.View
@@ -8,10 +9,13 @@ import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.exz.hscal.hscoal.DataCtrlClass
 import com.exz.hscal.hscoal.R
 import com.exz.hscal.hscoal.bean.TabEntity
 import com.exz.hscal.hscoal.module.demand.CoalFragment
+import com.exz.hscal.hscoal.utils.DialogUtils
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.szw.framelibrary.base.BaseActivity
@@ -53,6 +57,24 @@ class MainActivity : BaseActivity() {
 
             override fun onTabReselect(position: Int) {
                 startAnimation(position)
+            }
+        })
+
+        DataCtrlClass.updateApk(mContext, AppUtils.getAppVersionName(),{
+            if (it != null) {
+                if (it.data?.isUpgrade.equals("1")) {
+                    DialogUtils.updateApk(mContext, it.data?.tip ?: "", it.data?.isMust ?: "", {
+                        val uri = Uri.parse(it.data?.loadUrl)
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        if(it.data?.isMust.equals("0")){
+                            startActivity(Intent.createChooser(intent, "请选择浏览器"));
+                        }else{
+                            startActivity(intent)
+                            finishAffinity()
+                        }
+                    })
+                }
+
             }
         })
     }
